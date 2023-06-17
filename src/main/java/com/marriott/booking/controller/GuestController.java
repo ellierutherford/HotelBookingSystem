@@ -1,3 +1,4 @@
+package com.marriott.booking.controller;
 
 import com.marriott.booking.exception.GuestDeleteException;
 import com.marriott.booking.exception.GuestNotFoundException;

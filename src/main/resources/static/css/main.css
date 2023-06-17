@@ -1,19 +1,51 @@
-h1{
+h1 {
     display: flex;
     justify-content: center;
-    color:#0000FF;}
-h2{
+    color: #0000FF;
+}
+
+h2 {
     display: flex;
     justify-content: center;
-    color:#FF0000;}
-div{
+    color: #FF0000;
+}
+
+div {
     display: flex;
-    justify-content: center;}
-form{
+    justify-content: center;
+}
+
+form {
     display: flex;
-    justify-content: center;}
-table{
-    test-align: center;
+    justify-content: center;
+}
+
+table {
+    text-align: center;
     border-width: 1px;
-    cellpadding: 5px;
-    border: 1px solid black;}
+    cellspacing: 5px;
+    border: 1px solid black;
+}
+
+ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-right: 10px; /* Adjust the spacing between items */
+}
+
+.menu li.disabled a {
+    color: rgba(128, 128, 128, 0.3); /* Use rgba with transparency */
+    pointer-events: none;
+    text-decoration: none; /* Remove underline for disabled links */
+}
+
+table tr .disabled a {
+    color: rgba(128, 128, 128, 0.3); /* Use rgba with transparency */
+    pointer-events: none;
+    text-decoration: none; /* Remove underline for disabled links */
+}
