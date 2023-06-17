@@ -1,7 +1,6 @@
 package com.marriott.booking.model;
 
 import jakarta.persistence.*;
-
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.List;
@@ -84,8 +83,6 @@ public class Booking {
     public List<Reservation> getReservations() {
         return Reservations;
     }
-
-
 
     public void setReservations(List<Reservation> Reservations) {
         this.Reservations = Reservations;
