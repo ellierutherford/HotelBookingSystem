@@ -1,13 +1,13 @@
 package com.marriott.booking.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import javax.validation.constraints.NotBlank;
+import java.util.List;
+
 
 @Entity
-@Table(name= "bookings")
+@Table(name = "bookings")
 public class Booking {
 
     @Id
@@ -15,43 +15,57 @@ public class Booking {
     private Long id;
 
     @NotBlank
-    private String guestFirstName;
+    private String booking_name;
 
     @NotBlank
-    private String guestLastName;
-
+    private String bookRef;
+    //one book has one or more guests
+    @OneToMany(mappedBy = "booking")
+    private List<Guestship> Guestships;
 
     public Booking() {
         super();
     }
 
-    public Booking(Long id, String guestFirstName, String guestLastName) {
+    public Booking(Long id, String booking_name, String bookRef) {
         this.id = id;
-        this.guestFirstName = guestFirstName;
-        this.guestLastName = guestLastName;
+        this.booking_name = booking_name;
+        this.bookRef = bookRef;
     }
+
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setGuestFirstName(String guestFirstName) {
-        this.guestFirstName = guestFirstName;
+    public void setBooking_name(String booking_name) {
+        this.booking_name = booking_name;
     }
 
-    public void setGuestLastName(String guestLastName) {
-        this.guestLastName = guestLastName;
+    public void setIsbn(String bookRef) {
+        this.bookRef = bookRef;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getGuestFirstName() {
-        return guestFirstName;
+    public String getBooking_name() {
+        return booking_name;
     }
 
-    public String getGuestLastName() {
-        return guestLastName;
+    public String getBookRef() {
+        return bookRef;
+    }
+
+    public List<Guestship> getGuestships() {
+        return Guestships;
+    }
+
+
+
+    public void setGuestships(List<Guestship> Guestships) {
+        this.Guestships = Guestships;
     }
 }
