@@ -18,6 +18,13 @@ public class Guest {
     @NotBlank
     private String guest_last_name;
 
+    @NotBlank
+    private String guest_address;
+    @NotBlank
+    private String guest_phone_number;
+    @NotBlank
+    private String guest_email;
+
     public Guest(){
         super();
     }

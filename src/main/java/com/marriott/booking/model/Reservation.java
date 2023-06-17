@@ -27,6 +27,10 @@ public class Reservation {
     @JoinColumn(name = "id_guest")
     private Guest guest;
 
+    @ManyToOne
+    @JoinColumn(name = "id_creditCard")
+    private CreditCard creditCard;
+
     public Reservation(){
         super();
     }

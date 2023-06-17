@@ -6,15 +6,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "bookings")
-public class Booking {
+@Table(name = "creditCards")
+public class CreditCard {
 
     @Id
     @GeneratedValue
     private Long id;
 
     @NotBlank
-    private String booking_name;
+    private String creditCard_name;
 
     @NotBlank
     private String bookRef;
@@ -25,19 +25,19 @@ public class Booking {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @Enumerated(EnumType.STRING)
-    private BookingStatus status;
-
-    @OneToMany(mappedBy = "booking")
+    @OneToMany(mappedBy = "creditCard")
     private List<Reservation> reservations;
 
-    public Booking() {
+    @Enumerated(EnumType.STRING) // Using EnumType.STRING to store the status as a string in the database
+    private CreditCardStatus status; // New field for status
+
+    public CreditCard() {
         super();
     }
 
-    public Booking(Long id, String booking_name, String bookRef, LocalDate startDate, LocalDate endDate, BookingStatus status) {
+    public CreditCard(Long id, String creditCardName, String bookRef, LocalDate startDate, LocalDate endDate, CreditCardStatus status) {
         this.id = id;
-        this.booking_name = booking_name;
+        this.creditCard_name = creditCard_name;
         this.bookRef = bookRef;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -48,8 +48,8 @@ public class Booking {
         this.id = id;
     }
 
-    public void setBooking_name(String booking_name) {
-        this.booking_name = booking_name;
+    public void setCreditCard_name(String creditCard_name) {
+        this.creditCard_name = creditCard_name;
     }
 
     public void setBookRef(String bookRef) {
@@ -64,7 +64,7 @@ public class Booking {
         this.endDate = endDate;
     }
 
-    public void setStatus(BookingStatus status) {
+    public void setStatus(CreditCardStatus status) {
         this.status = status;
     }
 
@@ -72,8 +72,8 @@ public class Booking {
         return id;
     }
 
-    public String getBooking_name() {
-        return booking_name;
+    public String getCreditCard_name() {
+        return creditCard_name;
     }
 
     public String getBookRef() {
@@ -88,7 +88,7 @@ public class Booking {
         return endDate;
     }
 
-    public BookingStatus getStatus() {
+    public CreditCardStatus getStatus() {
         return status;
     }
 
