@@ -31,10 +31,10 @@ public class Room {
     public void setId(Long id) {
         this.id = id;
     }
-    public String getRoom_first_name() {
+    public String getRoom_name() {
         return room_name;
     }
-    public void setRoom_first_name(String room_name) {
+    public void setRoom_name(String room_name) {
         this.room_name = room_name;
     }
 
