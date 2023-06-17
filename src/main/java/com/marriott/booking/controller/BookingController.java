@@ -4,10 +4,10 @@ package com.marriott.booking.controller;
 import com.marriott.booking.exception.GuestNotFoundException;
 import com.marriott.booking.exception.BookingNotFoundException;
 import com.marriott.booking.model.Guest;
-import com.marriott.booking.model.GuestshipId;
+import com.marriott.booking.model.ReservationId;
 import com.marriott.booking.model.Booking;
 import com.marriott.booking.repository.GuestRepository;
-import com.marriott.booking.repository.GuestshipRepository;
+import com.marriott.booking.repository.ReservationRepository;
 import com.marriott.booking.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,7 @@ public class BookingController {
     @Autowired
     BookingRepository bookingRepository;
     @Autowired
-    GuestshipRepository guestshipRepository;
+    ReservationRepository ReservationRepository;
     @Autowired
     GuestRepository guestRepository;
 
@@ -34,7 +34,7 @@ public class BookingController {
                 .orElseThrow(() -> new BookingNotFoundException(bookingId));
         model.addAttribute("booking", booking);
 
-        List<Long> guest_ids = guestshipRepository.findGuestByBookingId(booking.getId()); /*find the guests by the booking ID*/
+        List<Long> guest_ids = ReservationRepository.findGuestByBookingId(booking.getId()); /*find the guests by the booking ID*/
         List<Guest> guests = new ArrayList<>();
         for(Long guest_id: guest_ids){
             Guest guest =guestRepository.findById(guest_id)
@@ -84,11 +84,11 @@ public class BookingController {
         bookingRepository.save(booking);
         System.out.println("DEBUG saved booking is: " + booking.getId());
         for (Long guestId : guestIds) {
-            System.out.println("Creating GuestshipID with booking id: " + booking.getId() + " and guest id: " + guestId);
-            // Create an instance of GuestshipId for this guest
-            GuestshipId guestshipId = new GuestshipId(booking.getId(), guestId);
-            System.out.println("GuestshipID has guest id..: " + guestshipId.getId_Guest() + " and Booking id: " + guestshipId.getId_Booking());
-            guestshipRepository.writeGuestship(guestshipId.getId_Guest(),guestshipId.getId_Booking());
+            System.out.println("Creating ReservationID with booking id: " + booking.getId() + " and guest id: " + guestId);
+            // Create an instance of ReservationId for this guest
+            ReservationId ReservationId = new ReservationId(booking.getId(), guestId);
+            System.out.println("ReservationID has guest id..: " + ReservationId.getId_Guest() + " and Booking id: " + ReservationId.getId_Booking());
+            ReservationRepository.writeReservation(ReservationId.getId_Guest(),ReservationId.getId_Booking());
         }
         return viewHomePage(model);
     }

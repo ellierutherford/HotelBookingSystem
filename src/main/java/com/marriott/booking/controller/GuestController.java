@@ -6,7 +6,7 @@ import com.marriott.booking.exception.BookingNotFoundException;
 import com.marriott.booking.model.Guest;
 import com.marriott.booking.model.Booking;
 import com.marriott.booking.repository.GuestRepository;
-import com.marriott.booking.repository.GuestshipRepository;
+import com.marriott.booking.repository.ReservationRepository;
 import com.marriott.booking.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,7 +23,7 @@ public class GuestController {
     @Autowired
     BookingRepository bookingRepository;
     @Autowired
-    GuestshipRepository guestshipRepository;
+    ReservationRepository ReservationRepository;
     @Autowired
     GuestRepository guestRepository;
 
@@ -35,7 +35,7 @@ public class GuestController {
                 .orElseThrow(() -> new GuestNotFoundException(guestId));
         model.addAttribute("guest", guest);
 
-        List<Long> booking_ids = guestshipRepository.findBookingByGuestId(guest.getId()); /*find the bookings by the guest ID*/
+        List<Long> booking_ids = ReservationRepository.findBookingByGuestId(guest.getId()); /*find the bookings by the guest ID*/
         List<Booking> bookings = new ArrayList<>();
         for(Long booking_id: booking_ids){
             Booking booking =bookingRepository.findById(booking_id)
@@ -56,7 +56,7 @@ public class GuestController {
         List<Integer> bookingCounts = new ArrayList<>();
         for (Guest guest : listGuests) {
             try {
-                List<Long> bookingIds = guestshipRepository.findBookingByGuestId(guest.getId());
+                List<Long> bookingIds = ReservationRepository.findBookingByGuestId(guest.getId());
                 int bookingCount = bookingIds.size();
                 bookingCounts.add(bookingCount);
             } catch (BookingNotFoundException e) {

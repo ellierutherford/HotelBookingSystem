@@ -3,15 +3,15 @@ package com.marriott.booking.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class GuestshipId implements Serializable {
+public class ReservationId implements Serializable {
 
     Long id_booking;
 
     Long id_guest;
 
-    public GuestshipId(){}
+    public ReservationId(){}
 
-    public GuestshipId( Long id_booking, Long id_guest){
+    public ReservationId( Long id_booking, Long id_guest){
         this.id_guest = id_guest;
         this.id_booking = id_booking;
     }
@@ -20,9 +20,9 @@ public class GuestshipId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GuestshipId guestshipId = (GuestshipId) o;
-        return id_booking.equals(guestshipId.id_booking) &&
-                id_guest.equals(guestshipId.id_guest);
+        ReservationId ReservationId = (ReservationId) o;
+        return id_booking.equals(ReservationId.id_booking) &&
+                id_guest.equals(ReservationId.id_guest);
     }
 
     @Override

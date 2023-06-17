@@ -21,7 +21,7 @@ public class Booking {
     private String bookRef;
     //one book has one or more guests
     @OneToMany(mappedBy = "booking")
-    private List<Guestship> Guestships;
+    private List<Reservation> Reservations;
 
     public Booking() {
         super();
@@ -59,13 +59,13 @@ public class Booking {
         return bookRef;
     }
 
-    public List<Guestship> getGuestships() {
-        return Guestships;
+    public List<Reservation> getReservations() {
+        return Reservations;
     }
 
 
 
-    public void setGuestships(List<Guestship> Guestships) {
-        this.Guestships = Guestships;
+    public void setReservations(List<Reservation> Reservations) {
+        this.Reservations = Reservations;
     }
 }

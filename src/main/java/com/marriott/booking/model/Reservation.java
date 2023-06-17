@@ -7,9 +7,9 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "guestship")
-@IdClass(GuestshipId.class)
-public class Guestship {
+@Table(name = "Reservation")
+@IdClass(ReservationId.class)
+public class Reservation {
     @Id  /*Note there are two and both marked ID*/
     @NotNull
     private Long id_booking;
@@ -19,7 +19,7 @@ public class Guestship {
     private Long id_guest;
 
     @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE) /*Need this for deleting the Guestship references*/
+    @OnDelete(action = OnDeleteAction.CASCADE) /*Need this for deleting the Reservation references*/
     @JoinColumn(name = "id_booking")
     private Booking booking;
 
@@ -27,10 +27,10 @@ public class Guestship {
     @JoinColumn(name = "id_guest")
     private Guest guest;
 
-    public Guestship(){
+    public Reservation(){
         super();
     }
-    public Guestship(Long id_booking, Long id_guest) {
+    public Reservation(Long id_booking, Long id_guest) {
         super();
         this.id_booking = id_booking;
         this.id_guest = id_guest;
