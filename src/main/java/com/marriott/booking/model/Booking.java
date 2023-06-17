@@ -3,8 +3,8 @@ package com.marriott.booking.model;
 import jakarta.persistence.*;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 import java.util.List;
-
 
 @Entity
 @Table(name = "bookings")
@@ -19,7 +19,13 @@ public class Booking {
 
     @NotBlank
     private String bookRef;
-    //one book has one or more guests
+
+    @Column(name = "start_date")
+    private LocalDate startDate;
+
+    @Column(name = "end_date")
+    private LocalDate endDate;
+
     @OneToMany(mappedBy = "booking")
     private List<Reservation> Reservations;
 
@@ -27,13 +33,13 @@ public class Booking {
         super();
     }
 
-    public Booking(Long id, String booking_name, String bookRef) {
+    public Booking(Long id, String bookingName, String bookRef, LocalDate startDate, LocalDate endDate) {
         this.id = id;
         this.booking_name = booking_name;
         this.bookRef = bookRef;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
-
-
 
     public void setId(Long id) {
         this.id = id;
@@ -47,6 +53,14 @@ public class Booking {
         this.bookRef = bookRef;
     }
 
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
     public Long getId() {
         return id;
     }
@@ -57,6 +71,14 @@ public class Booking {
 
     public String getBookRef() {
         return bookRef;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
     public List<Reservation> getReservations() {

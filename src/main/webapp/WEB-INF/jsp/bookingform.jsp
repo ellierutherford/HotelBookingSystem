@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
@@ -33,7 +32,6 @@
     <a href="/new">Add New Booking</a>
     &nbsp;&nbsp;&nbsp;
     <a href="/list">List All Bookings</a>
-
 </h2>
 
 <div >
@@ -63,6 +61,23 @@
                 </c:forEach>
             </tr>
 
+            <tr>
+                <th>Booking Start Date: </th>
+                <td>
+                    <input type="date" name="startDate"
+                           value="<c:out value='${booking.startDate}'/>"
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <th>Booking End Date: </th>
+                <td>
+                    <input type="date" name="endDate"
+                           value="<c:out value='${booking.endDate}'/>"
+                    />
+                </td>
+            </tr>
 
             <tr>
                 <th>Ref: </th>
@@ -72,7 +87,6 @@
                     />
                 </td>
             </tr>
-
 
             <tr>
                 <th>Number of Checked Guests: </th>
@@ -87,5 +101,4 @@
         </table>
     </form>
 </div>
-</body>
-</html>
+</
