@@ -6,12 +6,12 @@
 <head>
     <c:url value="/css/main.css" var="jstlCss" />
     <link href="${jstlCss}" rel="stylesheet" >
-    <title>Bookings Store Application</title>
+    <title>Marriott Hotel Booking System</title>
 
 </head>
 <body>
 
-<h1>Marriot</h1>
+<h1>Welcome to the Marriott Hotel Booking System</h1>
 <h2>
 
     <ul class="menu">
