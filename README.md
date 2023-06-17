@@ -9,6 +9,11 @@ Use the following commands to connect to mysql, create the db, table and populat
 mysql -u root -p 
 # When prompted, supply your password
 
+
+CREATE USER 'springuser'@'localhost' IDENTIFIED BY 'ThePassword';
+GRANT ALL PRIVILEGES ON hotelBookingSystem.* TO 'springuser'@'localhost';
+
+
 # create db + switch to it
 CREATE DATABASE hotelBookingSystem;
 USE hotelBookingSystem;
