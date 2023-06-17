@@ -61,7 +61,7 @@ Starwood users can book one or more available rooms. Allow users to book availab
 
 Starwood members can save their credit card details and also modify their details. After a user successfully logs in, Starwood members can save their credit card details (more than a credit card can be saved).
 
-Starwood members can visualize a history of their reservations: after a user performs the login successfully, Starwood members can visualize their reservations and their status (Active, Cancelled, Inactive). If an active reservation is selected, the user can cancel it.
+
 
 Starwood members can delete their registration.
 

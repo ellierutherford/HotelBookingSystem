@@ -25,19 +25,23 @@ public class Booking {
     @Column(name = "end_date")
     private LocalDate endDate;
 
+    @Enumerated(EnumType.STRING) // Using EnumType.STRING to store the status as a string in the database
+    private BookingStatus status; // New field for status
+
     @OneToMany(mappedBy = "booking")
-    private List<Reservation> Reservations;
+    private List<Reservation> reservations;
 
     public Booking() {
         super();
     }
 
-    public Booking(Long id, String bookingName, String bookRef, LocalDate startDate, LocalDate endDate) {
+    public Booking(Long id, String bookingName, String bookRef, LocalDate startDate, LocalDate endDate, BookingStatus status) {
         this.id = id;
         this.booking_name = booking_name;
         this.bookRef = bookRef;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.status = status;
     }
 
     public void setId(Long id) {
@@ -60,6 +64,10 @@ public class Booking {
         this.endDate = endDate;
     }
 
+    public void setStatus(BookingStatus status) {
+        this.status = status;
+    }
+
     public Long getId() {
         return id;
     }
@@ -80,11 +88,15 @@ public class Booking {
         return endDate;
     }
 
-    public List<Reservation> getReservations() {
-        return Reservations;
+    public BookingStatus getStatus() {
+        return status;
     }
 
-    public void setReservations(List<Reservation> Reservations) {
-        this.Reservations = Reservations;
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 }
