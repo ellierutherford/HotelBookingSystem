@@ -43,7 +43,7 @@ public class Booking {
         this.booking_name = booking_name;
     }
 
-    public void setIsbn(String bookRef) {
+    public void setBookRef(String bookRef) {
         this.bookRef = bookRef;
     }
 

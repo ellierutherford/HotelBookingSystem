@@ -37,7 +37,7 @@
                 <td><c:out value="${booking.id}" /></td>
                 <td><c:out value="${booking.booking_name}" /></td>
 
-                <td><c:out value="${booking.isbn}" /></td>
+                <td><c:out value="${booking.bookRef}" /></td>
                 <td>
                     <a href="/bookings/${booking.id}"/>Edit</a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

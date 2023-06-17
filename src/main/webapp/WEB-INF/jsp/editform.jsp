@@ -57,10 +57,10 @@
                 </c:forEach>
             </tr>
             <tr>
-                <th>ISBN: </th>
+                <th>REF: </th>
                 <td>
-                    <input type="text" name="isbn" size="45"
-                           value="<c:out value='${booking.isbn}' />"
+                    <input type="text" name="bookRef" size="45"
+                           value="<c:out value='${booking.bookRef}' />"
                     />
                 </td>
             </tr>
