@@ -12,7 +12,7 @@
 <h1>Guest Management</h1>
 <h2>
     <ul class="menu">
-        <li><a href="/list">The bookings</a></li>
+        <li><a href="/list">The Bookings</a></li>
         <li><a href="/guests">The Guests</a></li>
         <li><a href="/rooms">The Rooms</a></li>
     </ul>
