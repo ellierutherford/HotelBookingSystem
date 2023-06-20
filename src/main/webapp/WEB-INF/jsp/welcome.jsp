@@ -11,15 +11,22 @@
 </head>
 <body>
 
-<h1>Welcome to the Marriott Hotel Booking System</h1>
-<h2>
+<h1>Booking</h1>
 
+<h2>
+    <ul class="menu">
+        <li><a href="/list">The bookings</a></li>
+        <li><a href="/guests">The Guests</a></li>
+        <li><a href="/rooms">The Rooms</a></li>
+    </ul>
+</h2>
+<h3>
     <ul class="menu">
         <li <c:if test="${guestCount == 0}">class="disabled"</c:if>><a href="/new">Add New Booking</a></li>
-        <li><a href="/guests">The Guests</a></li>
+        <li><a href="/newguest">Add New Guest</a></li>
+        <li><a href="/newroom">Add New Room</a></li>
     </ul>
-
-</h2>
+</h3>
 
 
 <div>

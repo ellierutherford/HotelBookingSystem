@@ -11,11 +11,18 @@
 
 <h1>Room Management</h1>
 <h2>
-    <ul>
-        <li><a href="/newroom">Add New Room</a></li>
+    <ul class="menu">
         <li><a href="/list">The bookings</a></li>
+        <li><a href="/guests">The Guests</a></li>
+        <li><a href="/rooms">The Rooms</a></li>
     </ul>
 </h2>
+<h3>
+    <ul class="menu">
+        <li><a href="/newroom">Add New Room</a></li>
+    </ul>
+</h3>
+
 
 <div>
     <table>

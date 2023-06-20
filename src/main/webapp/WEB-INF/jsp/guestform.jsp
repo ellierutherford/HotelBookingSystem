@@ -13,7 +13,7 @@
 <h2>
     <a href="/new">Add New Guest</a>
     &nbsp;&nbsp;&nbsp;
-    <a href="/list">List All Guests</a>
+    <a href="/guests">List All Guests</a>
 
 </h2>
 

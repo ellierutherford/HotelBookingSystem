@@ -11,7 +11,7 @@
 <h1>Guest Management</h1>
 <h2>
     &nbsp;&nbsp;&nbsp;
-    <a href="/listguests">List All Guests</a>
+    <a href="/guests">List All Guests</a>
 
 </h2>
 <div>
