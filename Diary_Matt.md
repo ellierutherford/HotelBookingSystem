@@ -80,11 +80,12 @@ credit card details, ,
 reservations, 
 hotel rooms
     number, room type
-types of room?
+types of room
     double, twin,suite........
     sleeps (number of people)
     hasCot
     FK rate
+    FK Room Assets
 rate 
     room date per night
 
