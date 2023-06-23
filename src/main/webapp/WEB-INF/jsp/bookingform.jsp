@@ -82,8 +82,8 @@
             <tr>
                 <th>Ref: </th>
                 <td>
-                    <input type="text" name="bookRef" size="45"
-                           value="<c:out value='${booking.bookRef}' />"
+                    <input type="text" name="bookingRef" size="45"
+                           value="<c:out value='${booking.bookingRef}' />"
                     />
                 </td>
             </tr>

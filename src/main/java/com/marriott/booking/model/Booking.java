@@ -4,20 +4,21 @@ import jakarta.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "bookings")
 public class Booking {
-
     @Id
     @GeneratedValue
     private Long id;
-
     @NotBlank
     private String booking_name;
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
+    Set<Reservation> guests;
 
     @NotBlank
-    private String bookRef;
+    private String bookingRef;
 
     @Column(name = "start_date")
     private LocalDate startDate;
@@ -35,10 +36,10 @@ public class Booking {
         super();
     }
 
-    public Booking(Long id, String booking_name, String bookRef, LocalDate startDate, LocalDate endDate, BookingStatus status) {
+    public Booking(Long id, String booking_name, LocalDate startDate, LocalDate endDate, BookingStatus status) {
         this.id = id;
         this.booking_name = booking_name;
-        this.bookRef = bookRef;
+//use the ID no book ref
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
@@ -46,26 +47,6 @@ public class Booking {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public void setBooking_name(String booking_name) {
-        this.booking_name = booking_name;
-    }
-
-    public void setBookRef(String bookRef) {
-        this.bookRef = bookRef;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
-    public void setStatus(BookingStatus status) {
-        this.status = status;
     }
 
     public Long getId() {
@@ -76,27 +57,24 @@ public class Booking {
         return booking_name;
     }
 
-    public String getBookRef() {
-        return bookRef;
+    public void setBooking_name(String booking_name) {
+        this.booking_name = booking_name;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    // Modify the setter for guests to accept a Set<Reservation>
+    public void setGuests(Set<Reservation> guests) {
+        this.guests = guests;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    // Add a method to add an Reservation to the guests set
+    public void addReservation(Reservation reservation) {
+        guests.add(reservation);
+        reservation.setBooking(this);
     }
 
-    public BookingStatus getStatus() {
-        return status;
-    }
-
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
-
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
+    // Add a method to remove an Reservation from the guests set
+    public void removeReservation(Reservation reservation) {
+        guests.remove(reservation);
+        reservation.setBooking(null);
     }
 }

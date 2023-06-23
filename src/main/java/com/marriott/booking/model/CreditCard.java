@@ -17,7 +17,7 @@ public class CreditCard {
     private String creditCard_name;
 
     @NotBlank
-    private String bookRef;
+    private String bookingRef;
 
     @Column(name = "start_date")
     private LocalDate startDate;
@@ -35,10 +35,10 @@ public class CreditCard {
         super();
     }
 
-    public CreditCard(Long id, String creditCardName, String bookRef, LocalDate startDate, LocalDate endDate, CreditCardStatus status) {
+    public CreditCard(Long id, String creditCardName, String bookingRef, LocalDate startDate, LocalDate endDate, CreditCardStatus status) {
         this.id = id;
         this.creditCard_name = creditCard_name;
-        this.bookRef = bookRef;
+        this.bookingRef = bookingRef;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
@@ -52,8 +52,8 @@ public class CreditCard {
         this.creditCard_name = creditCard_name;
     }
 
-    public void setBookRef(String bookRef) {
-        this.bookRef = bookRef;
+    public void setbookingRef(String bookingRef) {
+        this.bookingRef = bookingRef;
     }
 
     public void setStartDate(LocalDate startDate) {
@@ -76,8 +76,8 @@ public class CreditCard {
         return creditCard_name;
     }
 
-    public String getBookRef() {
-        return bookRef;
+    public String getbookingRef() {
+        return bookingRef;
     }
 
     public LocalDate getStartDate() {

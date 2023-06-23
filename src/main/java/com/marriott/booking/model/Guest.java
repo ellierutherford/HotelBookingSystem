@@ -1,11 +1,9 @@
 package com.marriott.booking.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Entity
 @Table(name = "guests")
@@ -17,6 +15,9 @@ public class Guest {
     private String guest_first_name;
     @NotBlank
     private String guest_last_name;
+
+    @OneToMany(mappedBy ="guest", cascade = CascadeType.ALL)
+    Set<Reservation> reservedRooms;
 
     @NotBlank
     private String guest_address;

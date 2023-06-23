@@ -4,8 +4,8 @@ package com.marriott.booking.controller;
 import com.marriott.booking.exception.GuestNotFoundException;
 import com.marriott.booking.exception.BookingNotFoundException;
 import com.marriott.booking.model.Guest;
-import com.marriott.booking.model.ReservationId;
 import com.marriott.booking.model.Booking;
+import com.marriott.booking.model.Reservation;
 import com.marriott.booking.repository.GuestRepository;
 import com.marriott.booking.repository.ReservationRepository;
 import com.marriott.booking.repository.BookingRepository;
@@ -21,10 +21,13 @@ public class BookingController {
 
     @Autowired
     BookingRepository bookingRepository;
+
     @Autowired
-    ReservationRepository ReservationRepository;
+    ReservationRepository reservationRepository;
+
     @Autowired
     GuestRepository guestRepository;
+
 
     // Get a Single Booking
     @GetMapping("/bookings/{id}")
@@ -34,23 +37,16 @@ public class BookingController {
                 .orElseThrow(() -> new BookingNotFoundException(bookingId));
         model.addAttribute("booking", booking);
 
-        List<Long> guest_ids = ReservationRepository.findGuestByBookingId(booking.getId()); /*find the guests by the booking ID*/
-        List<Guest> guests = new ArrayList<>();
-        for(Long guest_id: guest_ids){
-            Guest guest =guestRepository.findById(guest_id)
-                    .orElseThrow(() -> new GuestNotFoundException(guest_id));
-            guests.add(guest);
-        }
-        model.addAttribute("guests", guests);
+        List<Guest> guests = reservationRepository.findGuestByBookingId(booking.getId());
+        System.out.println("Get a Single Booking: " +booking.getBooking_name() +" and guest it's guest" + reservationRepository.findGuestByBookingId(booking.getId()));
 
-        List<Guest> listGuests = guestRepository.findAll();
-        model.addAttribute("listGuests", listGuests);
+        model.addAttribute("listguests", guests);
+        model.addAttribute("missingGuests", reservationRepository.findGuestsNotInBooking(booking.getId()));
+        System.out.println("this is the missingGuests: " + reservationRepository.findGuestsNotInBooking(booking.getId()) +" !!!");
 
         return "editform";
     }
 
-
-    // See All Bookings on Homepage
     @RequestMapping({"/", "/list"})
     public String viewHomePage(Model model){
         List<Booking> listBookings = bookingRepository.findAll();
@@ -58,54 +54,91 @@ public class BookingController {
 
         List<Guest> listGuests = guestRepository.findAll();
         int guestCount = listGuests.size(); // Get the number of guests in the list
-        model.addAttribute("guestCount", guestCount); // Add the guest count to the model
+        model.addAttribute("guestCount", guestCount); // Add the guest count to the model*/
+        System.out.println("1 Welcome page List these bookings" + listBookings + " and this many registered guests "+guestCount );
         return "welcome";
     }
 
-    // Delete a Booking
-    @RequestMapping("/delete/{id}")
-    public String deleteBooking(@PathVariable(value = "id") Long bookingId, Model model) throws BookingNotFoundException{
-        Booking booking = bookingRepository.findById(bookingId)
-                .orElseThrow(() -> new BookingNotFoundException(bookingId));
-        bookingRepository.delete(booking);
-        return viewHomePage(model);
-    }
 
-    // Create a Booking
+
     @RequestMapping("/new")
     public String createBooking(Model model) {
         List<Guest> listGuests = guestRepository.findAll();
         model.addAttribute("listGuests", listGuests);
+        System.out.println("2 createBooking Form displayed with checkbox array of guests" +listGuests );
         return "bookingform";
     }
     @PostMapping("/bookings")
-    public String saveCreatedBooking(@ModelAttribute("booking") Booking booking, @RequestParam("guests") List<Long> guestIds, Model model) throws GuestNotFoundException {
-        // Save the booking to get an ID
+    public String saveCreatedBooking(@ModelAttribute("booking")  Booking booking, @RequestParam("guestIds") Long[] guestIds,  Model model) throws GuestNotFoundException {
+        System.out.println("3 redirect on saving of booking: " +booking.getBooking_name() + " and guest" + guestIds +" !!!");
         bookingRepository.save(booking);
-        System.out.println("DEBUG saved booking is: " + booking.getId());
+        List<Guest> guests = new ArrayList<>();
         for (Long guestId : guestIds) {
-            System.out.println("Creating ReservationID with booking id: " + booking.getId() + " and guest id: " + guestId);
-            // Create an instance of ReservationId for this guest
-            ReservationId ReservationId = new ReservationId(booking.getId(), guestId);
-            System.out.println("ReservationID has guest id..: " + ReservationId.getId_Guest() + " and Booking id: " + ReservationId.getId_Booking());
-            ReservationRepository.writeReservation(ReservationId.getId_Guest(),ReservationId.getId_Booking());
+            System.out.println("I am guest" +guestId + " .");
+
         }
-        return viewHomePage(model);
+
+        model.addAttribute("bookings", booking);
+
+        /* reservationRepository.save(new Reservation(booking, guest));*/
+
+        System.out.println("I'm a post save of booking" +booking.getBooking_name() + " and guest" + guestIds +" . ");
+        return "redirect:/";
     }
+
+
+    // this chains in the deltion it should work in reverse
+    @RequestMapping("bookings/removeGuest/{id}")
+    public String deleteReservation(@PathVariable(value = "id") Long bookingId, @RequestParam("id") Long guestId,  Model model) throws  BookingNotFoundException, GuestNotFoundException{
+        Reservation aut = reservationRepository.findReservationByGuestAndBookingId(bookingId, guestId);
+        reservationRepository.delete(aut);
+        System.out.println("NEVER RUN WE're deleting a booking so removeReservation guest ID:" +guestId + " and reservations " +aut );
+
+        return "redirect:/bookings/" + String.valueOf(bookingId) ;
+
+
+    }
+
+    // Delete a Booking
+    @RequestMapping("/delete/{id}")
+    public String deleteBooking(@PathVariable(value = "id") Long bookingId, Model model) throws BookingNotFoundException {
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new BookingNotFoundException(bookingId));
+
+        System.out.println("Booking Deleted: " + booking.getId() + "With " + booking.getBooking_name() );
+
+        bookingRepository.delete(booking);
+
+        return "redirect:/";
+
+    }
+
+
+
 
     // Update a Booking
     // Get Booking By ID and open the editform
     // Save Updated Details
-    @RequestMapping(value="/bookings/save", method=RequestMethod.POST)
-    public String updateBooking(@ModelAttribute("booking") Booking booking, Model model){
+    @RequestMapping(value = "bookings/save", method = RequestMethod.POST)
+    public String updateNote( @ModelAttribute("booking")  Booking booking, Model model) throws BookingNotFoundException, GuestNotFoundException {
+        /*System.out.println("I redirect on in the saving of booking: " +booking.getBooking_name() + " and guest" + reservationRepository.findGuestByBookingId(booking.getId()) +" !!!");*/
         bookingRepository.save(booking);
-        return viewHomePage(model);
+
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "bookings/add/{id}", method = RequestMethod.POST)
+    public String addGuest(@PathVariable(value = "id") Long bookingId, @RequestParam("guestMissing") Long guestId,  Model model)  throws BookingNotFoundException, GuestNotFoundException{
+
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new BookingNotFoundException(bookingId));
+        Guest guest = guestRepository.findById(guestId).orElseThrow(() -> new GuestNotFoundException(guestId));
+        System.out.println(".................................saving of booking: " +booking.getBooking_name() + "and guest" + guest.getGuest_first_name() + " ." );
+        reservationRepository.save(new Reservation(booking, guest));
+
+        return "redirect:/bookings/"+String.valueOf(bookingId);
+
     }
 
 
 
-
 }
-
-
-
