@@ -34,7 +34,7 @@ Guest users can book one or more available rooms.
 Allow users to book available rooms as guests. 
 //no login, email field is compulsory
 To do so, each user should provide their details (name, surname, address, phone number, email address). When booking a room, a user must provide their credit card number to terminate the booking.
-//LUHN validation on the front end
+//LUHN validation on the front end, or now credit card API sandbox? Stripe?
 
 
 //must be provided, note we don't need to do any charging. need SSL, encrypted table, see how to do in spring.
@@ -100,5 +100,14 @@ Requirement: You can use MySQL as a database management system. DONE
 Requirement: You are required to work on this assignment collaboratively in groups of 3.
 uses a distributed version repository (e.g., Git) to submit the WebApp. USING
 Inside your project, you should provide a diary documenting each team member's contribution.
+//moved this to diary.
 
 
+to 29th working through removing the Composite ID from my library App while preserving the 
+extra features (front end validation etc). Building familiarity with moving Arrays in and out.
+and noted more simplicity and is possible to remove my SQL statement
+to deal with creating relations. Syntax becomes more terse and code easier to 
+handle. Will bring this in to the hotel code and remove the composite ID, as per lecture technique, 
+will keep to the sketched up details in the Ellie's data model documentation, until we can meet later.
+
+----
