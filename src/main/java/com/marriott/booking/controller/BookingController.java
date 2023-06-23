@@ -75,12 +75,11 @@ public class BookingController {
         bookingRepository.save(booking);
         for (Long guestId : guestIds) {
             Guest guest = guestRepository.findById(guestId).orElseThrow(() -> new GuestNotFoundException(guestId));
-            Reservation reservation = new Reservation(booking, guest);
+            reservationRepository.save(new Reservation(booking, guest));
             System.out.println("Added guest " + guestId + " to booking " + booking.getId());
         }
 
         model.addAttribute("bookings", booking);
-        System.out.println("I'm a post save of booking " + booking.getBooking_name() + " and guests " + Arrays.toString(guestIds) + ".");
         return "redirect:/";
     }
 
@@ -113,7 +112,7 @@ public class BookingController {
     // Save Updated Details
     @RequestMapping(value = "bookings/save", method = RequestMethod.POST)
     public String updateNote( @ModelAttribute("booking")  Booking booking, Model model) throws BookingNotFoundException, GuestNotFoundException {
-        /*System.out.println("I redirect on in the saving of booking: " +booking.getBooking_name() + " and guest" + reservationRepository.findGuestByBookingId(booking.getId()) +" !!!");*/
+        System.out.println("I redirect on in the saving of booking: " +booking.getBooking_name() + " and guest" + reservationRepository.findGuestByBookingId(booking.getId()) +" !!!");
         bookingRepository.save(booking);
 
         return "redirect:/";
@@ -124,7 +123,7 @@ public class BookingController {
 
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new BookingNotFoundException(bookingId));
         Guest guest = guestRepository.findById(guestId).orElseThrow(() -> new GuestNotFoundException(guestId));
-        System.out.println(".................................saving of booking: " +booking.getBooking_name() + "and guest" + guest.getGuest_first_name() + " ." );
+        System.out.println("saving of booking: " +booking.getBooking_name() + "and guest" + guest.getGuest_first_name() + " ." );
         reservationRepository.save(new Reservation(booking, guest));
 
         return "redirect:/bookings/"+String.valueOf(bookingId);
