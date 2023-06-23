@@ -1,57 +1,71 @@
 package com.marriott.booking.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name= "bookings")
+@Table(name = "bookings")
 public class Booking {
-
     @Id
     @GeneratedValue
     private Long id;
-
     @NotBlank
-    private String guestFirstName;
+    private String booking_name;
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
+    Set<Reservation> guests;
+    @Column(name = "bookingRef")
+    private String bookingRef;
 
-    @NotBlank
-    private String guestLastName;
+    @Column(name = "start_date")
+    private LocalDate startDate;
 
+    @Column(name = "end_date")
+    private LocalDate endDate;
+
+    @Enumerated(EnumType.STRING)
+    private BookingStatus status;
+
+    @OneToMany(mappedBy = "booking")
+    private List<Reservation> reservations;
 
     public Booking() {
         super();
     }
 
-    public Booking(Long id, String guestFirstName, String guestLastName) {
+    public Booking(Long id, String booking_name, String bookingRef, LocalDate startDate, LocalDate endDate, BookingStatus status) {
         this.id = id;
-        this.guestFirstName = guestFirstName;
-        this.guestLastName = guestLastName;
+        this.booking_name = booking_name;
+        this.bookingRef = bookingRef;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setGuestFirstName(String guestFirstName) {
-        this.guestFirstName = guestFirstName;
-    }
-
-    public void setGuestLastName(String guestLastName) {
-        this.guestLastName = guestLastName;
-    }
-
     public Long getId() {
         return id;
     }
 
-    public String getGuestFirstName() {
-        return guestFirstName;
+    public String getBooking_name() {
+        return booking_name;
     }
 
-    public String getGuestLastName() {
-        return guestLastName;
+    public void setBooking_name(String booking_name) {
+        this.booking_name = booking_name;
     }
+
+    // Modify the setter for guests to accept a Set<Reservation>
+    public void setGuests(Set<Reservation> guests) {
+        this.guests = guests;
+    }
+
+
+
+
 }

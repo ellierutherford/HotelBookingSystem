@@ -3,7 +3,7 @@ Web app for UCD COMP47910
 
 You will need to install IntelliJ + MySQL.
 
-Once you have these installed, you will need to create a database called "hotelBookingSystem" and a table called "bookings" in this database. 
+Once you have these installed, you will need to create a database called "hotelBookingSystem" and a table called "bookings" in this database.
 Use the following commands to connect to mysql, create the db, table and populate it with some information.
 ```
 mysql -u root -p 
