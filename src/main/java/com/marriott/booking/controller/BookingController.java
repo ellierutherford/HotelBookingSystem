@@ -42,7 +42,6 @@ public class BookingController {
 
         List<Guest> guests = reservationRepository.findGuestByBookingId(booking.getId());
         System.out.println("Get a Single Booking: " +booking.getBooking_name() +" and guest it's guest" + reservationRepository.findGuestByBookingId(booking.getId()));
-
         model.addAttribute("listguests", guests);
         model.addAttribute("missingGuests", reservationRepository.findGuestsNotInBooking(booking.getId()));
         System.out.println("this is the missingGuests: " + reservationRepository.findGuestsNotInBooking(booking.getId()) +" !!!");
@@ -54,7 +53,6 @@ public class BookingController {
     public String viewHomePage(Model model){
         List<Booking> listBookings = bookingRepository.findAll();
         model.addAttribute("listBookings", listBookings);
-
         List<Guest> listGuests = guestRepository.findAll();
         int guestCount = listGuests.size(); // Get the number of guests in the list
         model.addAttribute("guestCount", guestCount); // Add the guest count to the model*/
