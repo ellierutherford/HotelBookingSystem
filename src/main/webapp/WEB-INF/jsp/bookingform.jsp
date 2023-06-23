@@ -8,7 +8,7 @@
     <link href="${jstlCss}" rel="stylesheet" >
     <script>
         function countCheckedCheckboxes() {
-            var checkboxes = document.getElementsByName("guests");
+            var checkboxes = document.getElementsByName("guestIds");
             var checkedCount = 0;
             for (var i = 0; i < checkboxes.length; i++) {
                 if (checkboxes[i].checked) {
@@ -51,11 +51,11 @@
 
             <tr>
                 <th>Guests: </th>
-                <c:forEach var="guest" items="${listGuests}">
+                <c:forEach var="listGuests" items="${listGuests}">
                     <td>
                         <label>
-                            <input type="checkbox" name="guests" value="<c:out value='${guest.id}'/>" onchange="countCheckedCheckboxes()">
-                            <c:out value='${guest.guest_first_name} ${guest.guest_last_name}'/>
+                            <input type="checkbox" name="guestIds" value="<c:out value='${listGuests.id}'/>" onchange="countCheckedCheckboxes()">
+                            <c:out value='${listGuests.guest_first_name} ${listGuests.guest_last_name}'/>
                         </label>
                     </td>
                 </c:forEach>

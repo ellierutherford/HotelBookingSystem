@@ -16,8 +16,7 @@ public class Booking {
     private String booking_name;
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
     Set<Reservation> guests;
-
-    @NotBlank
+    @Column(name = "bookingRef")
     private String bookingRef;
 
     @Column(name = "start_date")
@@ -36,10 +35,10 @@ public class Booking {
         super();
     }
 
-    public Booking(Long id, String booking_name, LocalDate startDate, LocalDate endDate, BookingStatus status) {
+    public Booking(Long id, String booking_name, String bookingRef, LocalDate startDate, LocalDate endDate, BookingStatus status) {
         this.id = id;
         this.booking_name = booking_name;
-//use the ID no book ref
+        this.bookingRef = bookingRef;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
@@ -66,15 +65,7 @@ public class Booking {
         this.guests = guests;
     }
 
-    // Add a method to add an Reservation to the guests set
-    public void addReservation(Reservation reservation) {
-        guests.add(reservation);
-        reservation.setBooking(this);
-    }
 
-    // Add a method to remove an Reservation from the guests set
-    public void removeReservation(Reservation reservation) {
-        guests.remove(reservation);
-        reservation.setBooking(null);
-    }
+
+
 }

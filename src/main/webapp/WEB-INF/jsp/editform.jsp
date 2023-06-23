@@ -64,14 +64,7 @@
                     </td>
                 </c:forEach>
             </tr>
-            <tr>
-                <th>REF: </th>
-                <td>
-                    <input type="text" name="bookingRef" size="45"
-                           value="<c:out value='${booking.bookingRef}' />"
-                    />
-                </td>
-            </tr>
+
             <tr>
                 <td colspan="2" >
                     <input type="submit" value="Save" />

@@ -15,7 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+
 @Controller
 public class BookingController {
 
@@ -59,8 +62,6 @@ public class BookingController {
         return "welcome";
     }
 
-
-
     @RequestMapping("/new")
     public String createBooking(Model model) {
         List<Guest> listGuests = guestRepository.findAll();
@@ -69,33 +70,27 @@ public class BookingController {
         return "bookingform";
     }
     @PostMapping("/bookings")
-    public String saveCreatedBooking(@ModelAttribute("booking")  Booking booking, @RequestParam("guestIds") Long[] guestIds,  Model model) throws GuestNotFoundException {
-        System.out.println("3 redirect on saving of booking: " +booking.getBooking_name() + " and guest" + guestIds +" !!!");
+    public String saveCreatedBooking(@ModelAttribute("booking") Booking booking, @RequestParam("guestIds") Long[] guestIds, Model model) throws GuestNotFoundException {
+        System.out.println("3 redirect on saving of booking: " + booking.getBooking_name() + " and guests " + Arrays.toString(guestIds) + " !!!");
         bookingRepository.save(booking);
-        List<Guest> guests = new ArrayList<>();
         for (Long guestId : guestIds) {
-            System.out.println("I am guest" +guestId + " .");
-
+            Guest guest = guestRepository.findById(guestId).orElseThrow(() -> new GuestNotFoundException(guestId));
+            Reservation reservation = new Reservation(booking, guest);
+            System.out.println("Added guest " + guestId + " to booking " + booking.getId());
         }
 
         model.addAttribute("bookings", booking);
-
-        /* reservationRepository.save(new Reservation(booking, guest));*/
-
-        System.out.println("I'm a post save of booking" +booking.getBooking_name() + " and guest" + guestIds +" . ");
+        System.out.println("I'm a post save of booking " + booking.getBooking_name() + " and guests " + Arrays.toString(guestIds) + ".");
         return "redirect:/";
     }
 
-
-    // this chains in the deltion it should work in reverse
+    // this chains in the deletion it should work in reverse
     @RequestMapping("bookings/removeGuest/{id}")
     public String deleteReservation(@PathVariable(value = "id") Long bookingId, @RequestParam("id") Long guestId,  Model model) throws  BookingNotFoundException, GuestNotFoundException{
         Reservation aut = reservationRepository.findReservationByGuestAndBookingId(bookingId, guestId);
         reservationRepository.delete(aut);
-        System.out.println("NEVER RUN WE're deleting a booking so removeReservation guest ID:" +guestId + " and reservations " +aut );
-
+        System.out.println("NEVER RUN We're deleting a booking so removeReservation guest ID:" +guestId + " and reservations " +aut );
         return "redirect:/bookings/" + String.valueOf(bookingId) ;
-
 
     }
 
@@ -112,9 +107,6 @@ public class BookingController {
         return "redirect:/";
 
     }
-
-
-
 
     // Update a Booking
     // Get Booking By ID and open the editform
@@ -138,7 +130,5 @@ public class BookingController {
         return "redirect:/bookings/"+String.valueOf(bookingId);
 
     }
-
-
 
 }
