@@ -137,6 +137,14 @@ Payments etc
 24/6/2023
 Start the build out of the new guest interface, based on the 'Add Booking' from Admin UI.
 removing the menu items, and reseting the things I send to the view completely, because I want to be careful 
-about what I put out there, and do it bit by bit.
+about what I put out there, and do it bit by bit. THis is an alternative to planning a whole load of stuff. Start with nothing
+each time in the pres layer and add in as little as possible to make it meet the bare function.
+Hackers were messing with my coding session, they have found point 8080 where I left it open the other day for the team meet and send
+funny looking things that perhaps webgoat might explain later when we hack at it.
+
+Enough diarising, back to it....
 
 
+---------------------
+
+Get to set one above in this commit, we now get a new guest when we have an an anon

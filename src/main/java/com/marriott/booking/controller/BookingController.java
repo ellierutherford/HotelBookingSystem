@@ -45,7 +45,7 @@ public class BookingController {
 
         model.addAttribute("listguests", guests);
         model.addAttribute("missingGuests", reservationRepository.findGuestsNotInBooking(booking.getId()));
-        System.out.println("this is the missingGuests: " + reservationRepository.findGuestsNotInBooking(booking.getId()) +" !!!");
+        System.out.println("2Cond1 This path when this is the missingGuests: " + reservationRepository.findGuestsNotInBooking(booking.getId()) +" !!!");
 
         return "editform";
     }
@@ -60,13 +60,6 @@ public class BookingController {
         model.addAttribute("guestCount", guestCount); // Add the guest count to the model*/
         System.out.println("1 Welcome page List these bookings" + listBookings + " and this many registered guests "+guestCount );
         return "welcome";
-    }
-
-    @RequestMapping("/")
-    public String createStrangerBooking(Model model) {
-
-        System.out.println("2 createStrangerBooking Form displayed" );
-        return "newguestbooking";
     }
 
     @RequestMapping("/new")
@@ -87,7 +80,7 @@ public class BookingController {
         }
 
         model.addAttribute("bookings", booking);
-        System.out.println("I'm a post save of booking " + booking.getBooking_name() + " and guests " + Arrays.toString(guestIds) + ".");
+        System.out.println("5 I'm post save of booking " + booking.getBooking_name() + " and guests " + Arrays.toString(guestIds) + ".");
         return "redirect:/";
     }
 
@@ -98,16 +91,14 @@ public class BookingController {
                 .orElseThrow(() -> new BookingNotFoundException(bookingId));
 
         System.out.println("Booking Deleted: " + booking.getId() + "With " + booking.getBooking_name() );
-
         bookingRepository.delete(booking);
-
         return "redirect:/";
 
     }
 
     @RequestMapping(value = "bookings/save", method = RequestMethod.POST)
     public String updateNote( @ModelAttribute("booking")  Booking booking, Model model) throws BookingNotFoundException, GuestNotFoundException {
-        /*System.out.println("I redirect on in the saving of booking: " +booking.getBooking_name() + " and guest" + reservationRepository.findGuestByBookingId(booking.getId()) +" !!!");*/
+        System.out.println("I redirect on in the saving of booking: " +booking.getBooking_name() + " and guest" + reservationRepository.findGuestByBookingId(booking.getId()) +" !!!");
         bookingRepository.save(booking);
 
         return "redirect:/";
@@ -118,12 +109,53 @@ public class BookingController {
 
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new BookingNotFoundException(bookingId));
         Guest guest = guestRepository.findById(guestId).orElseThrow(() -> new GuestNotFoundException(guestId));
-        System.out.println(".................................saving of booking: " +booking.getBooking_name() + "and guest" + guest.getGuest_first_name() + " ." );
+        System.out.println("saving of booking: " +booking.getBooking_name() + "and guest" + guest.getGuest_first_name() + " ." );
+        System.out.println("saving of booking: " +booking.getBooking_name() + "and guest" + guest.getGuest_last_name() + " ." );
         reservationRepository.save(new Reservation(booking, guest));
-
         return "redirect:/bookings/"+String.valueOf(bookingId);
 
     }
+    @RequestMapping("/")
+    public String createStrangerBooking(Model model) {
+        System.out.println("1a createStrangerBooking Form displayed next item to send in here is availability" );
+        return "newguestbooking";
+    }
+    @PostMapping("/newguestbookings")
+    public String saveCreatedStrangerBooking(@ModelAttribute("booking") Booking booking, Model model) throws GuestNotFoundException {
+        System.out.println("2a redirect on saving of a brand new booking!" + booking.getBooking_name() + " is Guest First name but no guest objects yet of course");
+
+        Guest guest = new Guest();
+        guest.setGuest_first_name(booking.getBooking_name());
+        guest.setGuest_last_name(booking.getBooking_name()); //add another field to the booking for lead anon guest 2nd name
+        guestRepository.save(guest);
+        System.out.println("3a Save Created New Guest: " + guest.getId() + "With first name " + guest.getGuest_first_name() + "With last name ." + guest.getGuest_last_name() );
+        bookingRepository.save(booking);
+        model.addAttribute("bookings", booking);
+        System.out.println("4a I'm a post save of 3a redirect booking TITLE" + booking.getBooking_name() + " and guest ." + guest);
+
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "newguestbookings/save", method = RequestMethod.POST)
+    public String updateStrangerBooking( @ModelAttribute("booking")  Booking booking, Model model) throws BookingNotFoundException, GuestNotFoundException {
+        System.out.println("NEVER RUN I redirect on in the saving of an new customer booking: " +booking.getBooking_name() + " and guest" + reservationRepository.findGuestByBookingId(booking.getId()) +" !!!");
+        bookingRepository.save(booking);
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "newguestbookings/add/{id}", method = RequestMethod.POST)
+    public String addGuestFromSite(@PathVariable(value = "id") Long bookingId, @RequestParam("guestMissing") Long guestId,  Model model)  throws BookingNotFoundException, GuestNotFoundException{
+
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new BookingNotFoundException(bookingId));
+        Guest guest = guestRepository.findById(guestId).orElseThrow(() -> new GuestNotFoundException(guestId));
+        System.out.println("saving of booking: " +booking.getBooking_name() + "and guest" + guest.getGuest_first_name() + " ." );
+        System.out.println("saving of booking: " +booking.getBooking_name() + "and guest" + guest.getGuest_last_name() + " ." );
+        reservationRepository.save(new Reservation(booking, guest));
+
+        return "redirect:/newguestbookings/"+String.valueOf(bookingId);
+
+    }
+
 
 
     // this chains in the deletion. but has never run or been tested, it's from the example code
