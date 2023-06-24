@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
@@ -41,17 +40,14 @@
                     />
                 </td>
             </tr>
-
-
             <tr>
                 <th>Assigned Guests: </th>
-                <c:forEach var="guest" items="${guests}">
+                <c:forEach var="listguests" items="${listguests}">
                     <td>
                         <input type="text" name="name" size="45"
-                               value="<c:out value='${guest.guest_first_name} ${guest.guest_last_name}'/>" readonly
+                               value="<c:out value='${listguests.guest_first_name} ${listguests.guest_last_name}'/>" readonly
                         />
                     </td>
-
                 </c:forEach>
             </tr>
             <tr>
@@ -59,12 +55,19 @@
                 <c:forEach var="missingGuests" items="${missingGuests}">
                     <td>
                         <label>
-                            <input type="checkbox" name="missingGuests" value="<c:out value='${missingGuests.id}'/>">
+                            <input type="checkbox" name="listguests" value="<c:out value='${missingGuests.id}'/>">
                             <c:out value='${missingGuests.guest_first_name} ${missingGuests.guest_last_name}'/>
                         </label>
                     </td>
                 </c:forEach>
             </tr>
+
+
+
+
+
+
+
 
             <tr>
                 <td colspan="2" >

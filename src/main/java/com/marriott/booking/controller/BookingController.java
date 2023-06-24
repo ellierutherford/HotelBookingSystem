@@ -98,7 +98,7 @@ public class BookingController {
 
     @RequestMapping(value = "bookings/save", method = RequestMethod.POST)
     public String updateNote( @ModelAttribute("booking")  Booking booking, Model model) throws BookingNotFoundException, GuestNotFoundException {
-        System.out.println("NEVER RUNS I redirect on in the saving of booking: " +booking.getBooking_name() + " and guest" + reservationRepository.findGuestByBookingId(booking.getId()) +" !!!");
+        System.out.println("1e booking edit in the saving of booking: " +booking.getBooking_name() + " and guest" + reservationRepository.findGuestByBookingId(booking.getId()) +" !!!");
         bookingRepository.save(booking);
 
         return "redirect:/list";

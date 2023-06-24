@@ -147,4 +147,8 @@ Enough diarising, back to it....
 
 ---------------------
 
-Get to set one above in this commit, we now get a new guest when we have an an anon
+working on edit booking but tired, so done, and edit not working.
+http://localhost:8080/experiment
+is working though, so an anon can make booking.
+Lots of logging in the console now too. We can confidently build out the data model and continue in the 
+way to build function, as handing the anon in the Controller layer has shown the decouping power of Dependency Injection. Note we not have a lot in the interfaces in today's work in this branch. I haven't really used it since the Composite ID phase, but I will need it in anything one controller needs to talk to another on, so have that to look forward to on a fresh brain tomorrow.
