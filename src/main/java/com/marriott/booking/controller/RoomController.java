@@ -3,10 +3,9 @@ package com.marriott.booking.controller;
 import com.marriott.booking.exception.BookingNotFoundException;
 import com.marriott.booking.exception.RoomDeleteException;
 import com.marriott.booking.exception.RoomNotFoundException;
-import com.marriott.booking.model.Booking;
-import com.marriott.booking.model.Room;
+import com.marriott.booking.model.RoomType;
 import com.marriott.booking.repository.BookingRepository;
-import com.marriott.booking.repository.RoomRepository;
+import com.marriott.booking.repository.RoomtypeRepository;
 import com.marriott.booking.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,13 +23,13 @@ public class RoomController {
     @Autowired
     ReservationRepository ReservationRepository;
     @Autowired
-    RoomRepository roomRepository;
+    RoomtypeRepository roomRepository;
 
     // Get a Single Room
     @GetMapping("/rooms/{id}")
     public String getRoomById(@PathVariable(value="id") Long roomId, Model model)
             throws RoomNotFoundException, BookingNotFoundException{
-        Room room = roomRepository.findById(roomId)/*add the room to the model*/
+        RoomType room = roomRepository.findById(roomId)/*add the room to the model*/
                 .orElseThrow(() -> new RoomNotFoundException(roomId));
         model.addAttribute("room", room);
 
@@ -43,7 +41,7 @@ public class RoomController {
     // See All Rooms on Homepage
     @RequestMapping({ "/rooms"})
     public String viewRoomHomePage(Model model){
-        List<Room> listRooms = roomRepository.findAll();
+        List<RoomType> listRooms = roomRepository.findAll();
         model.addAttribute("listRooms", listRooms);
 
 
@@ -54,7 +52,8 @@ public class RoomController {
     // Delete a Room
     @RequestMapping("/deleteroom/{id}")
     public String deleteRoom(@PathVariable(value = "id") Long roomId, Model model) throws RoomNotFoundException{
-        try {Room room = roomRepository.findById(roomId)
+        try {
+            RoomType room = roomRepository.findById(roomId)
                 .orElseThrow(() -> new RoomNotFoundException(roomId));
             roomRepository.delete(room);
             return viewRoomHomePage(model); }
@@ -71,7 +70,7 @@ public class RoomController {
     }
     // Save Created Room
     @PostMapping("/rooms")
-    public String saveCreatedRoom(@ModelAttribute("room") Room room, Model model){
+    public String saveCreatedRoom(@ModelAttribute("room") RoomType room, Model model){
         roomRepository.save(room);
         return viewRoomHomePage(model);
     }
@@ -81,7 +80,7 @@ public class RoomController {
 
     // Save Updated Details
     @RequestMapping(value="/rooms/save", method=RequestMethod.POST)
-    public String updateRoom(@ModelAttribute("room") Room room, Model model){
+    public String updateRoom(@ModelAttribute("room") RoomType room, Model model){
         roomRepository.save(room);
         return viewRoomHomePage(model);
     }
