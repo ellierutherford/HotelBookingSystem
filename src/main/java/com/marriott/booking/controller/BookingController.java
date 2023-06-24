@@ -76,7 +76,7 @@ public class BookingController {
         for (Long guestId : guestIds) {
             Guest guest = guestRepository.findById(guestId).orElseThrow(() -> new GuestNotFoundException(guestId));
             Reservation reservation = new Reservation(booking, guest);
-            System.out.println("Added guest " + guestId + " to booking " + booking.getId());
+            System.out.println("4 Added guest " + guestId + " to booking " + booking.getId());
         }
 
         model.addAttribute("bookings", booking);

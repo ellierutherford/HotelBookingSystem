@@ -6,29 +6,28 @@ import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Entity
-@Table(name = "roomAssets")
+@Table(name = "roomassets")
 public class RoomAsset {
     @Id
     @GeneratedValue
     private Long id;
     @NotBlank
-    private String roomAsset_first_name;
-    @NotBlank
-    private String roomAsset_last_name;
+    private String roomasset_name;
 
-    @OneToMany(mappedBy ="roomAsset", cascade = CascadeType.ALL)
-    Set<Reservation> reservedRooms;
+    @OneToMany(mappedBy ="roomasset", cascade = CascadeType.ALL)
+
 
     @NotBlank
-    private int roomAsset_number;
+    private int roomasset_number;
 
     public RoomAsset(){
         super();
     }
-    public RoomAsset(Long id, int roomAsset_number) {
+    public RoomAsset(Long id, int roomasset_number, String roomasset_name) {
         super();
         this.id = id;
-        this.roomAsset_number = roomAsset_number;
+        this.roomasset_number = roomasset_number;
+        this.roomasset_name = roomasset_name;
     }
 
     public Long getId() {
@@ -37,12 +36,24 @@ public class RoomAsset {
     public void setId(Long id) {
         this.id = id;
     }
-    public int roomAsset_number() {
-        return roomAsset_number;
+
+    public String getroomasset_name() {
+        return roomasset_name;
     }
-    public void roomAsset_number(int roomAsset_number) {
-        this.roomAsset_number = roomAsset_number;
+    public void setroomasset_name(String guest_first_name) {
+        this.roomasset_name = roomasset_name;
     }
+
+
+    public int getroomasset_number() {
+        return roomasset_number;
+    }
+    public void setroomasset_number(int roomasset_number) {
+        this.roomasset_number = roomasset_number;
+    }
+
+
+
 
 
 

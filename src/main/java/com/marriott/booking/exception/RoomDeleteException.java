@@ -6,7 +6,7 @@ public class RoomDeleteException extends DataIntegrityViolationException {
     private long booking_id;
     public RoomDeleteException(
             DataIntegrityViolationException e) {
-        super(String.format("THIS Room IS ASSOCIATED WITH A BOOKing! Cannot Delete!: '%s'", e));
+        super(String.format("THIS Room type IS ASSOCIATED WITH A BOOKing! Cannot Delete!: '%s'", e));
     }
 
 }

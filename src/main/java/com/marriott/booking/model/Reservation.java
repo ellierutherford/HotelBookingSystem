@@ -22,8 +22,8 @@ public class Reservation {
     private Guest guest;
 
     @ManyToOne()
-    @JoinColumn(name = "roomAsset")
-    private RoomAsset roomAsset;
+    @JoinColumn(name = "roomasset")
+    private RoomAsset roomasset;
 
     @ManyToOne
     @JoinColumn(name = "id_creditCard")

@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<h1>Rooms Management</h1>
+<h1>Room ASSETs Management</h1>
 <h2>
     <ul class="menu">
         <li><a href="/list">The Bookings</a></li>
@@ -20,22 +20,22 @@
 </h2>
 <h3>
     <ul class="menu">
-        <li><a href="/rooms">BACK</a></li>
+        <li><a href="/roomassets">BACK</a></li>
     </ul>
 </h3>
 
 
 <div >
-    <form action="rooms" method="post">
+    <form action="roomassets" method="post">
         <table >
             <caption>
-                <h2> Add New Room TYPE</h2>
+                <h2> Add New Room Asset</h2>
             </caption>
             <tr>
-                <th>Room Type Name: </th>
+                <th>Room Name: </th>
                 <td>
-                    <input type="text" name="room_name" size="45"
-                           value="<c:out value='${room.room_name}' />"
+                    <input type="text" name="roomasset_name" size="45"
+                           value="<c:out value='${roomasset.roomasset_name}' />"
                     />
                 </td>
             </tr>

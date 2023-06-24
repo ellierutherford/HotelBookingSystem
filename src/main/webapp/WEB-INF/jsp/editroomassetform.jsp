@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title> Application</title>
+    <title>Room ASSETS</title>
     <c:url value="/css/main.css" var="jstlCss" />
     <link href="${jstlCss}" rel="stylesheet" >
 </head>
@@ -14,14 +14,12 @@
         <li><a href="/list">The Bookings</a></li>
         <li><a href="/guests">The Guests</a></li>
         <li><a href="/rooms">The Rooms types</a></li>
-        <li><a href="/roomassets">The Rooms themselves</a></li> </ul>
+        <li><a href="/roomassets">The Rooms themselves</a></li>
     </ul>
 </h2>
 <h3>
     <ul class="menu">
-        <li <c:if test="${guestCount == 0}">class="disabled"</c:if>><a href="/new">Add New Booking</a></li>
-        <li><a href="/newguest">Add New Guest</a></li>
-        <li><a href="/newroom">Add New Room</a></li>
+        <li><a href="/newroomasset">Add New Room Asset</a></li>
     </ul>
 </h3>
 <div>
@@ -29,31 +27,25 @@
         <table>
             <caption>
                 <h2>
-                    Edit Room
+                    Edit RoomAsset
                 </h2>
             </caption>
-            <input type="hidden" name="id" value="<c:out value='${room.id}' />"  />
+            <input type="hidden" name="id" value="<c:out value='${roomasset.id}' />"  />
             <tr>
-                <th>The First Name: </th>
+                <th>The Room Name e.g. The JFK suite  </th>
                 <td>
-                    <input type="text" name="room_name" size="45"
-                           value="<c:out value='${room.room_name}' />"
+                    <input type="text" name="roomasset_name" size="45"
+                           value="<c:out value='${roomasset.roomasset_name}' />"
                     />
                 </td>
             </tr>
-
-
-
-
-            <th>Books: </th>
-            <c:forEach var="booking" items="${bookings}">
+            <tr>
+                <th>The Room number e.g. 101 or 237 </th>
                 <td>
-                    <input type="text" name="name" size="45"
-                           value="<c:out value='${booking.booking_name} ${booking.bookingRef}'/>"
+                    <input type="text" name="roomasset_number" size="45"
+                           value="<c:out value='${roomasset.roomasset_number}' />"
                     />
                 </td>
-
-            </c:forEach>
             </tr>
 
 

@@ -5,11 +5,11 @@
 <head>
     <c:url value="/css/main.css" var="jstlCss" />
     <link href="${jstlCss}" rel="stylesheet" >
-    <title>Guest Addition</title>
+    <title>Room ASSET Addition</title>
 </head>
 <body>
 
-<h1>Guest Management</h1>
+<h1>Room ASSET Management</h1>
 <h2>
     <ul class="menu">
         <li><a href="/list">The Bookings</a></li>
@@ -20,46 +20,40 @@
 </h2>
 <h3>
     <ul class="menu">
-
-        <li><a href="/newguest">Add New Guest</a></li>
-
+        <li><a href="/newroomasset">Add New Room ASSET!</a></li>
     </ul>
 </h3>
 
+
 <div>
     <table>
-        <caption><h2>List of Guests</h2></caption>
+        <caption><h2>List of Room Type</h2></caption>
         <tr>
             <th>ID</th>
-            <th>First Name</th>
+            <th>Name</th>
             <th>Last Name</th>
         </tr>
-        <c:forEach var="guest" items="${listGuests}" varStatus="loop">
+        <c:forEach var="roomasset" items="${roomasset}" varStatus="loop">
             <tr>
-                <td><c:out value="${guest.id}" /></td>
-                <td><c:out value="${guest.guest_first_name}" /></td>
-                <td><c:out value="${guest.guest_last_name}" /></td>
+                <td><c:out value="${roomasset.id}" /></td>
+                <td><c:out value="${roomasset.roomasset_name}" /></td>
                 <td>
-                    <a href="/guests/${guest.id}"/>Edit</a>
+                    <a href="/roomassets/${roomasset.id}"/>Edit</a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <c:choose>
                     <c:when test="${bookingCounts[loop.index] > 0}">
                 <td class="disabled">
-                    <a href="/deleteguest/${guest.id}">Delete</a>
+                    <a href="/deleteroomasset/${roomasset.id}">Delete</a>
                 </td>
                 </c:when>
                 <c:otherwise>
                     <td>
-                        <a href="/deleteguest/${guest.id}">Delete</a>
+                        <a href="/deleteroomasset/${roomasset.id}">Delete</a>
                     </td>
                 </c:otherwise>
                 </c:choose>
                 </td>
-                <% /* This is for debugging the guests' works counter
 
-                         <td>
-                            <c:out value="${bookingCounts[loop.index]}" />
-                        </td>*/ %>
             </tr>
         </c:forEach>
     </table>

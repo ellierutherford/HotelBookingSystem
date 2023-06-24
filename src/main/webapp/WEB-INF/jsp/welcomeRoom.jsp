@@ -14,22 +14,23 @@
     <ul class="menu">
         <li><a href="/list">The Bookings</a></li>
         <li><a href="/guests">The Guests</a></li>
-        <li><a href="/rooms">The Rooms</a></li>
+        <li><a href="/rooms">The Rooms types</a></li>
+        <li><a href="/roomassets">The Rooms themselves</a></li> </ul>
     </ul>
 </h2>
 <h3>
     <ul class="menu">
-        <li><a href="/newroom">Add New Room</a></li>
+        <li><a href="/newroom">Add New Room Type</a></li>
     </ul>
 </h3>
 
 
 <div>
     <table>
-        <caption><h2>List of Rooms</h2></caption>
+        <caption><h2>List of Room Type</h2></caption>
         <tr>
             <th>ID</th>
-            <th>First Name</th>
+            <th>Name</th>
             <th>Last Name</th>
         </tr>
         <c:forEach var="room" items="${listRooms}" varStatus="loop">
