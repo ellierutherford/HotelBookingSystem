@@ -5,7 +5,6 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.validation.constraints.NotNull;
-
 @Entity
 @Table(name = "Reservation")
 public class Reservation {
