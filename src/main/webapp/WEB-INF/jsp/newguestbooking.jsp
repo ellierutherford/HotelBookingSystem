@@ -74,6 +74,12 @@
             </tr>
         </table>
     </form>
+
 </div>
+<h3>
+    <ul class="menu">
+        <li><a href="/list">Arrange Your Bookings (and everyone else's too), until #task Login Security</a></li>
+    </ul>
+</h3>
 </body>
 </html>

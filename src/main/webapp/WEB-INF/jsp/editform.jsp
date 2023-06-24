@@ -55,12 +55,12 @@
                 </c:forEach>
             </tr>
             <tr>
-                <th>All Guests: </th>
-                <c:forEach var="listGuests" items="${listGuests}">
+                <th>Missing Guests: </th>
+                <c:forEach var="missingGuests" items="${missingGuests}">
                     <td>
                         <label>
-                            <input type="checkbox" name="listGuests" value="<c:out value='${listGuests.id}'/>">
-                            <c:out value='${listGuests.guest_first_name} ${listGuests.guest_last_name}'/>
+                            <input type="checkbox" name="missingGuests" value="<c:out value='${missingGuests.id}'/>">
+                            <c:out value='${missingGuests.guest_first_name} ${missingGuests.guest_last_name}'/>
                         </label>
                     </td>
                 </c:forEach>

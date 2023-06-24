@@ -41,16 +41,16 @@ public class BookingController {
         model.addAttribute("booking", booking);
 
         List<Guest> guests = reservationRepository.findGuestByBookingId(booking.getId());
-        System.out.println("Get a Single Booking: " +booking.getBooking_name() +" and guest it's guest" + reservationRepository.findGuestByBookingId(booking.getId()));
+        System.out.println("2 get a single booking by IDing a Single Booking for: " +booking.getBooking_name() +" and guest it's guest" + reservationRepository.findGuestByBookingId(booking.getId()));
 
         model.addAttribute("listguests", guests);
         model.addAttribute("missingGuests", reservationRepository.findGuestsNotInBooking(booking.getId()));
-        System.out.println("2Cond1 This path when this is the missingGuests: " + reservationRepository.findGuestsNotInBooking(booking.getId()) +" !!!");
+        System.out.println("2Cond1 We can send the guests that are not in this booking to edit screen and they are: " + reservationRepository.findGuestsNotInBooking(booking.getId()) +" !!!");
 
         return "editform";
     }
 
-    @RequestMapping({"/list"})
+    @RequestMapping({"/", "/list"})
     public String viewHomePage(Model model){
         List<Booking> listBookings = bookingRepository.findAll();
         model.addAttribute("listBookings", listBookings);
@@ -81,7 +81,7 @@ public class BookingController {
 
         model.addAttribute("bookings", booking);
         System.out.println("5 I'm post save of booking " + booking.getBooking_name() + " and guests " + Arrays.toString(guestIds) + ".");
-        return "redirect:/";
+        return "redirect:/list";
     }
 
     // Delete a Booking
@@ -92,16 +92,16 @@ public class BookingController {
 
         System.out.println("Booking Deleted: " + booking.getId() + "With " + booking.getBooking_name() );
         bookingRepository.delete(booking);
-        return "redirect:/";
+        return "redirect:/list";
 
     }
 
     @RequestMapping(value = "bookings/save", method = RequestMethod.POST)
     public String updateNote( @ModelAttribute("booking")  Booking booking, Model model) throws BookingNotFoundException, GuestNotFoundException {
-        System.out.println("I redirect on in the saving of booking: " +booking.getBooking_name() + " and guest" + reservationRepository.findGuestByBookingId(booking.getId()) +" !!!");
+        System.out.println("NEVER RUNS I redirect on in the saving of booking: " +booking.getBooking_name() + " and guest" + reservationRepository.findGuestByBookingId(booking.getId()) +" !!!");
         bookingRepository.save(booking);
 
-        return "redirect:/";
+        return "redirect:/list";
     }
 
     @RequestMapping(value = "bookings/add/{id}", method = RequestMethod.POST)
@@ -115,9 +115,9 @@ public class BookingController {
         return "redirect:/bookings/"+String.valueOf(bookingId);
 
     }
-    @RequestMapping("/")
+    @RequestMapping("/experiment")
     public String createStrangerBooking(Model model) {
-        System.out.println("1a createStrangerBooking Form displayed next item to send in here is availability" );
+        System.out.println("1a createStrangerBooking Form displayed" );
         return "newguestbooking";
     }
     @PostMapping("/newguestbookings")
@@ -138,9 +138,9 @@ public class BookingController {
 
     @RequestMapping(value = "newguestbookings/save", method = RequestMethod.POST)
     public String updateStrangerBooking( @ModelAttribute("booking")  Booking booking, Model model) throws BookingNotFoundException, GuestNotFoundException {
-        System.out.println("NEVER RUN I redirect on in the saving of an new customer booking: " +booking.getBooking_name() + " and guest" + reservationRepository.findGuestByBookingId(booking.getId()) +" !!!");
+        System.out.println("NEVER RUN I redirect on in the saving of a new customer booking: " +booking.getBooking_name() + " and guest" + reservationRepository.findGuestByBookingId(booking.getId()) +" !!!");
         bookingRepository.save(booking);
-        return "redirect:/";
+        return "redirect:/list";
     }
 
     @RequestMapping(value = "newguestbookings/add/{id}", method = RequestMethod.POST)
