@@ -32,15 +32,20 @@
                 <h2> Add New Room Asset</h2>
             </caption>
             <tr>
-                <th>Room Name: </th>
+                <th>Room Asset Number: </th>
+                <td>
+                    <input type="int" name="roomasset_number" size="45"
+                           value="<c:out value='${roomasset.roomasset_number}' />"
+                    />
+                </td>
+
+                <th>Room Asset Name: </th>
                 <td>
                     <input type="text" name="roomasset_name" size="45"
                            value="<c:out value='${roomasset.roomasset_name}' />"
                     />
                 </td>
             </tr>
-
-
             <tr>
                 <td colspan="2" >
                     <input type="submit" value="Save" />

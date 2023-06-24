@@ -62,9 +62,6 @@ public class RoomAssetController {
                 .orElseThrow(() -> new RoomAssetNotFoundException(roomassetId));
         model.addAttribute("roomasset", roomasset);
         System.out.println("Get RoomAssets: " + roomasset.getId() + "With name" + roomasset.getroomasset_name() );
-
-
-
         return "editroomassetform";
     }
 

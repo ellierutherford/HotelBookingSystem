@@ -50,7 +50,7 @@ public class BookingController {
         return "editform";
     }
 
-    @RequestMapping({"/", "/list"})
+    @RequestMapping({"/list"})
     public String viewHomePage(Model model){
         List<Booking> listBookings = bookingRepository.findAll();
         model.addAttribute("listBookings", listBookings);
@@ -60,6 +60,13 @@ public class BookingController {
         model.addAttribute("guestCount", guestCount); // Add the guest count to the model*/
         System.out.println("1 Welcome page List these bookings" + listBookings + " and this many registered guests "+guestCount );
         return "welcome";
+    }
+
+    @RequestMapping("/")
+    public String createStrangerBooking(Model model) {
+
+        System.out.println("2 createStrangerBooking Form displayed" );
+        return "newguestbooking";
     }
 
     @RequestMapping("/new")
@@ -84,16 +91,6 @@ public class BookingController {
         return "redirect:/";
     }
 
-    // this chains in the deletion it should work in reverse
-    @RequestMapping("bookings/removeGuest/{id}")
-    public String deleteReservation(@PathVariable(value = "id") Long bookingId, @RequestParam("id") Long guestId,  Model model) throws  BookingNotFoundException, GuestNotFoundException{
-        Reservation aut = reservationRepository.findReservationByGuestAndBookingId(bookingId, guestId);
-        reservationRepository.delete(aut);
-        System.out.println("NEVER RUN We're deleting a booking so removeReservation guest ID:" +guestId + " and reservations " +aut );
-        return "redirect:/bookings/" + String.valueOf(bookingId) ;
-
-    }
-
     // Delete a Booking
     @RequestMapping("/delete/{id}")
     public String deleteBooking(@PathVariable(value = "id") Long bookingId, Model model) throws BookingNotFoundException {
@@ -108,9 +105,6 @@ public class BookingController {
 
     }
 
-    // Update a Booking
-    // Get Booking By ID and open the editform
-    // Save Updated Details
     @RequestMapping(value = "bookings/save", method = RequestMethod.POST)
     public String updateNote( @ModelAttribute("booking")  Booking booking, Model model) throws BookingNotFoundException, GuestNotFoundException {
         /*System.out.println("I redirect on in the saving of booking: " +booking.getBooking_name() + " and guest" + reservationRepository.findGuestByBookingId(booking.getId()) +" !!!");*/
@@ -128,6 +122,17 @@ public class BookingController {
         reservationRepository.save(new Reservation(booking, guest));
 
         return "redirect:/bookings/"+String.valueOf(bookingId);
+
+    }
+
+
+    // this chains in the deletion. but has never run or been tested, it's from the example code
+    @RequestMapping("bookings/removeGuest/{id}")
+    public String deleteReservation(@PathVariable(value = "id") Long bookingId, @RequestParam("id") Long guestId,  Model model) throws  BookingNotFoundException, GuestNotFoundException{
+        Reservation aut = reservationRepository.findReservationByGuestAndBookingId(bookingId, guestId);
+        reservationRepository.delete(aut);
+        System.out.println("NEVER RUN We're deleting a booking so removeReservation guest ID:" +guestId + " and reservations " +aut );
+        return "redirect:/bookings/" + String.valueOf(bookingId) ;
 
     }
 

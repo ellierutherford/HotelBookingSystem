@@ -133,6 +133,10 @@ left out of this for now
 Payments etc
 
 
-
 ----
+24/6/2023
+Start the build out of the new guest interface, based on the 'Add Booking' from Admin UI.
+removing the menu items, and reseting the things I send to the view completely, because I want to be careful 
+about what I put out there, and do it bit by bit.
+
 
