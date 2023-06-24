@@ -34,7 +34,7 @@
             </caption>
             <input type="hidden" name="id" value="<c:out value='${booking.id}' />"  />
             <tr>
-                <th>Title: </th>
+                <th>Booking Lead Visitor: </th>
                 <td>
                     <input type="text" name="booking_name" size="45"
                            value="<c:out value='${booking.booking_name}' />"
