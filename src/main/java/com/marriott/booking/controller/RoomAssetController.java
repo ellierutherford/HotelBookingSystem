@@ -28,21 +28,29 @@ public class RoomAssetController {
         List<RoomAsset> roomasset = roomassetRepository.findAll();
         model.addAttribute("roomasset", roomasset);
 
-        System.out.println("All the roomassets" );
-        /* List<Integer> bookCounts = new ArrayList<>();
-        for (RoomAsset roomasset : listRoomAssets) {
-            try {
-                List<Booking> books = roomassetRepository.findBookingByRoomAsset(roomasset);
-                int bookCount = books.size();
-                bookCounts.add(bookCount);
-            } catch (BookingNotFoundException e) {
-                e.printStackTrace();
-                bookCounts.add(0);
-            }
+        System.out.println("All the roomassets sent to view" );
+
+        for (RoomAsset roomAsset : roomasset) {
+            System.out.println(" with" + roomAsset.getroomasset_name() + "" );
+            System.out.println(" with" + roomAsset.getroomasset_number() + "" );
         }
 
 
-        model.addAttribute("bookCounts", bookCounts);*/
+
+        /* List<Integer> bookingCounts = new ArrayList<>();
+        for (RoomAsset roomasset : listRoomAssets) {
+            try {
+                List<Booking> bookings = roomassetRepository.findBookingByRoomAsset(roomasset);
+                int bookingCount = bookings.size();
+                bookingCounts.add(bookingCount);
+            } catch (BookingNotFoundException e) {
+                e.printStackTrace();
+                bookingCounts.add(0);
+            }
+        }
+        //this would sending the booking count for the rooms
+
+        model.addAttribute("bookingCounts", bookingCounts);*/
 
         return "welcomeroomasset";
     }
@@ -55,14 +63,7 @@ public class RoomAssetController {
         model.addAttribute("roomasset", roomasset);
         System.out.println("Get RoomAssets: " + roomasset.getId() + "With name" + roomasset.getroomasset_name() );
 
-        /*List<Booking> books = roomassetRepository.findBookingByRoomAsset(roomasset.getId()); find the books by the roomasset ID
-        List<Booking> books = new ArrayList<>();
-        for(Booking books: book){
-            Booking book =roomassetRepository.findById(book)
-                    .orElseThrow(() -> new BookingNotFoundException(book));
-            books.add(book);
-        }
-        model.addAttribute("books", book);*/
+
 
         return "editroomassetform";
     }

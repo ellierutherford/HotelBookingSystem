@@ -20,14 +20,14 @@
 </h2>
 <h3>
     <ul class="menu">
-        <li><a href="/newroomasset">Add New Room ASSET!</a></li>
+        <li><a href="/newroomasset">Add New Room Asset</a></li>
     </ul>
 </h3>
 
 
 <div>
     <table>
-        <caption><h2>List of Room Type</h2></caption>
+        <caption><h2>List of Room Assets</h2></caption>
         <tr>
             <th>ID</th>
             <th>Name</th>

@@ -15,7 +15,6 @@
         <li><a href="/guests">The Guests</a></li>
         <li><a href="/rooms">The Rooms types</a></li>
         <li><a href="/roomassets">The Rooms themselves</a></li> </ul>
-
     </ul>
 </h2>
 <h3>

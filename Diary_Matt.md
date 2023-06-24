@@ -111,3 +111,28 @@ handle. Will bring this in to the hotel code and remove the composite ID, as per
 will keep to the sketched up details in the Ellie's data model documentation, until we can meet later.
 
 ----
+
+Working on with renamed class Rooms to RoomAssets, I reflect on the dangers of not fully
+addressing in my code, ambiguity and leaving related classed undefined. 
+
+Clodagh is taking on automated testing, 
+which will be handy as things get more complex.
+
+I wonder what the data model given to the class will look like when compared to the one arrived at iteratively 
+in this project, and if we'll end up changing things. 
+
+My instinct is that the Dependency Injection Layer 
+in the controller should decouple things so we have 
+huge flexibility in building custom views.
+I'll know if this is true after I attempt a build the strangers' interface, which should pull together
+1. New Guest 
+2. New Booking
+3. Existing Room Types and corresponding number of free roomAssets of that Type
+----
+left out of this for now
+Payments etc
+
+
+
+----
+

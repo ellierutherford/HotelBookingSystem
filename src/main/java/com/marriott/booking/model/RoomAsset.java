@@ -14,7 +14,9 @@ public class RoomAsset {
     @NotBlank
     private String roomasset_name;
 
-    @OneToMany(mappedBy ="roomasset", cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "roomtype_id")
+    private RoomType roomType;
 
 
     @NotBlank
@@ -40,7 +42,7 @@ public class RoomAsset {
     public String getroomasset_name() {
         return roomasset_name;
     }
-    public void setroomasset_name(String guest_first_name) {
+    public void setroomasset_name(String roomasset_name) {
         this.roomasset_name = roomasset_name;
     }
 
