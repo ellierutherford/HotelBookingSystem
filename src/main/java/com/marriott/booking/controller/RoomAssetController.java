@@ -33,15 +33,15 @@ public class RoomAssetController {
         List<RoomAsset> roomasset = roomassetRepository.findAll();
         model.addAttribute("roomasset", roomasset);
 
-        System.out.println("All the roomassets sent to view" );
+        /*System.out.println("All the roomassets sent to view" );*/
         List<RoomType> roomTypes = roomTypeRepository.findAll();
         model.addAttribute("roomTypes", roomTypes);
-        System.out.println("All the roomtypes sent to view" );
+       /* System.out.println("All the roomtypes sent to view" );*/
 
-        for (RoomAsset roomAsset : roomasset) {
+        /*for (RoomAsset roomAsset : roomasset) {
             System.out.println(" with" + roomAsset.getroomasset_name() + "" );
             System.out.println(" with" + roomAsset.getroomasset_number() + "" );
-        }
+        }*/
 
 
 
@@ -73,7 +73,6 @@ public class RoomAssetController {
         model.addAttribute("roomasset", roomasset);
         List<RoomType> roomTypes = roomTypeRepository.findAll();
         model.addAttribute("roomTypes", roomTypes);
-        System.out.println("All the roomtypes sent to view" );
         System.out.println("Get RoomAssets: " + roomasset.getId() + "With name" + roomasset.getroomasset_name() );
         return "editroomassetform";
     }
@@ -81,9 +80,22 @@ public class RoomAssetController {
     // Create a RoomAsset
     @RequestMapping("/newroomasset")
     public String createRoomAsset(Model model){
+        System.out.println("Asset 1 createRoomAsset outputs attribute roomTypes to roomassetform" );
         List<RoomType> roomTypes = roomTypeRepository.findAll();
         model.addAttribute("roomTypes", roomTypes);
         return "roomassetform";
+    }
+
+    // Save Created RoomAsset
+    @PostMapping("/roomassets")
+    public String saveCreatedRoomAsset(@ModelAttribute("roomasset") RoomAsset roomasset, RoomType roomType, Model model){
+        roomTypeRepository.save(roomType);
+        roomassetRepository.save(roomasset);
+        //set the room asset type to to the passed in data
+        roomasset.setroomasset_type(roomType);
+        roomassetRepository.save(roomasset); // do I need this twice?
+        System.out.println("Asset 2Save Created With name " + roomasset.getroomasset_name() + "roomtype  :" + roomType + "." );
+        return viewRoomAssetHomePage(model);
     }
 
 
@@ -103,13 +115,7 @@ public class RoomAssetController {
     }
 
 
-    // Save Created RoomAsset
-    @PostMapping("/roomassets")
-    public String saveCreatedRoomAsset(@ModelAttribute("roomasset") RoomAsset roomasset, Model model){
-        roomassetRepository.save(roomasset);
-        System.out.println("Save Created RoomAsset: " + roomasset.getId() + "With name " + roomasset.getroomasset_name() );
-        return viewRoomAssetHomePage(model);
-    }
+
 
     // Update a RoomAsset
     // Get RoomAsset By ID and open the editform

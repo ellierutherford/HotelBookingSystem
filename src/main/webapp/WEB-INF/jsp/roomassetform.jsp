@@ -38,7 +38,6 @@
                            value="<c:out value='${roomasset.roomasset_number}' />"
                     />
                 </td>
-
                 <th>Room Asset Name: </th>
                 <td>
                     <input type="text" name="roomasset_name" size="45"
@@ -53,6 +52,7 @@
                     <select name="roomType.id">
                         <c:forEach items="${roomTypes}" var="roomType">
                             <option value="${roomType.id}">${roomType.room_name}</option>
+
                         </c:forEach>
                     </select>
                 </td>
@@ -61,6 +61,7 @@
             <tr>
                 <td colspan="2" >
                     <input type="submit" value="Save" />
+                    <!-- need roomType Out to  -->
                 </td>
             </tr>
         </table>

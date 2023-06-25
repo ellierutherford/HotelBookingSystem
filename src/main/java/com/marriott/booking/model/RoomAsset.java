@@ -25,10 +25,11 @@ public class RoomAsset {
     public RoomAsset(){
         super();
     }
-    public RoomAsset(Long id, int roomasset_number, String roomasset_name) {
+    public RoomAsset(Long id, int roomasset_number, String roomasset_name, RoomType roomType) {
         super();
         this.id = id;
         this.roomasset_number = roomasset_number;
+        this.roomType = roomType;
         this.roomasset_name = roomasset_name;
     }
 
@@ -54,7 +55,12 @@ public class RoomAsset {
         this.roomasset_number = roomasset_number;
     }
 
-
+    public RoomType getroomasset_type() {
+        return roomType;
+    }
+    public void setroomasset_type(RoomType roomType) {
+        this.roomType = roomType;
+    }
 
 
 
