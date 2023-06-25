@@ -37,14 +37,14 @@
             <tr>
                 <th>Booking Start Date:</th>
                 <td>
-                    <input type="date" name="startDate" />
+                    <input type="date" name="startDate" id="startDate" />
                 </td>
             </tr>
 
             <tr>
                 <th>Booking End Date:</th>
                 <td>
-                    <input type="date" name="endDate" />
+                    <input type="date" name="endDate" id="endDate" />
                 </td>
             </tr>
 
@@ -74,5 +74,17 @@
         <li><a href="/list">Arrange Your Bookings (and everyone else's too), until #task Login Security</a></li>
     </ul>
 </h3>
+
+<script>
+    // JavaScript code to set default values for the date fields
+    //split out the date
+    var today = new Date().toISOString().split('T')[0];
+    var future = new Date();
+    var nextweek = new Date(future.getTime() + 7 * 24 * 3600000);
+    var nextweekFormatted = nextweek.toISOString().split('T')[0];
+    document.getElementById("startDate").value = today;
+    document.getElementById("endDate").value = nextweekFormatted;
+</script>
+
 </body>
 </html>
