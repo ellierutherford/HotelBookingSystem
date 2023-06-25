@@ -1,6 +1,5 @@
 package com.marriott.booking.controller;
 
-
 import com.marriott.booking.exception.GuestNotFoundException;
 import com.marriott.booking.exception.BookingNotFoundException;
 import com.marriott.booking.model.Guest;
@@ -11,6 +10,7 @@ import com.marriott.booking.repository.GuestRepository;
 import com.marriott.booking.repository.ReservationRepository;
 import com.marriott.booking.repository.BookingRepository;
 import com.marriott.booking.repository.RoomtypeRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -135,25 +135,39 @@ public class BookingController {
     @RequestMapping("/experiment")
     public String createStrangerBooking(Model model) {
         System.out.println("1a createStrangerBooking Form displayed" );
-        //need to send out roomtypes, full list
+        //need to send out roomtypes, full list for drop down
         List<RoomType> listroomTypes = roomtypeRepository.findAll();
         model.addAttribute("listroomTypes", listroomTypes);
-
         return "newguestbooking";
     }
+            @PostMapping("/newguestbookings")
+            public String saveCreatedStrangerBooking(@ModelAttribute("booking") Booking booking, Model model, HttpSession session) throws GuestNotFoundException {
+                System.out.println("2a redirect on saving of a brand new booking!" + booking.getleadguest_first_name() + "we make the anon lead booker the first guest.");
+                //lets get available roomtypes for their dates by looking for roomtypes that have room assets that have Null for each date in between reservation.start and reservation.end
+                //put off saving for the next step.
+                Guest guest = new Guest();
+                guest.setGuest_first_name(booking.getleadguest_first_name());
+                guest.setGuest_last_name(booking.getleadguest_last_name());
+                guestRepository.save(guest);
+                bookingRepository.save(booking);
+                Reservation reservation = new Reservation(booking, guest);
+                reservationRepository.save(reservation);
+                session.setAttribute("reservation", reservation);
+                System.out.println("3a Save Created New Guest: " + guest.getId() + "With first name " + guest.getGuest_first_name() + "With last name ." + guest.getGuest_last_name() );
+                return "newguestbookingstep2";
+            }
+        
+            @PostMapping("/newguestbookingsstep2")
+            public String saveCreatedStrangerBookingStep2(@ModelAttribute("booking") Booking booking, Model model,HttpSession session) throws GuestNotFoundException {
+                System.out.println("3a redirect on saving of a brand new booking!" + booking.getleadguest_first_name() + "we make the anon lead booker the first guest.");
+                //lets get available roomtypes for their dates by looking for roomtypes that have room assets that have Null for each date in between reservation.start and reservation.end
+                //put off saving for the next step.
+                Reservation reservation = (Reservation) session.getAttribute("reservation");
+                reservationRepository.save(reservation);
 
+                return "redirect:/";
+            }
 
-
-    @PostMapping("/newguestbookings")
-    public String saveCreatedStrangerBooking(@ModelAttribute("booking") Booking booking, Model model) throws GuestNotFoundException {
-        System.out.println("2a redirect on saving of a brand new booking!" + booking.getleadguest_first_name() + "we make the anon lead booker the first guest.");
-        Guest guest = new Guest();
-        guest.setGuest_first_name(booking.getleadguest_first_name());
-        guest.setGuest_last_name(booking.getleadguest_last_name());
-        reservationRepository.save(new Reservation(bookingRepository.save(booking), guestRepository.save(guest)));
-        System.out.println("3a Save Created New Guest: " + guest.getId() + "With first name " + guest.getGuest_first_name() + "With last name ." + guest.getGuest_last_name() );
-        return "redirect:/";
-    }
 
     @RequestMapping(value = "newguestbookings/save", method = RequestMethod.POST)
     public String updateStrangerBooking( @ModelAttribute("booking")  Booking booking, Model model) throws BookingNotFoundException, GuestNotFoundException {
