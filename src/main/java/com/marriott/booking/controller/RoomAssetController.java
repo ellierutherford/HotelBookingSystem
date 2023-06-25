@@ -5,9 +5,11 @@ import com.marriott.booking.exception.RoomAssetNotFoundException;
 import com.marriott.booking.exception.BookingNotFoundException;
 import com.marriott.booking.model.RoomAsset;
 import com.marriott.booking.model.Booking;
+import com.marriott.booking.model.RoomType;
 import com.marriott.booking.repository.RoomAssetRepository;
 import com.marriott.booking.repository.ReservationRepository;
 import com.marriott.booking.repository.BookingRepository;
+import com.marriott.booking.repository.RoomtypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -23,17 +25,25 @@ public class RoomAssetController {
     @Autowired
     RoomAssetRepository roomassetRepository;
 
+    @Autowired
+    RoomtypeRepository roomTypeRepository;
+
     @RequestMapping({ "/roomassets"})
     public String viewRoomAssetHomePage(Model model){
         List<RoomAsset> roomasset = roomassetRepository.findAll();
         model.addAttribute("roomasset", roomasset);
 
         System.out.println("All the roomassets sent to view" );
+        List<RoomType> roomTypes = roomTypeRepository.findAll();
+        model.addAttribute("roomTypes", roomTypes);
+        System.out.println("All the roomtypes sent to view" );
 
         for (RoomAsset roomAsset : roomasset) {
             System.out.println(" with" + roomAsset.getroomasset_name() + "" );
             System.out.println(" with" + roomAsset.getroomasset_number() + "" );
         }
+
+
 
 
 
@@ -61,16 +71,24 @@ public class RoomAssetController {
         RoomAsset roomasset = roomassetRepository.findById(roomassetId)/*add the roomasset to the model*/
                 .orElseThrow(() -> new RoomAssetNotFoundException(roomassetId));
         model.addAttribute("roomasset", roomasset);
+        List<RoomType> roomTypes = roomTypeRepository.findAll();
+        model.addAttribute("roomTypes", roomTypes);
+        System.out.println("All the roomtypes sent to view" );
         System.out.println("Get RoomAssets: " + roomasset.getId() + "With name" + roomasset.getroomasset_name() );
         return "editroomassetform";
     }
 
     // Create a RoomAsset
     @RequestMapping("/newroomasset")
-    public String createRoomAsset(){
+    public String createRoomAsset(Model model){
+        List<RoomType> roomTypes = roomTypeRepository.findAll();
+        model.addAttribute("roomTypes", roomTypes);
         return "roomassetform";
     }
-    // Delete a RoomAsset
+
+
+
+
     @RequestMapping("/deleteroomasset/{id}")
     public String deleteRoomAsset(@PathVariable(value = "id") Long roomassetId, Model model) throws RoomAssetNotFoundException{
         try {RoomAsset roomasset = roomassetRepository.findById(roomassetId)

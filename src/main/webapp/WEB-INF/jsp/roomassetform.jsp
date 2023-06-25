@@ -46,6 +46,18 @@
                     />
                 </td>
             </tr>
+
+            <tr>
+                <th>Room Type:</th>
+                <td>
+                    <select name="roomType.id">
+                        <c:forEach items="${roomTypes}" var="roomType">
+                            <option value="${roomType.id}">${roomType.room_name}</option>
+                        </c:forEach>
+                    </select>
+                </td>
+            </tr>
+
             <tr>
                 <td colspan="2" >
                     <input type="submit" value="Save" />
