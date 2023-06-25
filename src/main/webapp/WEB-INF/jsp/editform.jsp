@@ -63,7 +63,7 @@
                 <c:forEach var="missingGuests" items="${missingGuests}">
                     <td>
                         <label>
-                            <input type="checkbox" name="listguests" value="<c:out value='${missingGuests.id}'/>">
+                            <input type="checkbox" name="missingGuests" value="<c:out value='${missingGuests.id}'/>">
                             <c:out value='${missingGuests.guest_first_name} ${missingGuests.guest_last_name}'/>
                         </label>
                     </td>

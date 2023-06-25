@@ -99,8 +99,19 @@ public class BookingController {
     }
 
     @RequestMapping(value = "bookings/save", method = RequestMethod.POST)
-    public String updateNote( @ModelAttribute("booking")  Booking booking, Model model) throws BookingNotFoundException, GuestNotFoundException {
-        System.out.println("1e booking edit in the saving of booking: " +booking.getleadguest_first_name() + " and guest" + reservationRepository.findGuestByBookingId(booking.getId()) +" !!!");
+    public String updateNote( @ModelAttribute("booking")  Booking booking, @RequestParam("missingGuests") Long[] guestIds, Model model) throws BookingNotFoundException, GuestNotFoundException {
+        System.out.println("1e booking edit in the saving of booking: " +booking.getleadguest_first_name() + " with existing guest" + reservationRepository.findGuestByBookingId(booking.getId()) +" !!!");
+                //apply guest to reservation
+        System.out.println("1e booking edit in the saving of booking: " +booking.getleadguest_first_name() + " with new guests" + guestIds+" !!!");
+        for (Long guestId : guestIds) {
+            Guest guest = new Guest();
+            guest.setGuest_first_name(booking.getleadguest_first_name());
+            guest.setGuest_last_name(booking.getleadguest_last_name());
+            reservationRepository.save(new Reservation(bookingRepository.save(booking), guestRepository.save(guest)));
+            System.out.println("1eL Added guest " + guestId + " to booking " + booking.getId());
+        }
+
+
         bookingRepository.save(booking);
 
         return "redirect:/list";
@@ -128,7 +139,6 @@ public class BookingController {
         Guest guest = new Guest();
         guest.setGuest_first_name(booking.getleadguest_first_name());
         guest.setGuest_last_name(booking.getleadguest_last_name());
-        //add another field to the booking for lead anon guest 2nd name
         reservationRepository.save(new Reservation(bookingRepository.save(booking), guestRepository.save(guest)));
         System.out.println("3a Save Created New Guest: " + guest.getId() + "With first name " + guest.getGuest_first_name() + "With last name ." + guest.getGuest_last_name() );
         return "redirect:/";
