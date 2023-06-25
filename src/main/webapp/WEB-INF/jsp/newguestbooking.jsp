@@ -21,21 +21,14 @@
             <tr>
                 <th>Lead Guest:</th>
                 <td>
-                    <input type="text" name="booking_name" size="45" />
+                    <input type="text" name="leadguest_first_name" size="45" />
                 </td>
             </tr>
 
-            <!-- Add fields for new guest details -->
             <tr>
-                <th>Guest First Name:</th>
+                <th>Lead Last Name:</th>
                 <td>
-                    <input type="text" name="guest_first_name" size="45" />
-                </td>
-            </tr>
-            <tr>
-                <th>Guest Last Name:</th>
-                <td>
-                    <input type="text" name="guest_last_name" size="45" />
+                    <input type="text" name="leadguest_last_name" size="45" />
                 </td>
             </tr>
 

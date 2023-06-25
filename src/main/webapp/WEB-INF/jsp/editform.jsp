@@ -35,8 +35,16 @@
             <tr>
                 <th>Booking Lead Visitor: </th>
                 <td>
-                    <input type="text" name="booking_name" size="45"
-                           value="<c:out value='${booking.booking_name}' />"
+                    <input type="text" name="leadguest_first_name" size="45"
+                           value="<c:out value='${booking.leadguest_first_name}' />"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <th>Booking Lead Visitor: </th>
+                <td>
+                    <input type="text" name="leadguest_last_name" size="45"
+                           value="<c:out value='${booking.leadguest_last_name}' />"
                     />
                 </td>
             </tr>

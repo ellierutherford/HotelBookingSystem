@@ -44,7 +44,7 @@
         <c:forEach var="booking" items="${listBookings}">
             <tr>
                 <td><c:out value="${booking.id}" /></td>
-                <td><c:out value="${booking.booking_name}" /></td>
+                <td><c:out value="${booking.leadguest_first_name}" /></td>
 
                 <td>
                     <a href="/bookings/${booking.id}"/>Edit</a>
