@@ -31,21 +31,23 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Last Name</th>
+            <th>AssetLabel</th>
         </tr>
         <c:forEach var="roomasset" items="${roomasset}" varStatus="loop">
             <tr>
                 <td><c:out value="${roomasset.id}" /></td>
                 <td><c:out value="${roomasset.roomasset_name}" /></td>
+                <td><c:out value="${roomasset.roomType.room_name}" /></td>
+
                 <td>
                     <a href="/roomassets/${roomasset.id}"/>Edit</a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <c:choose>
                     <c:when test="${bookingCounts[loop.index] > 0}">
-                <td class="disabled">
-                    <a href="/deleteroomasset/${roomasset.id}">Delete</a>
-                </td>
-                </c:when>
+                        <td class="disabled">
+                            <a href="/deleteroomasset/${roomasset.id}">Delete</a>
+                        </td>
+                    </c:when>
                 <c:otherwise>
                     <td>
                         <a href="/deleteroomasset/${roomasset.id}">Delete</a>

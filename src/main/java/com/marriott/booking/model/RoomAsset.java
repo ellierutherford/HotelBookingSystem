@@ -55,7 +55,7 @@ public class RoomAsset {
         this.roomasset_number = roomasset_number;
     }
 
-    public RoomType getroomasset_type() {
+    public RoomType getroomType() {
         return roomType;
     }
     public void setroomasset_type(RoomType roomType) {

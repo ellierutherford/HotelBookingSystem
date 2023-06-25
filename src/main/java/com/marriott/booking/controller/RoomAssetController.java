@@ -26,21 +26,19 @@ public class RoomAssetController {
 
     @RequestMapping({ "/roomassets"})
     public String viewRoomAssetHomePage(Model model){
+        System.out.println("1 Display view of all room assets called, seedings room assets and room types" );
         List<RoomAsset> roomasset = roomassetRepository.findAll();
         model.addAttribute("roomasset", roomasset);
 
         /*System.out.println("All the roomassets sent to view" );*/
         List<RoomType> roomTypes = roomTypeRepository.findAll();
         model.addAttribute("roomTypes", roomTypes);
-       /* System.out.println("All the roomtypes sent to view" );*/
+        System.out.println("All the roomtypes sent to view" );
 
         /*for (RoomAsset roomAsset : roomasset) {
             System.out.println(" with" + roomAsset.getroomasset_name() + "" );
             System.out.println(" with" + roomAsset.getroomasset_number() + "" );
         }*/
-
-
-
 
 
         /* List<Integer> bookingCounts = new ArrayList<>();
