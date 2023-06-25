@@ -76,6 +76,8 @@ public class BookingController {
         for (Long guestId : guestIds) {
             Guest guest = guestRepository.findById(guestId).orElseThrow(() -> new GuestNotFoundException(guestId));
             Reservation reservation = new Reservation(booking, guest);
+            reservationRepository.save(reservation);
+            //reservationRepository.save(new Reservation(booking, guest));
             System.out.println("4 Added guest " + guestId + " to booking " + booking.getId());
         }
 
@@ -155,8 +157,6 @@ public class BookingController {
         return "redirect:/newguestbookings/"+String.valueOf(bookingId);
 
     }
-
-
 
     // this chains in the deletion. but has never run or been tested, it's from the example code
     @RequestMapping("bookings/removeGuest/{id}")
