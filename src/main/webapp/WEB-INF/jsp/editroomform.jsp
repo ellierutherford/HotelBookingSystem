@@ -45,7 +45,7 @@
 
 
 
-            <th>Bookings: TBC</th>
+            <th>Books: </th>
             <c:forEach var="booking" items="${bookings}">
                 <td>
                     <input type="text" name="name" size="45"

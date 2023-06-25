@@ -94,7 +94,7 @@ public class RoomAssetController {
         //set the room asset type to to the passed in data
         roomasset.setroomasset_type(roomType);
         roomassetRepository.save(roomasset); // do I need this twice?
-        System.out.println("Asset 2 saveCreatedRoomAsset name: " + roomasset.getroomasset_name() + " roomtype  :" + roomType + " ." );
+        System.out.println("Asset 2Save Created With name " + roomasset.getroomasset_name() + "roomtype  :" + roomType + "." );
         return viewRoomAssetHomePage(model);
     }
 
