@@ -6,9 +6,11 @@ import com.marriott.booking.exception.BookingNotFoundException;
 import com.marriott.booking.model.Guest;
 import com.marriott.booking.model.Booking;
 import com.marriott.booking.model.Reservation;
+import com.marriott.booking.model.RoomType;
 import com.marriott.booking.repository.GuestRepository;
 import com.marriott.booking.repository.ReservationRepository;
 import com.marriott.booking.repository.BookingRepository;
+import com.marriott.booking.repository.RoomtypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,9 @@ public class BookingController {
 
     @Autowired
     GuestRepository guestRepository;
+
+    @Autowired
+    RoomtypeRepository roomtypeRepository;
 
 
     // Get a Single Booking
@@ -110,10 +115,7 @@ public class BookingController {
             reservationRepository.save(new Reservation(bookingRepository.save(booking), guestRepository.save(guest)));
             System.out.println("1eL Added guest " + guestId + " to booking " + booking.getId());
         }
-
-
         bookingRepository.save(booking);
-
         return "redirect:/list";
     }
 
@@ -133,6 +135,10 @@ public class BookingController {
     @RequestMapping("/experiment")
     public String createStrangerBooking(Model model) {
         System.out.println("1a createStrangerBooking Form displayed" );
+        //need to send out roomtypes, full list
+        List<RoomType> listroomTypes = roomtypeRepository.findAll();
+        model.addAttribute("listroomTypes", listroomTypes);
+
         return "newguestbooking";
     }
 
