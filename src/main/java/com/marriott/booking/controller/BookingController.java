@@ -128,11 +128,16 @@ public class BookingController {
         return "redirect:/bookings/"+String.valueOf(bookingId);
 
     }
+
+
     @RequestMapping("/experiment")
     public String createStrangerBooking(Model model) {
         System.out.println("1a createStrangerBooking Form displayed" );
         return "newguestbooking";
     }
+
+
+
     @PostMapping("/newguestbookings")
     public String saveCreatedStrangerBooking(@ModelAttribute("booking") Booking booking, Model model) throws GuestNotFoundException {
         System.out.println("2a redirect on saving of a brand new booking!" + booking.getleadguest_first_name() + "we make the anon lead booker the first guest.");

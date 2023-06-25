@@ -28,6 +28,10 @@ public class Booking {
     @Column(name = "end_date")
     private LocalDate endDate;
 
+    @ManyToOne()
+    @JoinColumn(name = "roomasset")
+    private RoomAsset roomasset;
+
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
 

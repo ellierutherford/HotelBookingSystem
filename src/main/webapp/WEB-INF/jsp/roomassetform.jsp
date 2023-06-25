@@ -49,10 +49,9 @@
             <tr>
                 <th>Room Type:</th>
                 <td>
-                    <select name="roomType.id">
+                    <select name="roomTypeId">
                         <c:forEach items="${roomTypes}" var="roomType">
                             <option value="${roomType.id}">${roomType.room_name}</option>
-
                         </c:forEach>
                     </select>
                 </td>

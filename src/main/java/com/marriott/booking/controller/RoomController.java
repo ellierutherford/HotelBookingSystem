@@ -33,7 +33,7 @@ public class RoomController {
                 .orElseThrow(() -> new RoomNotFoundException(roomId));
         model.addAttribute("room", room);
 
-
+        System.out.println("RoomType Controller getRoomById" );
         return "editroomform";
     }
 
@@ -44,7 +44,7 @@ public class RoomController {
         List<RoomType> listRooms = roomRepository.findAll();
         model.addAttribute("listRooms", listRooms);
 
-
+        System.out.println("RoomType Controller viewRoomHomePage" );
 
         return "welcomeRoom";
     }
@@ -52,6 +52,8 @@ public class RoomController {
     // Delete a Room
     @RequestMapping("/deleteroom/{id}")
     public String deleteRoom(@PathVariable(value = "id") Long roomId, Model model) throws RoomNotFoundException{
+
+        System.out.println("RoomType Controller deleteRoom" );
         try {
             RoomType room = roomRepository.findById(roomId)
                 .orElseThrow(() -> new RoomNotFoundException(roomId));
@@ -71,6 +73,7 @@ public class RoomController {
     // Save Created Room
     @PostMapping("/rooms")
     public String saveCreatedRoom(@ModelAttribute("room") RoomType room, Model model){
+        System.out.println("RoomType Controller saveCreatedRoom " );
         roomRepository.save(room);
         return viewRoomHomePage(model);
     }
@@ -81,6 +84,7 @@ public class RoomController {
     // Save Updated Details
     @RequestMapping(value="/rooms/save", method=RequestMethod.POST)
     public String updateRoom(@ModelAttribute("room") RoomType room, Model model){
+        System.out.println("RoomType Controller updateRoom " );
         roomRepository.save(room);
         return viewRoomHomePage(model);
     }

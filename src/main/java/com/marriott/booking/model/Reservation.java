@@ -21,10 +21,6 @@ public class Reservation {
     @JoinColumn(name = "guest")
     private Guest guest;
 
-    @ManyToOne()
-    @JoinColumn(name = "roomasset")
-    private RoomAsset roomasset;
-
     @ManyToOne
     @JoinColumn(name = "id_creditCard")
     private CreditCard creditCard;

@@ -152,3 +152,25 @@ http://localhost:8080/experiment
 is working though, so an anon can make booking.
 Lots of logging in the console now too. We can confidently build out the data model and continue in the 
 way to build function, as handing the anon in the Controller layer has shown the decouping power of Dependency Injection. Note we not have a lot in the interfaces in today's work in this branch. I haven't really used it since the Composite ID phase, but I will need it in anything one controller needs to talk to another on, so have that to look forward to on a fresh brain tomorrow.
+
+----------------------
+
+I have going to work on building interfaces like yesterday over the basics of the CRUD 
+and build function from tools in the lecture. I'm open to my work being refactoring, but I am just going 
+to work in spring to see what I can get. It doesn't seem, to be a problem to try something out
+in the data model and roll back, I'm going with 
+the endpoints I need and trusting to the flexibility change anything I need to. Once familiarity 
+with DI is built following MVC the feature velocity should build.
+
+This MVC gives us options on what we put out and take in and put out and process and redirect. 
+One solid datamodel, build out a bit a at time is what this is for, and it will give a 
+working structure that is more complex that anything we can specify.
+
+THe focus should be on what feature is possible next, and build it so it makes sense, refactor it when you need too
+it's too small and low data volume to be any real trouble, the risk is we don't product enough basic function.
+
+
+--------
+
+working on roomassets, seems to be coming along. Will take a break and view the other branches for interest. Dev Team 2/3 up and running 
+in the development env yet so it looks like testing might not be on the cards just yet.

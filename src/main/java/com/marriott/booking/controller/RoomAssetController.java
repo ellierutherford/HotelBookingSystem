@@ -1,11 +1,7 @@
 package com.marriott.booking.controller;
 
-import com.marriott.booking.exception.RoomAssetDeleteException;
-import com.marriott.booking.exception.RoomAssetNotFoundException;
-import com.marriott.booking.exception.BookingNotFoundException;
-import com.marriott.booking.model.RoomAsset;
-import com.marriott.booking.model.Booking;
-import com.marriott.booking.model.RoomType;
+import com.marriott.booking.exception.*;
+import com.marriott.booking.model.*;
 import com.marriott.booking.repository.RoomAssetRepository;
 import com.marriott.booking.repository.ReservationRepository;
 import com.marriott.booking.repository.BookingRepository;
@@ -88,13 +84,16 @@ public class RoomAssetController {
 
     // Save Created RoomAsset
     @PostMapping("/roomassets")
-    public String saveCreatedRoomAsset(@ModelAttribute("roomasset") RoomAsset roomasset, RoomType roomType, Model model){
-        roomTypeRepository.save(roomType);
-        roomassetRepository.save(roomasset);
-        //set the room asset type to to the passed in data
-        roomasset.setroomasset_type(roomType);
-        roomassetRepository.save(roomasset); // do I need this twice?
-        System.out.println("Asset 2Save Created With name " + roomasset.getroomasset_name() + "roomtype  :" + roomType + "." );
+    //<form action="roomassets" method="post"> in roomassetform.jsp feeds //
+    public String saveCreatedRoomAsset(@ModelAttribute("roomasset") RoomAsset roomasset,@RequestParam("roomTypeId") Long roomTypeId, Model model){
+        try {
+            RoomType roomtype = roomTypeRepository.findById(roomTypeId).orElseThrow(() -> new RoomNotFoundException(roomTypeId));
+            roomasset.setroomasset_type(roomtype);
+            roomassetRepository.save(roomasset);
+            System.out.println("Asset 2Save Created With name " + roomasset.getroomasset_name() + "roomtype  :" + roomtype + "." );
+        } catch (RoomNotFoundException e) {
+            e.printStackTrace();
+        }
         return viewRoomAssetHomePage(model);
     }
 
