@@ -128,12 +128,11 @@ public class BookingController {
 
         Guest guest = new Guest();
         guest.setGuest_first_name(booking.getBooking_name());
-        guest.setGuest_last_name(booking.getBooking_name()); //add another field to the booking for lead anon guest 2nd name
-        guestRepository.save(guest);
+        guest.setGuest_last_name(booking.getBooking_name());
+        //add another field to the booking for lead anon guest 2nd name
+        reservationRepository.save(new Reservation(bookingRepository.save(booking), guestRepository.save(guest)));
         System.out.println("3a Save Created New Guest: " + guest.getId() + "With first name " + guest.getGuest_first_name() + "With last name ." + guest.getGuest_last_name() );
-        bookingRepository.save(booking);
-        model.addAttribute("bookings", booking);
-        System.out.println("4a I'm a post save of 3a redirect booking TITLE" + booking.getBooking_name() + " and guest ." + guest);
+
 
         return "redirect:/";
     }
