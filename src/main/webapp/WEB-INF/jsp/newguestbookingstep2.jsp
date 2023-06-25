@@ -5,20 +5,95 @@
 <head>
     <title>WELCOME NEW GUEST TO THE BEST MOST INSECURE HOTEL IN THE WORLD</title>
     <c:url value="/css/main.css" var="jstlCss" />
-    <link href="${jstlCss}" rel="stylesheet">
+    <link href="${jstlCss}" rel="stylesheet" >
 </head>
 <body>
+<h1>Marketing Slogan here about something at the Heart of Something else</h1>
+<h2>We think you're wonderful, but have no clue who you are.</h2>
+<h2>So Get one of our Available rooms</h2>
 
 <div>
-    <h1>Transaction Completed</h1>
+    <form action="newguestbookingsstep2" method="post">
+        <table>
+            <caption>
+                <h3>Add New Booking. Rest assured the Book-a-lator 3000 has no idea what a free room is yet, but that's no impediment, it soon will</h3>
+            </caption>
+            <tr>
+                <th>Lead Guest:</th>
+                <td>
+                    <input type="text" name="leadguest_first_name" size="45" />
+                </td>
+            </tr>
 
-    </head>
-    <body>
-    <h1>Transaction Completed</h1>
-    <p>The transaction started in the previous step has been successfully completed.</p>
+            <tr>
+                <th>Lead Last Name:</th>
+                <td>
+                    <input type="text" name="leadguest_last_name" size="45" />
+                </td>
+            </tr>
 
-    <form action="/newguestbookingsstep2" method="post">
-        <input type="submit" value="OK" />
+            <!-- Add more fields for additional guest details if needed -->
+
+            <tr>
+                <th>Booking Start Date:</th>
+                <td>
+                    <input type="date" name="startDate" id="startDate" />
+                </td>
+            </tr>
+
+            <tr>
+                <th>Booking End Date:</th>
+                <td>
+                    <input type="date" name="endDate" id="endDate" />
+                </td>
+            </tr>
+
+            <th>Room Asset Type:</th>
+            <td>
+                <select name="listroomTypes">
+                    <c:forEach items="${listroomTypes}" var="listroomTypes">
+                        <option value="${listroomTypes.id}">${listroomTypes.room_name}</option>
+                    </c:forEach>
+                </select>
+            </td>
+
+            <tr>
+                <th>Ref:</th>
+                <td>
+                    <input type="text" name="bookingRef" size="45" />
+                </td>
+            </tr>
+
+            <tr>
+                <th>Number of Checked Guests:</th>
+                <td id="guestCount">0</td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <input type="submit" id="saveButton" value="Save"  />
+                </td>
+            </tr>
+        </table>
     </form>
-    </body>
-    </html>
+
+</div>
+<h3>
+    <ul class="menu">
+        <li><a href="/list">Arrange Your Bookings (and everyone else's too), until #task Login Security</a></li>
+    </ul>
+</h3>
+
+<script>
+    // JavaScript code to set default values for the date fields
+    //split out the date
+    var today = new Date().toISOString().split('T')[0];
+    var future = new Date();
+    var nextweek = new Date(future.getTime() + 7 * 24 * 3600000);
+    var nextweekFormatted = nextweek.toISOString().split('T')[0];
+    document.getElementById("startDate").value = today;
+    document.getElementById("endDate").value = nextweekFormatted;
+</script>
+
+</body>
+</html>

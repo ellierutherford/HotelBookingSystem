@@ -140,33 +140,39 @@ public class BookingController {
         model.addAttribute("listroomTypes", listroomTypes);
         return "newguestbooking";
     }
-            @PostMapping("/newguestbookings")
-            public String saveCreatedStrangerBooking(@ModelAttribute("booking") Booking booking, Model model, HttpSession session) throws GuestNotFoundException {
-                System.out.println("2a redirect on saving of a brand new booking!" + booking.getleadguest_first_name() + "we make the anon lead booker the first guest.");
-                //lets get available roomtypes for their dates by looking for roomtypes that have room assets that have Null for each date in between reservation.start and reservation.end
-                //put off saving for the next step.
-                Guest guest = new Guest();
-                guest.setGuest_first_name(booking.getleadguest_first_name());
-                guest.setGuest_last_name(booking.getleadguest_last_name());
-                guestRepository.save(guest);
-                bookingRepository.save(booking);
-                Reservation reservation = new Reservation(booking, guest);
-                reservationRepository.save(reservation);
-                session.setAttribute("reservation", reservation);
-                System.out.println("3a Save Created New Guest: " + guest.getId() + "With first name " + guest.getGuest_first_name() + "With last name ." + guest.getGuest_last_name() );
-                return "newguestbookingstep2";
-            }
-        
-            @PostMapping("/newguestbookingsstep2")
-            public String saveCreatedStrangerBookingStep2(@ModelAttribute("booking") Booking booking, Model model,HttpSession session) throws GuestNotFoundException {
-                System.out.println("3a redirect on saving of a brand new booking!" + booking.getleadguest_first_name() + "we make the anon lead booker the first guest.");
-                //lets get available roomtypes for their dates by looking for roomtypes that have room assets that have Null for each date in between reservation.start and reservation.end
-                //put off saving for the next step.
-                Reservation reservation = (Reservation) session.getAttribute("reservation");
-                reservationRepository.save(reservation);
+    @PostMapping("/newguestbookings")
+    public String saveCreatedStrangerBooking(@ModelAttribute("booking") Booking booking, Model model, HttpSession session) throws GuestNotFoundException {
+        System.out.println("2a redirect on saving of a brand new booking!" + booking.getleadguest_first_name() + "we make the anon lead booker the first guest.");
+        //lets get available roomtypes for their dates by looking for roomtypes that have room assets that have Null for each date in between reservation.start and reservation.end
+        //put off saving for the next step.
+        Guest guest = new Guest();
+        guest.setGuest_first_name(booking.getleadguest_first_name());
+        guest.setGuest_last_name(booking.getleadguest_last_name());
+        guestRepository.save(guest);
+        bookingRepository.save(booking);
+        Reservation reservation = new Reservation(booking, guest);
+        reservationRepository.save(reservation);
+        session.setAttribute("reservation", reservation);
+        System.out.println("3a Save Created New Guest: " + guest.getId() + "With first name " + guest.getGuest_first_name() + "With last name ." + guest.getGuest_last_name() );
+        model.addAttribute("guest", guest);
+        return "newguestbookingstep2";
+    }
 
-                return "redirect:/";
-            }
+    @PostMapping("/newguestbookingsstep2")
+    public String saveCreatedStrangerBookingStep2(@ModelAttribute("booking") Booking booking, Model model,HttpSession session) throws GuestNotFoundException {
+        System.out.println("3a redirect on saving of a brand new booking for" + booking.getleadguest_first_name() + "our booking dates for setting are: ");
+        //lets get available roomtypes for their dates by looking for roomtypes that have room assets that have Null for each date in between reservation.start and reservation.end
+
+
+        List<RoomType> listroomTypes = roomtypeRepository.findAll(); //lets get available roomtypes for their dates by looking for roomtypes
+        // that have room assets that have Null for each date in between reservation.start and reservation.end
+        model.addAttribute("listroomTypes", listroomTypes);
+
+        Reservation reservation = (Reservation) session.getAttribute("reservation");
+        reservationRepository.save(reservation);
+
+        return "redirect:/";
+    }
 
 
     @RequestMapping(value = "newguestbookings/save", method = RequestMethod.POST)
