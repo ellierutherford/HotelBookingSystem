@@ -183,3 +183,11 @@ refined datamodel from the function I am getting. So far since there is DI from 
 function can be built out. Once I have some basic pricing for roomstypes and availability behaviour across room assets I will stop to tidy up and make some tests
 
 -------------
+An architecture is a set of constraints according to the REST author, and these are helpful for building persistent
+object state when CRUD is used to operate them. The DI means that things are easy to change and address in the controller
+the main challenge for me has been to build familiarity with the operations. I'm looking at the the booking being 
+inside the reservation and wondering how much do I need to worry about building into a corner. 
+
+Here are the one I've made for myself Bookings are of assets that are of types, and I'm working thru marchalling them in an 
+unsmelly way in the anon controller route. So far I haven't needed to leave spring, I'll know if the approach works if I can 
+build the availability on assets presented as RoomType as a super-header. 

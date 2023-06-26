@@ -2,14 +2,9 @@ package com.marriott.booking.controller;
 
 import com.marriott.booking.exception.GuestNotFoundException;
 import com.marriott.booking.exception.BookingNotFoundException;
-import com.marriott.booking.model.Guest;
-import com.marriott.booking.model.Booking;
-import com.marriott.booking.model.Reservation;
-import com.marriott.booking.model.RoomType;
-import com.marriott.booking.repository.GuestRepository;
-import com.marriott.booking.repository.ReservationRepository;
-import com.marriott.booking.repository.BookingRepository;
-import com.marriott.booking.repository.RoomTypeRepository;
+import com.marriott.booking.exception.RoomNotFoundException;
+import com.marriott.booking.model.*;
+import com.marriott.booking.repository.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +29,10 @@ public class BookingController {
     GuestRepository guestRepository;
 
     @Autowired
-    RoomTypeRepository roomtypeRepository;
+    RoomTypeRepository roomTypeRepository;
+
+    @Autowired
+    RoomAssetRepository roomAssetRepository;
 
 
     // Get a Single Booking
@@ -136,25 +134,43 @@ public class BookingController {
     public String createStrangerBooking(Model model) {
         System.out.println("1a createStrangerBooking Form displayed" );
         //need to send out roomtypes, full list for drop down
-        List<RoomType> listroomTypes = roomtypeRepository.findAll();
+        List<RoomType> listroomTypes = roomTypeRepository.findAll();
         model.addAttribute("listroomTypes", listroomTypes);
         return "newguestbooking";
     }
     @PostMapping("/newguestbookings")
-    public String saveCreatedStrangerBooking(@ModelAttribute("booking") Booking booking, Model model, HttpSession session) throws GuestNotFoundException {
-        System.out.println("New anon booking FIRSTNAME" + booking.getleadguest_first_name() + "");
+    public String saveCreatedStrangerBooking(@ModelAttribute("booking") Booking booking, @RequestParam("listroomTypes") Long[] roomTypeIds, Model model, HttpSession session) throws RoomNotFoundException {
+        System.out.println("New anon booker IN CONTROLLER FIRSTNAME" + booking.getleadguest_first_name() + "");
+        System.out.println("STARTDATE: " + booking.getStartDate() + ". ");
+        System.out.println("ENDDATE: " + booking.getEndDate() + ". ");
         System.out.println("New anon booking LASTNAME " + booking.getleadguest_last_name() + "we make the anon lead booker the first guest.");
-        System.out.println("STARTDATE" + booking.getStartDate() + ". ");
-        System.out.println("ENDDATE" + booking.getEndDate() + ". ");
-        //lets get available roomtypes for their dates by looking for roomtypes that
-        // have room assets that have Null for each date in between reservation.start and reservation.end
-        List<RoomType> listroomTypes = roomtypeRepository.findAll();
-        model.addAttribute("listroomTypes", listroomTypes);
+
+        bookingRepository.save(booking);
+
+        for (Long roomTypeId : roomTypeIds) {
+            RoomType roomType = roomTypeRepository.findById(roomTypeId).orElseThrow(() -> new RoomNotFoundException(roomTypeId));
+            System.out.println("Attempt set room type Id to roomname " + roomType.getRoom_name() + " on booking ID" + booking.getId());
+            RoomAsset bookedAsset = new RoomAsset();
+            roomAssetRepository.save(bookedAsset);
+            bookedAsset.setroomasset_type(roomType);
+            roomAssetRepository.save(bookedAsset); //rough, just checking writes to the table by making a whole new room asset
+            booking.setRoomAsset(bookedAsset);
+
+
+            System.out.println("Added roomAsset " + bookedAsset.getroomType() + " to booking " + booking.getId());  //roomType isn't safe for find and replace beccause get and set not consistent
+        }
+
+        bookingRepository.save(booking); //write my roomasset changes
+
+        //TODO Get available listroomTypes on or after booking.getStartDate() to on or before booking.getEndDate()
+        // their dates by looking for RoomAssets if listroomType that
+        // have Null for each date in between reservation.start and reservation.end
+
         Guest guest = new Guest();
         guest.setGuest_first_name(booking.getleadguest_first_name());
         guest.setGuest_last_name(booking.getleadguest_last_name());
         guestRepository.save(guest);
-        bookingRepository.save(booking);
+
         Reservation reservation = new Reservation(booking, guest);
         reservationRepository.save(reservation);
         session.setAttribute("reservation", reservation);
@@ -165,20 +181,28 @@ public class BookingController {
 
     @PostMapping("/newguestbookingsstep2")
     public String saveCreatedStrangerBookingStep2(@ModelAttribute("booking") Booking booking, Model model,HttpSession session) throws GuestNotFoundException {
-        System.out.println("3a redirect on saving of a brand new booking for" + booking.getleadguest_first_name() + "our booking dates for setting are: ");
 
+
+
+        System.out.println("3a redirect on saving of a brand new booking for" + booking.getleadguest_first_name() + "our booking dates for  \" + Arrays.toString(guestIds) + \" !!!\"");
+        System.out.println("New anon booking FIRSTNAME" + booking.getleadguest_first_name() + "");
+        System.out.println("New anon booking LASTNAME " + booking.getleadguest_last_name() + "we make the anon lead booker the first guest.");
+
+        System.out.println("STARTDATE" + booking.getStartDate() + ". ");
+        System.out.println("ENDDATE" + booking.getEndDate() + ". ");
         //lets get available roomtypes for their dates by looking for roomtypes that have room assets that have Null for each date in between reservation.start and reservation.end
 
 
-        List<RoomType> listroomTypes = roomtypeRepository.findAll(); //lets get available roomtypes for their dates by looking for roomtypes
-        // that have room assets that have Null for each date in between reservation.start and reservation.end
+        List<RoomType> listroomTypes = roomTypeRepository.findAll(); //TODO let's get available roomtypes for their dates by looking for roomtypes
+        // that have room assets that have Null for each date in between reservation.start and reservation.end to populate this dropdown
         model.addAttribute("listroomTypes", listroomTypes);
 
         Reservation reservation = (Reservation) session.getAttribute("reservation");
 
 
-        reservationRepository.save(reservation);
 
+        reservationRepository.save(reservation);
+        model.addAttribute("reservation", reservation);
         return "redirect:/";
     }
 

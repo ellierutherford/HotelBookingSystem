@@ -13,8 +13,28 @@
     <p>Hi ${guest.guest_first_name},</p>
     <p>The transaction started in the previous step has been successfully completed.</p>
     <p>Booking dates: ${booking.startDate} </p>
+    <p>First Name: ${booking.leadguest_first_name} + "");</p>
+
+
 
     <form action="/newguestbookingsstep2" method="post">
+
+
+        < ! ---  we must hold these vars --- >
+        <input type="hidden" name="startDate" value="${booking.startDate}" />
+        <input type="hidden" name="endDate" value="${booking.endDate}" />
+        <input type="hidden" name="leadguest_first_name" value="${booking.leadguest_first_name}" />
+        <input type="hidden" name="leadguest_last_name" value="${booking.leadguest_last_name}" />
+
+        <th>Room Asset Type:</th>
+        <td>
+            <select name="listroomTypes">
+                <c:forEach items="${listroomTypes}" var="listroomTypes">
+                    <option value="${listroomTypes.id}">${listroomTypes.room_name}</option>
+                </c:forEach>
+            </select>
+        </td>
+
         <input type="submit" value="OK" />
     </form>
 

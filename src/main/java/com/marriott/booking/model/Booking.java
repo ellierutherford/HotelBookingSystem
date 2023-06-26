@@ -84,7 +84,13 @@ public class Booking {
         this.endDate = endDate;
     }
 
+    public RoomAsset getRoomAsset() {
+        return roomasset;
+    }
 
+    public void setRoomAsset(RoomAsset roomAsset) {
+        this.roomasset = roomAsset;
+    }
 
 
     public void setleadguest_first_name(String leadguest_first_name) {
