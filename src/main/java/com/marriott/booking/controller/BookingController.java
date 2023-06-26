@@ -8,15 +8,13 @@ import com.marriott.booking.model.*;
 import com.marriott.booking.repository.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class BookingController {
@@ -39,6 +37,22 @@ public class BookingController {
     @Autowired
     AssetBookingRepository assetBookingRepository;
 
+    // Show available rooms to book
+    @GetMapping("/allavailable")
+    public String showAvailableRooms(@RequestParam("start_date")
+                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start_date,
+                                     @RequestParam("end_date") @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
+                                     LocalDate end_date, Model model)
+            throws RoomNotFoundException{
+        List<Long> room_ids = roomAssetRepository.findAvailableRooms(start_date, end_date);
+        List<RoomAsset> availableRooms = new ArrayList<RoomAsset>();
+        for (Long room_id : room_ids) {
+            RoomAsset room = roomAssetRepository.findById(room_id).orElseThrow(() -> new RoomNotFoundException(room_id));
+            availableRooms.add(room);
+        }
+        model.addAttribute("rooms", availableRooms);
+        return "room";
+    }
 
     // Get a Single Booking
     @GetMapping("/bookings/{id}")
