@@ -61,7 +61,6 @@ public class BookingController {
     public String viewHomePage(Model model){
         List<Booking> listBookings = bookingRepository.findAll();
         model.addAttribute("listBookings", listBookings);
-
         List<Guest> listGuests = guestRepository.findAll();
         int guestCount = listGuests.size(); // Get the number of guests in the list
         model.addAttribute("guestCount", guestCount); // Add the guest count to the model*/
@@ -84,31 +83,21 @@ public class BookingController {
         System.out.println("3 redirect on saving of booking: " + booking.getleadguest_first_name() + " and on Room Type ID " + listroomType + " and guest IDs: " + Arrays.toString(guestIds) + " !!!");
 
         try {
-            //to get the free rooms of this type
             List<RoomAsset> roomAssets = roomAssetRepository.findByRoomTypeId(listroomType);
             for (RoomAsset roomAsset : roomAssets) {
-                System.out.println("This is an available room asset " + roomAsset.getroomasset_name() + " .") ;
+                System.out.println("Setting bookingRoomAsset to" + roomAsset.getroomasset_name() + " as it is believed to be available.") ;
+                booking.setRoomAsset(roomAsset);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
-
-
-
-
-
-        bookingRepository.save(booking);
+                bookingRepository.save(booking);
         for (Long guestId : guestIds) {
             Guest guest = guestRepository.findById(guestId).orElseThrow(() -> new GuestNotFoundException(guestId));
             Reservation reservation = new Reservation(booking, guest);
             reservationRepository.save(reservation);
-            System.out.println("4 Added guest " + guestId + " to booking " + booking.getId());
+            System.out.println("4 Added guest " + guestId + " to booking " + booking.getId() + " on room asset" + booking.getRoomAsset() );
         }
-
         model.addAttribute("bookings", booking);
         System.out.println("5 I'm post save of booking " + booking.getleadguest_first_name() + " and guests " + Arrays.toString(guestIds) + ".");
         return "redirect:/list";

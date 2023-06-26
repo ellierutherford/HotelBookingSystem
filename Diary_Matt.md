@@ -191,3 +191,10 @@ inside the reservation and wondering how much do I need to worry about building 
 Here are the one I've made for myself Bookings are of assets that are of types, and I'm working thru marchalling them in an 
 unsmelly way in the anon controller route. So far I haven't needed to leave spring, I'll know if the approach works if I can 
 build the availability on assets presented as RoomType as a super-header. 
+
+-----
+
+THis is going great, the room Assets and types make sense now and we're ready to consider when they can be booked.
+
+
+-----
