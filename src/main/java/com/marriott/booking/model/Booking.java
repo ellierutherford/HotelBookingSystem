@@ -64,6 +64,9 @@ public class Booking {
     public String getleadguest_first_name() {
         return leadguest_first_name;
     }
+    public String getleadguest_last_name() {
+        return leadguest_last_name;
+    }
 
     public LocalDate getStartDate() {
         return startDate;
@@ -88,9 +91,10 @@ public class Booking {
         this.leadguest_first_name = leadguest_first_name;
     }
 
-    public String getleadguest_last_name() {
-        return leadguest_last_name;
+    public void setleadguest_last_name(String leadguest_last_name) {
+        this.leadguest_last_name = leadguest_last_name;
     }
+
 
 
     // Modify the setter for guests to accept a Set<Reservation>

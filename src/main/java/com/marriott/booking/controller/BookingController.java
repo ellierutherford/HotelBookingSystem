@@ -142,8 +142,10 @@ public class BookingController {
     }
     @PostMapping("/newguestbookings")
     public String saveCreatedStrangerBooking(@ModelAttribute("booking") Booking booking, Model model, HttpSession session) throws GuestNotFoundException {
-        System.out.println("............2a redirect on saving of a brand new booking!" + booking.getleadguest_first_name() + "we make the anon lead booker the first guest.");
+        System.out.println("New anon booking FIRSTNAME" + booking.getleadguest_first_name() + "");
+        System.out.println("New anon booking LASTNAME " + booking.getleadguest_last_name() + "we make the anon lead booker the first guest.");
         System.out.println("STARTDATE" + booking.getStartDate() + ". ");
+        System.out.println("ENDDATE" + booking.getEndDate() + ". ");
         //lets get available roomtypes for their dates by looking for roomtypes that
         // have room assets that have Null for each date in between reservation.start and reservation.end
         List<RoomType> listroomTypes = roomtypeRepository.findAll();
