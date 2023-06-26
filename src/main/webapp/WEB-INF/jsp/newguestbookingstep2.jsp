@@ -8,47 +8,15 @@
     <link href="${jstlCss}" rel="stylesheet" >
 </head>
 <body>
-<h1>Marketing Slogan here about something at the Heart of Something else</h1>
-<h2>We think you're wonderful, but have no clue who you are.</h2>
-<h2>So Get one of our Available rooms</h2>
-
 <div>
     <form action="newguestbookingsstep2" method="post">
         <table>
             <caption>
-                <h3>Add New Booking. Rest assured the Book-a-lator 3000 has no idea what a free room is yet, but that's no impediment, it soon will</h3>
+                <h3>PICK YOUR ROOM</h3>
             </caption>
-            <tr>
-                <th>Lead Guest:</th>
-                <td>
-                    <input type="text" name="leadguest_first_name" size="45" />
-                </td>
-            </tr>
 
-            <tr>
-                <th>Lead Last Name:</th>
-                <td>
-                    <input type="text" name="leadguest_last_name" size="45" />
-                </td>
-            </tr>
 
-            <!-- Add more fields for additional guest details if needed -->
-
-            <tr>
-                <th>Booking Start Date:</th>
-                <td>
-                    <input type="date" name="startDate" id="startDate" />
-                </td>
-            </tr>
-
-            <tr>
-                <th>Booking End Date:</th>
-                <td>
-                    <input type="date" name="endDate" id="endDate" />
-                </td>
-            </tr>
-
-            <th>Room Asset Type:</th>
+            <th>Pick your room type Availability will come later by your previously selected date</th>
             <td>
                 <select name="listroomTypes">
                     <c:forEach items="${listroomTypes}" var="listroomTypes">
@@ -57,17 +25,9 @@
                 </select>
             </td>
 
-            <tr>
-                <th>Ref:</th>
-                <td>
-                    <input type="text" name="bookingRef" size="45" />
-                </td>
-            </tr>
 
-            <tr>
-                <th>Number of Checked Guests:</th>
-                <td id="guestCount">0</td>
-            </tr>
+
+
 
             <tr>
                 <td colspan="2">

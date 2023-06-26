@@ -143,8 +143,10 @@ public class BookingController {
     @PostMapping("/newguestbookings")
     public String saveCreatedStrangerBooking(@ModelAttribute("booking") Booking booking, Model model, HttpSession session) throws GuestNotFoundException {
         System.out.println("2a redirect on saving of a brand new booking!" + booking.getleadguest_first_name() + "we make the anon lead booker the first guest.");
-        //lets get available roomtypes for their dates by looking for roomtypes that have room assets that have Null for each date in between reservation.start and reservation.end
-        //put off saving for the next step.
+        //lets get available roomtypes for their dates by looking for roomtypes that
+        // have room assets that have Null for each date in between reservation.start and reservation.end
+        List<RoomType> listroomTypes = roomtypeRepository.findAll();
+        model.addAttribute("listroomTypes", listroomTypes);
         Guest guest = new Guest();
         guest.setGuest_first_name(booking.getleadguest_first_name());
         guest.setGuest_last_name(booking.getleadguest_last_name());
@@ -169,6 +171,8 @@ public class BookingController {
         model.addAttribute("listroomTypes", listroomTypes);
 
         Reservation reservation = (Reservation) session.getAttribute("reservation");
+
+
         reservationRepository.save(reservation);
 
         return "redirect:/";
