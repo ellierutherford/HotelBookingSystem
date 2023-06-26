@@ -5,7 +5,7 @@ import com.marriott.booking.exception.RoomDeleteException;
 import com.marriott.booking.exception.RoomNotFoundException;
 import com.marriott.booking.model.RoomType;
 import com.marriott.booking.repository.BookingRepository;
-import com.marriott.booking.repository.RoomtypeRepository;
+import com.marriott.booking.repository.RoomTypeRepository;
 import com.marriott.booking.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,7 +23,7 @@ public class RoomController {
     @Autowired
     ReservationRepository ReservationRepository;
     @Autowired
-    RoomtypeRepository roomRepository;
+    RoomTypeRepository roomRepository;
 
     // Get a Single Room
     @GetMapping("/rooms/{id}")

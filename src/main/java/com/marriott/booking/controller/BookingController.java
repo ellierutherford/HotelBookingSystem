@@ -9,7 +9,7 @@ import com.marriott.booking.model.RoomType;
 import com.marriott.booking.repository.GuestRepository;
 import com.marriott.booking.repository.ReservationRepository;
 import com.marriott.booking.repository.BookingRepository;
-import com.marriott.booking.repository.RoomtypeRepository;
+import com.marriott.booking.repository.RoomTypeRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +34,7 @@ public class BookingController {
     GuestRepository guestRepository;
 
     @Autowired
-    RoomtypeRepository roomtypeRepository;
+    RoomTypeRepository roomtypeRepository;
 
 
     // Get a Single Booking
@@ -142,7 +142,8 @@ public class BookingController {
     }
     @PostMapping("/newguestbookings")
     public String saveCreatedStrangerBooking(@ModelAttribute("booking") Booking booking, Model model, HttpSession session) throws GuestNotFoundException {
-        System.out.println("2a redirect on saving of a brand new booking!" + booking.getleadguest_first_name() + "we make the anon lead booker the first guest.");
+        System.out.println("............2a redirect on saving of a brand new booking!" + booking.getleadguest_first_name() + "we make the anon lead booker the first guest.");
+        System.out.println("STARTDATE" + booking.getStartDate() + ". ");
         //lets get available roomtypes for their dates by looking for roomtypes that
         // have room assets that have Null for each date in between reservation.start and reservation.end
         List<RoomType> listroomTypes = roomtypeRepository.findAll();
@@ -163,6 +164,7 @@ public class BookingController {
     @PostMapping("/newguestbookingsstep2")
     public String saveCreatedStrangerBookingStep2(@ModelAttribute("booking") Booking booking, Model model,HttpSession session) throws GuestNotFoundException {
         System.out.println("3a redirect on saving of a brand new booking for" + booking.getleadguest_first_name() + "our booking dates for setting are: ");
+
         //lets get available roomtypes for their dates by looking for roomtypes that have room assets that have Null for each date in between reservation.start and reservation.end
 
 

@@ -3,6 +3,7 @@ package com.marriott.booking.model;
 import jakarta.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
 
@@ -64,28 +65,38 @@ public class Booking {
         return leadguest_first_name;
     }
 
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+
+
+
     public void setleadguest_first_name(String leadguest_first_name) {
         this.leadguest_first_name = leadguest_first_name;
     }
 
-
     public String getleadguest_last_name() {
         return leadguest_last_name;
     }
-
-    public void setleadguest_last_name(String leadguest_last_name) {
-        this.leadguest_last_name = leadguest_last_name;
-    }
-
-
 
 
     // Modify the setter for guests to accept a Set<Reservation>
     public void setGuests(Set<Reservation> guests) {
         this.guests = guests;
     }
-
-
 
 
 }

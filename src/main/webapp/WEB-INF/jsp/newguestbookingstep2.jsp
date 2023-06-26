@@ -9,32 +9,13 @@
 </head>
 <body>
 <div>
-    <form action="newguestbookingsstep2" method="post">
-        <table>
-            <caption>
-                <h3>PICK YOUR ROOM</h3>
-            </caption>
+    <h1>Transaction Completed</h1>
+    <p>Hi ${guest.guest_first_name},</p>
+    <p>The transaction started in the previous step has been successfully completed.</p>
+    <p>Booking dates: ${booking.startDate} </p>
 
-
-            <th>Pick your room type Availability will come later by your previously selected date</th>
-            <td>
-                <select name="listroomTypes">
-                    <c:forEach items="${listroomTypes}" var="listroomTypes">
-                        <option value="${listroomTypes.id}">${listroomTypes.room_name}</option>
-                    </c:forEach>
-                </select>
-            </td>
-
-
-
-
-
-            <tr>
-                <td colspan="2">
-                    <input type="submit" id="saveButton" value="Save"  />
-                </td>
-            </tr>
-        </table>
+    <form action="/newguestbookingsstep2" method="post">
+        <input type="submit" value="OK" />
     </form>
 
 </div>

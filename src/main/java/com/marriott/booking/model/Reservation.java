@@ -11,22 +11,16 @@ public class Reservation {
     @Id
     @GeneratedValue
     Long id;
-
     @ManyToOne()
-    @OnDelete(action = OnDeleteAction.CASCADE) /*Need this for deleting the Reservation references*/
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "booking")
     private Booking booking;
-
     @ManyToOne()
     @JoinColumn(name = "guest")
     private Guest guest;
-
     @ManyToOne
     @JoinColumn(name = "id_creditCard")
     private CreditCard creditCard;
-
-
-
 
     public Reservation(){
         super();

@@ -5,7 +5,7 @@ import com.marriott.booking.model.*;
 import com.marriott.booking.repository.RoomAssetRepository;
 import com.marriott.booking.repository.ReservationRepository;
 import com.marriott.booking.repository.BookingRepository;
-import com.marriott.booking.repository.RoomtypeRepository;
+import com.marriott.booking.repository.RoomTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,7 @@ public class RoomAssetController {
     RoomAssetRepository roomassetRepository;
 
     @Autowired
-    RoomtypeRepository roomTypeRepository;
+    RoomTypeRepository roomTypeRepository;
 
     @RequestMapping({ "/roomassets"})
     public String viewRoomAssetHomePage(Model model){
