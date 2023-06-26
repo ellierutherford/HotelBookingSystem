@@ -77,8 +77,8 @@ public class BookingController {
         return "bookingform";
     }
     @PostMapping("/bookings")
-    public String saveCreatedBooking(@ModelAttribute("booking") Booking booking, @RequestParam("guestIds") Long[] guestIds, @RequestParam("listroomTypes") Long listroomTypes, Model model) throws GuestNotFoundException {
-        System.out.println("3 redirect on saving of booking: " + booking.getleadguest_first_name() + " and on Room Type ID " + listroomTypes + " and guest IDs: " + Arrays.toString(guestIds) + " !!!");
+    public String saveCreatedBooking(@ModelAttribute("booking") Booking booking, @RequestParam("guestIds") Long[] guestIds, @RequestParam("listroomType") Long listroomType, Model model) throws GuestNotFoundException {
+        System.out.println("3 redirect on saving of booking: " + booking.getleadguest_first_name() + " and on Room Type ID " + listroomType + " and guest IDs: " + Arrays.toString(guestIds) + " !!!");
 
         bookingRepository.save(booking);
         for (Long guestId : guestIds) {
