@@ -24,10 +24,11 @@ public class AssetBooking {
         super();
     }
 
-    public AssetBooking(Long id, LocalDate assetbooking_date) {
+    public AssetBooking(RoomAsset roomAsset, LocalDate assetbooking_date) {
         super();
         this.id = id;
         this.assetbooking_date = assetbooking_date;
+        this.roomAsset = roomAsset;
     }
 
     public Long getId() {

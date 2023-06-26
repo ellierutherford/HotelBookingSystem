@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -85,24 +86,41 @@ public class BookingController {
         System.out.println("STARTDATE" + booking.getStartDate() + ". ");
         System.out.println("ENDDATE" + booking.getEndDate() + ". ");
 
+        LocalDate startDate = booking.getStartDate();
+        LocalDate endDate = booking.getEndDate();
 
-        //Get the booking start and end dates including start and end and assign to private arrayBookingDates
+        List<LocalDate> bookingDates = new ArrayList<>();
+
+        LocalDate currentDate = startDate;
+        while (!currentDate.isAfter(endDate)) {
+            bookingDates.add(currentDate);
+            currentDate = currentDate.plusDays(1);
+        }
+
+        for (LocalDate date : bookingDates) {
+            System.out.println("Adding Reserved Booking Date: " + date);
+        }
 
         try {
             List<RoomAsset> roomAssets = roomAssetRepository.findByRoomTypeId(listroomType);
             for (RoomAsset roomAsset : roomAssets) {
                 System.out.println("Setting bookingRoomAsset to" + roomAsset.getroomasset_name() + " as it is believed to be available.") ;
                 booking.setRoomAsset(roomAsset);
-                //for each item in arrayBookingDates do loop:
-                AssetBooking assetbooking = new AssetBooking (roomAsset.getId(),booking.getStartDate());
-                assetbooking.setRoomAsset(roomAsset);
-                assetBookingRepository.save(assetbooking);
-                //end loop
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-                bookingRepository.save(booking);
+
+        //write out all the dates
+        for (LocalDate date : bookingDates) {
+            AssetBooking assetbooking = new AssetBooking(booking.getRoomAsset(), date);
+            assetBookingRepository.save(assetbooking);
+            System.out.println("Added Reserved Booking Date: " + date);
+        }
+
+
+
+        bookingRepository.save(booking);
         for (Long guestId : guestIds) {
             Guest guest = guestRepository.findById(guestId).orElseThrow(() -> new GuestNotFoundException(guestId));
             Reservation reservation = new Reservation(booking, guest);
