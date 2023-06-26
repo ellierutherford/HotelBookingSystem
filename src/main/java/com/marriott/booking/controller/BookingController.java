@@ -49,11 +49,11 @@ public class BookingController {
         model.addAttribute("booking", booking);
 
         List<Guest> guests = reservationRepository.findGuestByBookingId(booking.getId());
-        System.out.println("2GETsingle booking by IDing a Single Booking for: " +booking.getleadguest_first_name() +" and guest it's guest" + reservationRepository.findGuestByBookingId(booking.getId()));
+        //System.out.println("2GETsingle booking by IDing a Single Booking for: " +booking.getleadguest_first_name() +" and guest its guest" + reservationRepository.findGuestByBookingId(booking.getId()));
 
         model.addAttribute("listguests", guests);
         model.addAttribute("missingGuests", reservationRepository.findGuestsNotInBooking(booking.getId()));
-        System.out.println("2GETSingle We can send the guests that are not in this booking to edit screen and they are: " + reservationRepository.findGuestsNotInBooking(booking.getId()) +" !!!");
+        //System.out.println("2GETSingle We can send the guests that are not in this booking to edit screen and they are: " + reservationRepository.findGuestsNotInBooking(booking.getId()) +" !!!");
 
         return "editform";
     }
@@ -73,22 +73,15 @@ public class BookingController {
     public String createBooking(Model model) {
         List<Guest> listGuests = guestRepository.findAll();
         model.addAttribute("listGuests", listGuests);
-        System.out.println("2a createBooking Form displayed with checkbox array of guests" +listGuests );
         List<RoomType> listroomTypes = roomTypeRepository.findAll();
         model.addAttribute("listroomTypes", listroomTypes);
-        System.out.println("2b createBooking Form displayed with droplist array of listroomTypes" +listroomTypes );
         return "bookingform";
     }
     @PostMapping("/bookings")
     public String saveCreatedBooking(@ModelAttribute("booking") Booking booking, @RequestParam("guestIds") Long[] guestIds, @RequestParam("listroomType") Long listroomType, Model model) throws GuestNotFoundException {
-        System.out.println("3 redirect on saving of booking: " + booking.getleadguest_first_name() + " and on Room Type ID " + listroomType + " and guest IDs: " + Arrays.toString(guestIds) + " !!!");
-
-        System.out.println("STARTDATE" + booking.getStartDate() + ". ");
-        System.out.println("ENDDATE" + booking.getEndDate() + ". ");
-
+        //make array of our dates
         LocalDate startDate = booking.getStartDate();
         LocalDate endDate = booking.getEndDate();
-
         List<LocalDate> bookingDates = new ArrayList<>();
 
         LocalDate currentDate = startDate;
@@ -97,28 +90,22 @@ public class BookingController {
             currentDate = currentDate.plusDays(1);
         }
 
-        for (LocalDate date : bookingDates) {
-            System.out.println("Adding Reserved Booking Date: " + date);
-        }
-
         try {
             List<RoomAsset> roomAssets = roomAssetRepository.findByRoomTypeId(listroomType);
             for (RoomAsset roomAsset : roomAssets) {
-                System.out.println("Setting bookingRoomAsset to" + roomAsset.getroomasset_name() + " as it is believed to be available.") ;
+                System.out.println("Setting bookingRoomAsset to" + roomAsset.getroomasset_name() + " as matches request and is believed to be available.") ;
                 booking.setRoomAsset(roomAsset);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        //write out all the dates
+        //write out all the dates of the booking to reserve the room
         for (LocalDate date : bookingDates) {
             AssetBooking assetbooking = new AssetBooking(booking.getRoomAsset(), date);
             assetBookingRepository.save(assetbooking);
             System.out.println("Added Reserved Booking Date: " + date);
         }
-
-
 
         bookingRepository.save(booking);
         for (Long guestId : guestIds) {

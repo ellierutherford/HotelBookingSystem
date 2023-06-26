@@ -195,6 +195,6 @@ build the availability on assets presented as RoomType as a super-header.
 -----
 
 THis is going great, the room Assets and types make sense now and we're ready to consider when they can be booked.
-
-
+Getting a record down now of when the rooms are occupied. Had to make one more interface, but nothing too bad. Very happy 
+with the day's progress.
 -----
