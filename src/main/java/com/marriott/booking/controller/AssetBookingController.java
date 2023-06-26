@@ -1,12 +1,12 @@
 package com.marriott.booking.controller;
 
-import com.marriott.booking.exception.*;
+import com.marriott.booking.exception.BookingNotFoundException;
+import com.marriott.booking.exception.AssetBookingDeleteException;
+import com.marriott.booking.exception.AssetBookingNotFoundException;
 import com.marriott.booking.model.AssetBooking;
-import com.marriott.booking.model.RoomAsset;
-import com.marriott.booking.model.RoomType;
+import com.marriott.booking.repository.BookingRepository;
 import com.marriott.booking.repository.AssetBookingRepository;
-import com.marriott.booking.repository.RoomAssetRepository;
-import com.marriott.booking.repository.RoomTypeRepository;
+import com.marriott.booking.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -19,29 +19,13 @@ import java.util.List;
 public class AssetBookingController {
 
     @Autowired
+    BookingRepository bookingRepository;
+    @Autowired
+    ReservationRepository ReservationRepository;
+    @Autowired
     AssetBookingRepository assetbookingRepository;
 
-    @Autowired
-    RoomAssetRepository roomassetRepository;
-
-    @RequestMapping({ "/assetbookings"})
-    public String viewAssetBookingHomePage(Model model){
-
-        System.out.println("1 Display view of all asset bookings called" );
-
-        List<AssetBooking> assetbooking = assetbookingRepository.findAll();
-        model.addAttribute("assetbooking", assetbooking);
-        System.out.println("All the assetbooking sent to view" );
-
-
-        List<RoomAsset> roomAssets = roomassetRepository.findAll();
-        model.addAttribute("roomAssets", roomAssets);
-        System.out.println("All the roomAssets sent to view" );
-
-
-        return "welcomeassetbooking";
-    }
-
+    // Get a Single AssetBooking
     @GetMapping("/assetbookings/{id}")
     public String getAssetBookingById(@PathVariable(value="id") Long assetbookingId, Model model)
             throws AssetBookingNotFoundException, BookingNotFoundException{
@@ -49,41 +33,30 @@ public class AssetBookingController {
                 .orElseThrow(() -> new AssetBookingNotFoundException(assetbookingId));
         model.addAttribute("assetbooking", assetbooking);
 
-        List<RoomAsset> roomAssets = roomassetRepository.findAll();
-        model.addAttribute("roomAssets", roomAssets);
-        System.out.println("Get AssetBookings: " + assetbooking.getId() + " ."  );
-
+        System.out.println("AssetBooking Controller getAssetBookingById" );
         return "editassetbookingform";
     }
 
-    // Create a AssetBooking
-    @RequestMapping("/newassetbooking")
-    public String createAssetBooking(Model model){
-        System.out.println("Asset 1 createAssetBooking outputs attribute roomTypes to assetbookingform" );
-        List<RoomAsset> roomAssets = roomassetRepository.findAll();
-        model.addAttribute("roomAssets", roomAssets);
-        return "assetbookingform";
+
+    // See All AssetBookings on Homepage
+    @RequestMapping({ "/assetbookings"})
+    public String viewAssetBookingHomePage(Model model){
+        List<AssetBooking> listAssetBookings = assetbookingRepository.findAll();
+        model.addAttribute("listAssetBookings", listAssetBookings);
+
+        System.out.println("AssetBooking Controller viewAssetBookingHomePage" );
+
+        return "welcomeAssetBooking";
     }
 
-    // Save Created AssetBooking
-    @PostMapping("/assetbookings")
-    //<form action="assetbookings" method="post"> in assetbookingform.jsp feeds //
-    public String saveCreatedAssetBooking(@ModelAttribute("assetbooking") AssetBooking assetbooking,@RequestParam("roomAssetId") Long roomAssetId, Model model){
-
-
-            assetbookingRepository.save(assetbooking);
-
-        return viewAssetBookingHomePage(model);
-    }
-
-
-
-
+    // Delete a AssetBooking
     @RequestMapping("/deleteassetbooking/{id}")
     public String deleteAssetBooking(@PathVariable(value = "id") Long assetbookingId, Model model) throws AssetBookingNotFoundException{
-        try {AssetBooking assetbooking = assetbookingRepository.findById(assetbookingId)
+
+        System.out.println("AssetBooking Controller deleteAssetBooking" );
+        try {
+            AssetBooking assetbooking = assetbookingRepository.findById(assetbookingId)
                 .orElseThrow(() -> new AssetBookingNotFoundException(assetbookingId));
-            System.out.println("AssetBooking Deleted: " + assetbooking.getId() + "With asset booking date" + assetbooking.getAssetbooking_date() );
             assetbookingRepository.delete(assetbooking);
             return viewAssetBookingHomePage(model); }
         catch (DataIntegrityViolationException e){
@@ -92,8 +65,18 @@ public class AssetBookingController {
 
     }
 
-
-
+    // Create a AssetBooking
+    @RequestMapping("/newassetbooking")
+    public String createAssetBooking(){
+        return "assetbookingform";
+    }
+    // Save Created AssetBooking
+    @PostMapping("/assetbookings")
+    public String saveCreatedAssetBooking(@ModelAttribute("assetbooking") AssetBooking assetbooking, Model model){
+        System.out.println("AssetBooking Controller saveCreatedAssetBooking " );
+        assetbookingRepository.save(assetbooking);
+        return viewAssetBookingHomePage(model);
+    }
 
     // Update a AssetBooking
     // Get AssetBooking By ID and open the editform
@@ -101,8 +84,8 @@ public class AssetBookingController {
     // Save Updated Details
     @RequestMapping(value="/assetbookings/save", method=RequestMethod.POST)
     public String updateAssetBooking(@ModelAttribute("assetbooking") AssetBooking assetbooking, Model model){
+        System.out.println("AssetBooking Controller updateAssetBooking " );
         assetbookingRepository.save(assetbooking);
-        System.out.println("Updated : " + assetbooking.getId() + "With asset booking date" + assetbooking.getAssetbooking_date() );
         return viewAssetBookingHomePage(model);
     }
 

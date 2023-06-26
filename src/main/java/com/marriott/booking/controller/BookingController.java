@@ -82,11 +82,22 @@ public class BookingController {
     public String saveCreatedBooking(@ModelAttribute("booking") Booking booking, @RequestParam("guestIds") Long[] guestIds, @RequestParam("listroomType") Long listroomType, Model model) throws GuestNotFoundException {
         System.out.println("3 redirect on saving of booking: " + booking.getleadguest_first_name() + " and on Room Type ID " + listroomType + " and guest IDs: " + Arrays.toString(guestIds) + " !!!");
 
+        System.out.println("STARTDATE" + booking.getStartDate() + ". ");
+        System.out.println("ENDDATE" + booking.getEndDate() + ". ");
+
+
+        //Get the booking start and end dates including start and end and assign to private arrayBookingDates
+
         try {
             List<RoomAsset> roomAssets = roomAssetRepository.findByRoomTypeId(listroomType);
             for (RoomAsset roomAsset : roomAssets) {
                 System.out.println("Setting bookingRoomAsset to" + roomAsset.getroomasset_name() + " as it is believed to be available.") ;
                 booking.setRoomAsset(roomAsset);
+                //for each item in arrayBookingDates do loop:
+                AssetBooking assetbooking = new AssetBooking (roomAsset.getId(),booking.getStartDate());
+                assetbooking.setRoomAsset(roomAsset);
+                assetBookingRepository.save(assetbooking);
+                //end loop
             }
         } catch (Exception e) {
             e.printStackTrace();
