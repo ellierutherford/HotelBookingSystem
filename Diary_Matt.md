@@ -174,3 +174,12 @@ it's too small and low data volume to be any real trouble, the risk is we don't 
 
 working on roomassets, seems to be coming along. Will take a break and view the other branches for interest. Dev Team 2/3 up and running 
 in the development env yet so it looks like testing might not be on the cards just yet.
+
+---------
+
+Setting myself the objective of getting a booking through the reservation process through the multistage screens, which involves CRUD operations at each step in the controller,
+and is skillbuilding in terms of moving operations through the controller and views. I am relying on the Spring boot features to handle the data model, and I validate the
+refined datamodel from the function I am getting. So far since there is DI from controller level and REST on the data structures, these are both my constraints and the reason
+function can be built out. Once I have some basic pricing for roomstypes and availability behaviour across room assets I will stop to tidy up and make some tests
+
+-------------
