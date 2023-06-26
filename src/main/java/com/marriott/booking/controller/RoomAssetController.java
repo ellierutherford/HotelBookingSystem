@@ -35,26 +35,6 @@ public class RoomAssetController {
         model.addAttribute("roomTypes", roomTypes);
         System.out.println("All the roomtypes sent to view" );
 
-        /*for (RoomAsset roomAsset : roomasset) {
-            System.out.println(" with" + roomAsset.getroomasset_name() + "" );
-            System.out.println(" with" + roomAsset.getroomasset_number() + "" );
-        }*/
-
-
-        /* List<Integer> bookingCounts = new ArrayList<>();
-        for (RoomAsset roomasset : listRoomAssets) {
-            try {
-                List<Booking> bookings = roomassetRepository.findBookingByRoomAsset(roomasset);
-                int bookingCount = bookings.size();
-                bookingCounts.add(bookingCount);
-            } catch (BookingNotFoundException e) {
-                e.printStackTrace();
-                bookingCounts.add(0);
-            }
-        }
-        //this would sending the booking count for the rooms
-
-        model.addAttribute("bookingCounts", bookingCounts);*/
 
         return "welcomeroomasset";
     }
@@ -65,6 +45,7 @@ public class RoomAssetController {
         RoomAsset roomasset = roomassetRepository.findById(roomassetId)/*add the roomasset to the model*/
                 .orElseThrow(() -> new RoomAssetNotFoundException(roomassetId));
         model.addAttribute("roomasset", roomasset);
+
         List<RoomType> roomTypes = roomTypeRepository.findAll();
         model.addAttribute("roomTypes", roomTypes);
         System.out.println("Get RoomAssets: " + roomasset.getId() + "With name" + roomasset.getroomasset_name() );

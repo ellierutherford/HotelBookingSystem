@@ -48,14 +48,7 @@
                 </td>
             </tr>
 
-            <th>Room Asset Type:</th>
-            <td>
-                <select name="listroomTypes">
-                    <c:forEach items="${listroomTypes}" var="listroomTypes">
-                        <option value="${listroomTypes.id}">${listroomTypes.room_name}</option>
-                    </c:forEach>
-                </select>
-            </td>
+
 
             <tr>
                 <th>Ref:</th>

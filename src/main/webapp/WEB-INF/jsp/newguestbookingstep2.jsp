@@ -11,10 +11,10 @@
 <div>
     <h1>Transaction Completed</h1>
     <p>Hi ${guest.guest_first_name},</p>
-    <p>The transaction started in the previous step has been successfully completed.</p>
+    <p>You seek a ${guest.guest_first_name},</p>
     <p>Booking dates: ${booking.startDate} </p>
     <p>First Name: ${booking.leadguest_first_name} + "");</p>
-
+    roomTypeId
 
 
     <form action="/newguestbookingsstep2" method="post">
@@ -26,6 +26,7 @@
         <input type="hidden" name="leadguest_first_name" value="${booking.leadguest_first_name}" />
         <input type="hidden" name="leadguest_last_name" value="${booking.leadguest_last_name}" />
 
+
         <th>Room Asset Type:</th>
         <td>
             <select name="listroomTypes">
@@ -34,6 +35,8 @@
                 </c:forEach>
             </select>
         </td>
+
+
 
         <input type="submit" value="OK" />
     </form>

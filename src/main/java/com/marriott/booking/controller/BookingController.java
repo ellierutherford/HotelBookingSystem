@@ -2,6 +2,7 @@ package com.marriott.booking.controller;
 
 import com.marriott.booking.exception.GuestNotFoundException;
 import com.marriott.booking.exception.BookingNotFoundException;
+import com.marriott.booking.exception.RoomAssetNotFoundException;
 import com.marriott.booking.exception.RoomNotFoundException;
 import com.marriott.booking.model.*;
 import com.marriott.booking.repository.*;
@@ -44,11 +45,11 @@ public class BookingController {
         model.addAttribute("booking", booking);
 
         List<Guest> guests = reservationRepository.findGuestByBookingId(booking.getId());
-        System.out.println("2 get a single booking by IDing a Single Booking for: " +booking.getleadguest_first_name() +" and guest it's guest" + reservationRepository.findGuestByBookingId(booking.getId()));
+        System.out.println("2GETsingle booking by IDing a Single Booking for: " +booking.getleadguest_first_name() +" and guest it's guest" + reservationRepository.findGuestByBookingId(booking.getId()));
 
         model.addAttribute("listguests", guests);
         model.addAttribute("missingGuests", reservationRepository.findGuestsNotInBooking(booking.getId()));
-        System.out.println("2Cond1 We can send the guests that are not in this booking to edit screen and they are: " + reservationRepository.findGuestsNotInBooking(booking.getId()) +" !!!");
+        System.out.println("2GETSingle We can send the guests that are not in this booking to edit screen and they are: " + reservationRepository.findGuestsNotInBooking(booking.getId()) +" !!!");
 
         return "editform";
     }
@@ -70,17 +71,20 @@ public class BookingController {
         List<Guest> listGuests = guestRepository.findAll();
         model.addAttribute("listGuests", listGuests);
         System.out.println("2 createBooking Form displayed with checkbox array of guests" +listGuests );
+        List<RoomType> listroomTypes = roomTypeRepository.findAll();
+        model.addAttribute("listroomTypes", listroomTypes);
+        System.out.println("2 createBooking Form displayed with droplist array of listroomTypes" +listroomTypes );
         return "bookingform";
     }
     @PostMapping("/bookings")
-    public String saveCreatedBooking(@ModelAttribute("booking") Booking booking, @RequestParam("guestIds") Long[] guestIds, Model model) throws GuestNotFoundException {
-        System.out.println("3 redirect on saving of booking: " + booking.getleadguest_first_name() + " and guests " + Arrays.toString(guestIds) + " !!!");
+    public String saveCreatedBooking(@ModelAttribute("booking") Booking booking, @RequestParam("guestIds") Long[] guestIds, @RequestParam("listroomTypes") Long listroomTypes, Model model) throws GuestNotFoundException {
+        System.out.println("3 redirect on saving of booking: " + booking.getleadguest_first_name() + " and on Room Type ID " + listroomTypes + " and guest IDs: " + Arrays.toString(guestIds) + " !!!");
+
         bookingRepository.save(booking);
         for (Long guestId : guestIds) {
             Guest guest = guestRepository.findById(guestId).orElseThrow(() -> new GuestNotFoundException(guestId));
             Reservation reservation = new Reservation(booking, guest);
             reservationRepository.save(reservation);
-            //reservationRepository.save(new Reservation(booking, guest));
             System.out.println("4 Added guest " + guestId + " to booking " + booking.getId());
         }
 
@@ -95,7 +99,7 @@ public class BookingController {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new BookingNotFoundException(bookingId));
 
-        System.out.println("Booking Deleted: " + booking.getId() + "With " + booking.getleadguest_first_name() );
+        System.out.println("1 ID Action Booking Deleted: " + booking.getId() + "With " + booking.getleadguest_first_name() );
         bookingRepository.delete(booking);
         return "redirect:/list";
 
@@ -134,37 +138,20 @@ public class BookingController {
     public String createStrangerBooking(Model model) {
         System.out.println("1a createStrangerBooking Form displayed" );
         //need to send out roomtypes, full list for drop down
-        List<RoomType> listroomTypes = roomTypeRepository.findAll();
-        model.addAttribute("listroomTypes", listroomTypes);
+
         return "newguestbooking";
     }
     @PostMapping("/newguestbookings")
-    public String saveCreatedStrangerBooking(@ModelAttribute("booking") Booking booking, @RequestParam("listroomTypes") Long[] roomTypeIds, Model model, HttpSession session) throws RoomNotFoundException {
-        System.out.println("New anon booker IN CONTROLLER FIRSTNAME" + booking.getleadguest_first_name() + "");
-        System.out.println("STARTDATE: " + booking.getStartDate() + ". ");
-        System.out.println("ENDDATE: " + booking.getEndDate() + ". ");
-        System.out.println("New anon booking LASTNAME " + booking.getleadguest_last_name() + "we make the anon lead booker the first guest.");
+    public String saveCreatedStrangerBooking(@ModelAttribute("booking") Booking booking,  Model model, HttpSession session) throws BookingNotFoundException, GuestNotFoundException {
+
+        System.out.println("New unknown booker with Name: " + booking.getleadguest_first_name() + " " + booking.getleadguest_last_name() +" .");
+        System.out.println("Booking Startdate: " + booking.getStartDate() + ". ");
+        System.out.println("Booking Enddate: " + booking.getEndDate() + ". ");
+
+        List<RoomType> listroomTypes = roomTypeRepository.findAll();
+        model.addAttribute("listroomTypes", listroomTypes);
 
         bookingRepository.save(booking);
-
-        for (Long roomTypeId : roomTypeIds) {
-            RoomType roomType = roomTypeRepository.findById(roomTypeId).orElseThrow(() -> new RoomNotFoundException(roomTypeId));
-            System.out.println("Attempt set room type Id to roomname " + roomType.getRoom_name() + " on booking ID" + booking.getId());
-            RoomAsset bookedAsset = new RoomAsset();
-            roomAssetRepository.save(bookedAsset);
-            bookedAsset.setroomasset_type(roomType);
-            roomAssetRepository.save(bookedAsset); //rough, just checking writes to the table by making a whole new room asset
-            booking.setRoomAsset(bookedAsset);
-
-
-            System.out.println("Added roomAsset " + bookedAsset.getroomType() + " to booking " + booking.getId());  //roomType isn't safe for find and replace beccause get and set not consistent
-        }
-
-        bookingRepository.save(booking); //write my roomasset changes
-
-        //TODO Get available listroomTypes on or after booking.getStartDate() to on or before booking.getEndDate()
-        // their dates by looking for RoomAssets if listroomType that
-        // have Null for each date in between reservation.start and reservation.end
 
         Guest guest = new Guest();
         guest.setGuest_first_name(booking.getleadguest_first_name());
@@ -173,37 +160,39 @@ public class BookingController {
 
         Reservation reservation = new Reservation(booking, guest);
         reservationRepository.save(reservation);
+
         session.setAttribute("reservation", reservation);
+
         System.out.println("3a Save Created New Guest: " + guest.getId() + "With first name " + guest.getGuest_first_name() + "With last name ." + guest.getGuest_last_name() );
         model.addAttribute("guest", guest);
         return "newguestbookingstep2";
     }
 
     @PostMapping("/newguestbookingsstep2")
-    public String saveCreatedStrangerBookingStep2(@ModelAttribute("booking") Booking booking, Model model,HttpSession session) throws GuestNotFoundException {
+    public String saveCreatedStrangerBookingStep2(@ModelAttribute("booking") Booking booking, Model model, @RequestParam("listroomTypes") Long[] roomTypeIds, HttpSession session) throws RoomNotFoundException, GuestNotFoundException {
 
-
-
-        System.out.println("3a redirect on saving of a brand new booking for" + booking.getleadguest_first_name() + "our booking dates for  \" + Arrays.toString(guestIds) + \" !!!\"");
-        System.out.println("New anon booking FIRSTNAME" + booking.getleadguest_first_name() + "");
-        System.out.println("New anon booking LASTNAME " + booking.getleadguest_last_name() + "we make the anon lead booker the first guest.");
-
+        Reservation reservation = (Reservation) session.getAttribute("reservation");
+        System.out.println("New anon booking FIRSTNAME: " + booking.getleadguest_first_name() + " .");
+        System.out.println("New anon booking LASTNAME: " + booking.getleadguest_last_name() + " .");
         System.out.println("STARTDATE" + booking.getStartDate() + ". ");
         System.out.println("ENDDATE" + booking.getEndDate() + ". ");
         //lets get available roomtypes for their dates by looking for roomtypes that have room assets that have Null for each date in between reservation.start and reservation.end
 
+        for (Long roomTypeId : roomTypeIds) {
+            //Find the room type from the room type ID
+            RoomType roomType = roomTypeRepository.findById(roomTypeId).orElseThrow(() -> new RoomNotFoundException(roomTypeId));
+            System.out.println("Attempt set room type to" + roomType.getRoom_name() + " on booking ID" + booking.getId());
+            /*should run once*/
+            model.addAttribute("roomTypeId", roomTypeId);
+        }
 
-        List<RoomType> listroomTypes = roomTypeRepository.findAll(); //TODO let's get available roomtypes for their dates by looking for roomtypes
-        // that have room assets that have Null for each date in between reservation.start and reservation.end to populate this dropdown
-        model.addAttribute("listroomTypes", listroomTypes);
-
-        Reservation reservation = (Reservation) session.getAttribute("reservation");
+        System.out.println("............redirect on saving of a brand new booking for this asset" + reservation.getBooking().getRoomAsset() + ". ");
 
 
 
-        reservationRepository.save(reservation);
         model.addAttribute("reservation", reservation);
-        return "redirect:/";
+
+        return "newguestbookings/save";
     }
 
 
