@@ -19,12 +19,11 @@
         <tr>
             <th>ID</th>
             <th>Type</th>
-            <th>Num Guests</th>
         </tr>
         <c:forEach var="room" items="${rooms}" varStatus="loop">
             <tr>
                 <td><c:out value="${room.id}" /></td>
-                <td><c:out value="${room.roomType}" /></td>
+                <td><c:out value="${room.roomasset_name}" /></td>
 
             </tr>
         </c:forEach>

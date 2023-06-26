@@ -18,8 +18,7 @@ import java.util.List;
 public interface RoomAssetRepository extends JpaRepository<RoomAsset, Long> {
     @Query("select a from RoomAsset a where a.roomType.id = ?1")
     List<RoomAsset> findByRoomTypeId(Long roomType_id) throws RoomNotFoundException;
-
-    //    @Query("SELECT e.id FROM RoomAsset e WHERE e.id NOT IN (SELECT g.id FROM Booking g WHERE g.startDate <= :start_date or g.endDate >= :end_date)")
-    @Query("SELECT g.id FROM Booking g WHERE g.startDate <= :start_date or g.endDate >= :end_date")
+    
+    @Query("SELECT e.id FROM RoomAsset e WHERE e.id NOT IN (SELECT g.id FROM Booking g WHERE (:start_date BETWEEN g.startDate and g.endDate or :end_date BETWEEN g.startDate and g.endDate))")
     List<Long> findAvailableRooms(@Param("start_date") LocalDate start_date, @Param("end_date") LocalDate end_date);
 }
