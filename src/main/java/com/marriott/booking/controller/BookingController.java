@@ -82,10 +82,7 @@ public class BookingController {
         //make array of our dates
         LocalDate startDate = booking.getStartDate();
         LocalDate endDate = booking.getEndDate();
-
-
         List<LocalDate> bookingDates = new ArrayList<>();
-
         LocalDate currentDate = startDate;
         while (!currentDate.isAfter(endDate)) {
             bookingDates.add(currentDate);
@@ -93,25 +90,21 @@ public class BookingController {
         }
 
         try {
-            List<RoomAsset> roomAssets = roomAssetRepository.findByRoomTypeId(listroomType);
-            for (RoomAsset roomAsset : roomAssets) {
-                System.out.println("Setting bookingRoomAsset to" + roomAsset.getroomasset_name() + " as matches request and is believed to be available.") ;
+            List<RoomAsset> availableRoomAssets = roomAssetRepository.findAvailableRoomsByType(booking.getStartDate(), booking.getEndDate(), listroomType);
+            for (RoomAsset roomAsset : availableRoomAssets) {
+                System.out.println("Setting bookingRoomAsset for " + roomAsset.getroomasset_name() + " as matches request and could be available.");
                 booking.setRoomAsset(roomAsset);
+                bookingRepository.save(booking);
+                // Run the availability routine for booking dates
+                break; // just one asset pls
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        //write out all the dates of the booking to reserve the room
-        for (LocalDate date : bookingDates) {
-            AssetBooking assetbooking = new AssetBooking(booking.getRoomAsset(), date);
-            assetBookingRepository.save(assetbooking);
-            System.out.println("Added Reserved Booking Date: " + date);
 
 
-        }
 
-        bookingRepository.save(booking);
         for (Long guestId : guestIds) {
             Guest guest = guestRepository.findById(guestId).orElseThrow(() -> new GuestNotFoundException(guestId));
             Reservation reservation = new Reservation(booking, guest);
@@ -119,7 +112,7 @@ public class BookingController {
             System.out.println("4 Added guest " + guestId + " to booking " + booking.getId() + " on room asset" + booking.getRoomAsset() );
         }
         model.addAttribute("bookings", booking);
-        System.out.println("5 I'm post save of booking " + booking.getleadguest_first_name() + " and guests " + Arrays.toString(guestIds) + ".");
+        System.out.println("5 I'm post save of booking " + booking.getleadguest_first_name() + " and guests " + Arrays.toString(guestIds) + " on room AssetName " + booking.getRoomAsset().getroomasset_name()  );
         return "redirect:/list";
     }
 
@@ -181,12 +174,8 @@ public class BookingController {
 
         List<RoomAsset> roomAssets = roomAssetRepository.findAvailableRooms(booking.getStartDate(),booking.getEndDate());
         for (RoomAsset roomAsset : roomAssets) {
-            System.out.println("Found this roomAsset " + roomAsset.getroomasset_name() + " and type: "+ roomAsset.getroomType() + " as a potential for booking.");
+            System.out.println("Found this roomAsset " + roomAsset.getroomasset_name() + " and type: "+ roomAsset.getroomType().getRoom_name() + " as a potential for booking.");
         }
-
-
-
-
 
 
         List<RoomType> listroomTypes = roomTypeRepository.findAll();

@@ -71,20 +71,16 @@
             </tr>
 
             <tr>
-                <th>Booking Start Date: </th>
+                <th>Booking Start Date:</th>
                 <td>
-                    <input type="date" name="startDate"
-                           value="<c:out value='${booking.startDate}'/>"
-                    />
+                    <input type="date" name="startDate" id="startDate" />
                 </td>
             </tr>
 
             <tr>
-                <th>Booking End Date: </th>
+                <th>Booking End Date:</th>
                 <td>
-                    <input type="date" name="endDate"
-                           value="<c:out value='${booking.endDate}'/>"
-                    />
+                    <input type="date" name="endDate" id="endDate" />
                 </td>
             </tr>
 
@@ -118,5 +114,15 @@
             </tr>
         </table>
     </form>
+    <script>
+        // JavaScript code to set default values for the date fields
+        //split out the date
+        var today = new Date().toISOString().split('T')[0];
+        var future = new Date();
+        var nextweek = new Date(future.getTime() + 7 * 24 * 3600000);
+        var nextweekFormatted = nextweek.toISOString().split('T')[0];
+        document.getElementById("startDate").value = today;
+        document.getElementById("endDate").value = nextweekFormatted;
+    </script>
 </div>
 </
