@@ -93,7 +93,8 @@ public class BookingController {
         try {
             List<RoomAsset> roomAssets = roomAssetRepository.findByRoomTypeId(listroomType);
             for (RoomAsset roomAsset : roomAssets) {
-                System.out.println("Setting bookingRoomAsset to" + roomAsset.getroomasset_name() + " as matches request and is believed to be available.") ;
+                //CHeck with assetBookingRepository
+                System.out.println("Setting bookingRoomAsset to" + roomAsset.getroomasset_name() + " as matches request and is believed true false " + assetBookingRepository.isAvailable(roomAsset.getId(),startDate) + "to be available on your arrival day.") ;
                 booking.setRoomAsset(roomAsset);
             }
         } catch (Exception e) {
