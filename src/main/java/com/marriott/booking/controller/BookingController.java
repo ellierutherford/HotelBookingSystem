@@ -89,6 +89,12 @@ public class BookingController {
             currentDate = currentDate.plusDays(1);
         }
 
+        List<Long> roomAssetIds = roomAssetRepository.findAvailableRooms(booking.getStartDate(),booking.getEndDate());
+        for (Long roomAssetId : roomAssetIds) {
+            System.out.println("DEBUG Found this roomAsset " + roomAssetId + " ID open");
+        }
+
+
         try {
             List<RoomAsset> availableRoomAssets = roomAssetRepository.findAvailableRoomsByType(booking.getStartDate(), booking.getEndDate(), listroomType);
             for (RoomAsset roomAsset : availableRoomAssets) {
@@ -172,10 +178,6 @@ public class BookingController {
         System.out.println("Booking Enddate: " + booking.getEndDate() + ". ");
 
 
-        List<RoomAsset> roomAssets = roomAssetRepository.findAvailableRooms(booking.getStartDate(),booking.getEndDate());
-        for (RoomAsset roomAsset : roomAssets) {
-            System.out.println("Found this roomAsset " + roomAsset.getroomasset_name() + " and type: "+ roomAsset.getroomType().getRoom_name() + " as a potential for booking.");
-        }
 
 
         List<RoomType> listroomTypes = roomTypeRepository.findAll();
