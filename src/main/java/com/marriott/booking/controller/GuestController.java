@@ -4,10 +4,7 @@ import com.marriott.booking.exception.GuestDeleteException;
 import com.marriott.booking.exception.GuestNotFoundException;
 import com.marriott.booking.exception.BookingNotFoundException;
 import com.marriott.booking.model.Guest;
-import com.marriott.booking.model.Booking;
 import com.marriott.booking.repository.GuestRepository;
-import com.marriott.booking.repository.ReservationRepository;
-import com.marriott.booking.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -29,21 +26,6 @@ public class GuestController {
         model.addAttribute("listGuests", listGuests);
 
         System.out.println("All the guests" );
-        /* List<Integer> bookCounts = new ArrayList<>();
-        for (Guest guest : listGuests) {
-            try {
-                List<Booking> books = guestRepository.findBookingByGuest(guest);
-                int bookCount = books.size();
-                bookCounts.add(bookCount);
-            } catch (BookingNotFoundException e) {
-                e.printStackTrace();
-                bookCounts.add(0);
-            }
-        }
-
-
-        model.addAttribute("bookCounts", bookCounts);*/
-
         return "welcomeGuest";
     }
 
@@ -54,15 +36,6 @@ public class GuestController {
                 .orElseThrow(() -> new GuestNotFoundException(guestId));
         model.addAttribute("guest", guest);
         System.out.println("Get Guests: " + guest.getId() + "With first name" + guest.getGuest_first_name() );
-
-        /*List<Booking> books = guestRepository.findBookingByGuest(guest.getId()); find the books by the guest ID
-        List<Booking> books = new ArrayList<>();
-        for(Booking books: book){
-            Booking book =guestRepository.findById(book)
-                    .orElseThrow(() -> new BookingNotFoundException(book));
-            books.add(book);
-        }
-        model.addAttribute("books", book);*/
 
         return "editguestform";
     }
@@ -85,8 +58,6 @@ public class GuestController {
         }
 
     }
-
-
     // Save Created Guest
     @PostMapping("/guests")
     public String saveCreatedGuest(@ModelAttribute("guest") Guest guest, Model model){
@@ -95,10 +66,6 @@ public class GuestController {
         return viewGuestHomePage(model);
     }
 
-    // Update a Guest
-    // Get Guest By ID and open the editform
-
-    // Save Updated Details
     @RequestMapping(value="/guests/save", method=RequestMethod.POST)
     public String updateGuest(@ModelAttribute("guest") Guest guest, Model model){
         guestRepository.save(guest);

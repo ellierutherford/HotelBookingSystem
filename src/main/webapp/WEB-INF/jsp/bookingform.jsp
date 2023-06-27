@@ -41,10 +41,19 @@
                 <h2> Add New Booking</h2>
             </caption>
             <tr>
-                <th>Title: </th>
+                <th>Lead Guest First Name:</th>
                 <td>
-                    <input type="text" name="booking_name" size="45"
-                           value="<c:out value='${booking.booking_name}' />"
+                    <input type="text" name="leadguest_first_name" size="45"
+                           value="<c:out value='${booking.leadguest_first_name}' />"
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <th>Lead Guest Last Name: </th>
+                <td>
+                    <input type="text" name="leadguest_last_name" size="45"
+                           value="<c:out value='${booking.leadguest_last_name}' />"
                     />
                 </td>
             </tr>
@@ -78,6 +87,15 @@
                     />
                 </td>
             </tr>
+
+            <th>Room Asset Type:</th>
+            <td>
+                <select name="listroomType">
+                    <c:forEach items="${listroomTypes}" var="listroomType">
+                        <option value="${listroomType.id}">${listroomType.room_name}</option>
+                    </c:forEach>
+                </select>
+            </td>
 
             <tr>
                 <th>Ref: </th>

@@ -13,7 +13,8 @@
     <ul class="menu">
         <li><a href="/list">The Bookings</a></li>
         <li><a href="/guests">The Guests</a></li>
-        <li><a href="/rooms">The Rooms</a></li>
+        <li><a href="/rooms">The Rooms types</a></li>
+        <li><a href="/roomassets">The Rooms themselves</a></li> </ul>
     </ul>
 </h2>
 <h3>
@@ -48,7 +49,7 @@
             <c:forEach var="booking" items="${bookings}">
                 <td>
                     <input type="text" name="name" size="45"
-                           value="<c:out value='${booking.booking_name} ${booking.bookingRef}'/>"
+                           value="<c:out value='${booking.leadguest_first_name} ${booking.bookingRef}'/>"
                     />
                 </td>
 

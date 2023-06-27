@@ -14,7 +14,8 @@
     <ul class="menu">
         <li><a href="/list">The Bookings</a></li>
         <li><a href="/guests">The Guests</a></li>
-        <li><a href="/rooms">The Rooms</a></li>
+        <li><a href="/rooms">The Rooms types</a></li>
+        <li><a href="/roomassets">The Rooms themselves</a></li> </ul>
     </ul>
 </h2>
 <h3>
@@ -28,10 +29,10 @@
     <form action="rooms" method="post">
         <table >
             <caption>
-                <h2> Add New Room</h2>
+                <h2> Add New Room TYPE</h2>
             </caption>
             <tr>
-                <th>Room Name: </th>
+                <th>Room Type Name: </th>
                 <td>
                     <input type="text" name="room_name" size="45"
                            value="<c:out value='${room.room_name}' />"

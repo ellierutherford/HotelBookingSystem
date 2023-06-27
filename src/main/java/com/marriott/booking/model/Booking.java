@@ -1,8 +1,12 @@
 package com.marriott.booking.model;
 
 import jakarta.persistence.*;
+import org.springframework.cglib.core.Local;
+
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -13,7 +17,10 @@ public class Booking {
     @GeneratedValue
     private Long id;
     @NotBlank
-    private String booking_name;
+    private String leadguest_first_name;
+
+    @NotBlank
+    private String leadguest_last_name;
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
     Set<Reservation> guests;
     @Column(name = "bookingRef")
@@ -25,6 +32,10 @@ public class Booking {
     @Column(name = "end_date")
     private LocalDate endDate;
 
+    @ManyToOne()
+    @JoinColumn(name = "roomasset")
+    private RoomAsset roomasset;
+
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
 
@@ -35,9 +46,10 @@ public class Booking {
         super();
     }
 
-    public Booking(Long id, String booking_name, String bookingRef, LocalDate startDate, LocalDate endDate, BookingStatus status) {
+    public Booking(Long id, String leadguest_first_name, String leadguest_last_name, String bookingRef, LocalDate startDate, LocalDate endDate, BookingStatus status) {
         this.id = id;
-        this.booking_name = booking_name;
+        this.leadguest_first_name = leadguest_first_name;
+        this.leadguest_last_name = leadguest_last_name;
         this.bookingRef = bookingRef;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -52,20 +64,52 @@ public class Booking {
         return id;
     }
 
-    public String getBooking_name() {
-        return booking_name;
+    public String getleadguest_first_name() {
+        return leadguest_first_name;
+    }
+    public String getleadguest_last_name() {
+        return leadguest_last_name;
     }
 
-    public void setBooking_name(String booking_name) {
-        this.booking_name = booking_name;
+    public LocalDate getStartDate() {
+        return startDate;
     }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public RoomAsset getRoomAsset() {
+        return roomasset;
+    }
+
+    public void setRoomAsset(RoomAsset roomAsset) {
+        this.roomasset = roomAsset;
+    }
+
+
+    public void setleadguest_first_name(String leadguest_first_name) {
+        this.leadguest_first_name = leadguest_first_name;
+    }
+
+    public void setleadguest_last_name(String leadguest_last_name) {
+        this.leadguest_last_name = leadguest_last_name;
+    }
+
+
 
     // Modify the setter for guests to accept a Set<Reservation>
     public void setGuests(Set<Reservation> guests) {
         this.guests = guests;
     }
-
-
 
 
 }

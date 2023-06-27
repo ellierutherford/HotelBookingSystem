@@ -17,12 +17,14 @@
     <ul class="menu">
         <li><a href="/list">The Bookings</a></li>
         <li><a href="/guests">The Guests</a></li>
-        <li><a href="/rooms">The Rooms</a></li>
+        <li><a href="/rooms">The Rooms types</a></li>
+        <li><a href="/roomassets">The Rooms themselves</a></li> </ul>
     </ul>
 </h2>
 <h3>
     <ul class="menu">
-        <li <c:if test="${guestCount == 0}">class="disabled"</c:if>><a href="/new">Add New Booking</a></li>
+        <li <c:if test="${guestCount == 0}">class="disabled"</c:if>><a href="/new">Add New Booking existing guest</a></li>
+        <li><a href="/experiment">Add New Booking new guest</a></li>
         <li><a href="/newguest">Add New Guest</a></li>
         <li><a href="/newroom">Add New Room</a></li>
     </ul>
@@ -42,7 +44,7 @@
         <c:forEach var="booking" items="${listBookings}">
             <tr>
                 <td><c:out value="${booking.id}" /></td>
-                <td><c:out value="${booking.booking_name}" /></td>
+                <td><c:out value="${booking.leadguest_first_name}" /></td>
 
                 <td>
                     <a href="/bookings/${booking.id}"/>Edit</a>

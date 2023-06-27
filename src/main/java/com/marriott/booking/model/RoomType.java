@@ -8,18 +8,18 @@ import jakarta.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "rooms")
-public class Room {
+@Table(name = "roomtypes")
+public class RoomType {
     @Id
     @GeneratedValue
     private Long id;
     @NotBlank
     private String room_name;
 
-    public Room(){
+    public RoomType(){
         super();
     }
-    public Room(Long id, String room_name) {
+    public RoomType(Long id, String room_name) {
         super();
         this.id = id;
         this.room_name = room_name;

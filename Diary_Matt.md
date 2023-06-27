@@ -111,3 +111,90 @@ handle. Will bring this in to the hotel code and remove the composite ID, as per
 will keep to the sketched up details in the Ellie's data model documentation, until we can meet later.
 
 ----
+
+Working on with renamed class Rooms to RoomAssets, I reflect on the dangers of not fully
+addressing in my code, ambiguity and leaving related classed undefined. 
+
+Clodagh is taking on automated testing, 
+which will be handy as things get more complex.
+
+I wonder what the data model given to the class will look like when compared to the one arrived at iteratively 
+in this project, and if we'll end up changing things. 
+
+My instinct is that the Dependency Injection Layer 
+in the controller should decouple things so we have 
+huge flexibility in building custom views.
+I'll know if this is true after I attempt a build the strangers' interface, which should pull together
+1. New Guest 
+2. New Booking
+3. Existing Room Types and corresponding number of free roomAssets of that Type
+----
+left out of this for now
+Payments etc
+
+
+----
+24/6/2023
+Start the build out of the new guest interface, based on the 'Add Booking' from Admin UI.
+removing the menu items, and reseting the things I send to the view completely, because I want to be careful 
+about what I put out there, and do it bit by bit. THis is an alternative to planning a whole load of stuff. Start with nothing
+each time in the pres layer and add in as little as possible to make it meet the bare function.
+Hackers were messing with my coding session, they have found point 8080 where I left it open the other day for the team meet and send
+funny looking things that perhaps webgoat might explain later when we hack at it.
+
+Enough diarising, back to it....
+
+
+---------------------
+
+working on edit booking but tired, so done, and edit not working.
+http://localhost:8080/experiment
+is working though, so an anon can make booking.
+Lots of logging in the console now too. We can confidently build out the data model and continue in the 
+way to build function, as handing the anon in the Controller layer has shown the decouping power of Dependency Injection. Note we not have a lot in the interfaces in today's work in this branch. I haven't really used it since the Composite ID phase, but I will need it in anything one controller needs to talk to another on, so have that to look forward to on a fresh brain tomorrow.
+
+----------------------
+
+I have going to work on building interfaces like yesterday over the basics of the CRUD 
+and build function from tools in the lecture. I'm open to my work being refactoring, but I am just going 
+to work in spring to see what I can get. It doesn't seem, to be a problem to try something out
+in the data model and roll back, I'm going with 
+the endpoints I need and trusting to the flexibility change anything I need to. Once familiarity 
+with DI is built following MVC the feature velocity should build.
+
+This MVC gives us options on what we put out and take in and put out and process and redirect. 
+One solid datamodel, build out a bit a at time is what this is for, and it will give a 
+working structure that is more complex that anything we can specify.
+
+THe focus should be on what feature is possible next, and build it so it makes sense, refactor it when you need too
+it's too small and low data volume to be any real trouble, the risk is we don't product enough basic function.
+
+
+--------
+
+working on roomassets, seems to be coming along. Will take a break and view the other branches for interest. Dev Team 2/3 up and running 
+in the development env yet so it looks like testing might not be on the cards just yet.
+
+---------
+
+Setting myself the objective of getting a booking through the reservation process through the multistage screens, which involves CRUD operations at each step in the controller,
+and is skillbuilding in terms of moving operations through the controller and views. I am relying on the Spring boot features to handle the data model, and I validate the
+refined datamodel from the function I am getting. So far since there is DI from controller level and REST on the data structures, these are both my constraints and the reason
+function can be built out. Once I have some basic pricing for roomstypes and availability behaviour across room assets I will stop to tidy up and make some tests
+
+-------------
+An architecture is a set of constraints according to the REST author, and these are helpful for building persistent
+object state when CRUD is used to operate them. The DI means that things are easy to change and address in the controller
+the main challenge for me has been to build familiarity with the operations. I'm looking at the the booking being 
+inside the reservation and wondering how much do I need to worry about building into a corner. 
+
+Here are the one I've made for myself Bookings are of assets that are of types, and I'm working thru marchalling them in an 
+unsmelly way in the anon controller route. So far I haven't needed to leave spring, I'll know if the approach works if I can 
+build the availability on assets presented as RoomType as a super-header. 
+
+-----
+
+THis is going great, the room Assets and types make sense now and we're ready to consider when they can be booked.
+Getting a record down now of when the rooms are occupied. Had to make one more interface, but nothing too bad. Very happy 
+with the day's progress.
+-----

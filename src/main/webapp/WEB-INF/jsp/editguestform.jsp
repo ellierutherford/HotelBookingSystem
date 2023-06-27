@@ -34,7 +34,7 @@
 
 
             <tr>
-                <th>Last: </th>
+                <th>Last Name: </th>
                 <td>
                     <input type="text" name="guest_last_name" size="45"
                            value="<c:out value='${guest.guest_last_name}' />"
@@ -42,11 +42,11 @@
                 </td>
             </tr>
 
-            <th>Books: </th>
+            <th>Bookings: </th>
             <c:forEach var="booking" items="${bookings}">
                 <td>
                     <input type="text" name="name" size="45"
-                           value="<c:out value='${booking.booking_name} ${booking.bookingRef}'/>"
+                           value="<c:out value='${booking.leadguest_first_name} ${booking.bookingRef}'/>"
                     />
                 </td>
 
