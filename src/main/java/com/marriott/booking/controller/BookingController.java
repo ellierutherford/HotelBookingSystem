@@ -8,6 +8,7 @@ import com.marriott.booking.model.*;
 import com.marriott.booking.repository.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +40,22 @@ public class BookingController {
     @Autowired
     AssetBookingRepository assetBookingRepository;
 
+    // Show available rooms to book
+    @GetMapping("/allavailable")
+    public String showAvailableRooms(@RequestParam("start_date")
+                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start_date,
+                                     @RequestParam("end_date") @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
+                                     LocalDate end_date, Model model)
+            throws RoomNotFoundException{
+        List<Long> room_ids = roomAssetRepository.findAvailableRooms(start_date, end_date);
+        List<RoomAsset> availableRooms = new ArrayList<RoomAsset>();
+        for (Long room_id : room_ids) {
+            RoomAsset room = roomAssetRepository.findById(room_id).orElseThrow(() -> new RoomNotFoundException(room_id));
+            availableRooms.add(room);
+        }
+        model.addAttribute("rooms", availableRooms);
+        return "room";
+    }
 
     // Get a Single Booking
     @GetMapping("/bookings/{id}")
@@ -93,8 +110,7 @@ public class BookingController {
         try {
             List<RoomAsset> roomAssets = roomAssetRepository.findByRoomTypeId(listroomType);
             for (RoomAsset roomAsset : roomAssets) {
-                //CHeck with assetBookingRepository
-                System.out.println("Setting bookingRoomAsset to" + roomAsset.getroomasset_name() + " as matches request and is believed true false " + assetBookingRepository.isAvailable(roomAsset.getId(),startDate) + "to be available on your arrival day.") ;
+                System.out.println("Setting bookingRoomAsset to" + roomAsset.getroomasset_name() + " as matches request and is believed to be available.") ;
                 booking.setRoomAsset(roomAsset);
             }
         } catch (Exception e) {
@@ -135,7 +151,7 @@ public class BookingController {
     @RequestMapping(value = "bookings/save", method = RequestMethod.POST)
     public String updateNote( @ModelAttribute("booking")  Booking booking, @RequestParam("missingGuests") Long[] guestIds, Model model) throws BookingNotFoundException, GuestNotFoundException {
         System.out.println("1e booking edit in the saving of booking: " +booking.getleadguest_first_name() + " with existing guest" + reservationRepository.findGuestByBookingId(booking.getId()) +" !!!");
-                //apply guest to reservation
+        //apply guest to reservation
         System.out.println("1e booking edit in the saving of booking: " +booking.getleadguest_first_name() + " with new guests" + guestIds+" !!!");
         for (Long guestId : guestIds) {
             Guest guest = new Guest();
