@@ -41,21 +41,21 @@ public class BookingController {
     AssetBookingRepository assetBookingRepository;
 
     // Show available rooms to book
-    @GetMapping("/allavailable")
+   /* @GetMapping("/allavailable")
     public String showAvailableRooms(@RequestParam("start_date")
                                      @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start_date,
                                      @RequestParam("end_date") @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
                                      LocalDate end_date, Model model)
             throws RoomNotFoundException{
-        List<Long> room_ids = roomAssetRepository.findAvailableRooms(start_date, end_date);
+        List<RoomAsset> rooms = roomAssetRepository.findAvailableRooms(start_date, end_date);
         List<RoomAsset> availableRooms = new ArrayList<RoomAsset>();
-        for (Long room_id : room_ids) {
-            RoomAsset room = roomAssetRepository.findById(room_id).orElseThrow(() -> new RoomNotFoundException(room_id));
+        for (RoomAsset room : rooms) {
+            RoomAsset room = roomAssetRepository.findById(room.getId()).orElseThrow(() -> new RoomNotFoundException(room));
             availableRooms.add(room);
         }
         model.addAttribute("rooms", availableRooms);
         return "room";
-    }
+    }*/
 
     // Get a Single Booking
     @GetMapping("/bookings/{id}")
@@ -83,6 +83,7 @@ public class BookingController {
         int guestCount = listGuests.size(); // Get the number of guests in the list
         model.addAttribute("guestCount", guestCount); // Add the guest count to the model*/
         System.out.println("1 Welcome page List these bookings" + listBookings + " and this many registered guests "+guestCount );
+
         return "welcome";
     }
 
@@ -99,6 +100,8 @@ public class BookingController {
         //make array of our dates
         LocalDate startDate = booking.getStartDate();
         LocalDate endDate = booking.getEndDate();
+
+
         List<LocalDate> bookingDates = new ArrayList<>();
 
         LocalDate currentDate = startDate;
@@ -122,6 +125,8 @@ public class BookingController {
             AssetBooking assetbooking = new AssetBooking(booking.getRoomAsset(), date);
             assetBookingRepository.save(assetbooking);
             System.out.println("Added Reserved Booking Date: " + date);
+
+
         }
 
         bookingRepository.save(booking);
@@ -190,6 +195,17 @@ public class BookingController {
         System.out.println("New unknown booker with Name: " + booking.getleadguest_first_name() + " " + booking.getleadguest_last_name() +" .");
         System.out.println("Booking Startdate: " + booking.getStartDate() + ". ");
         System.out.println("Booking Enddate: " + booking.getEndDate() + ". ");
+
+
+        List<RoomAsset> roomAssets = roomAssetRepository.findAvailableRooms(booking.getStartDate(),booking.getEndDate());
+        for (RoomAsset roomAsset : roomAssets) {
+            System.out.println("Found this roomAsset " + roomAsset.room_name + " as a potential for booking: " + booking.getId());
+        }
+
+
+
+
+
 
         List<RoomType> listroomTypes = roomTypeRepository.findAll();
         model.addAttribute("listroomTypes", listroomTypes);

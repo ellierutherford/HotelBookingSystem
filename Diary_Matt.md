@@ -198,3 +198,5 @@ THis is going great, the room Assets and types make sense now and we're ready to
 Getting a record down now of when the rooms are occupied. Had to make one more interface, but nothing too bad. Very happy 
 with the day's progress.
 -----
+
+Ellie has done a query for availability, incorporate it into a view somewhere as a precursor to getting it in functions....
