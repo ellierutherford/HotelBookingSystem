@@ -199,4 +199,36 @@ Getting a record down now of when the rooms are occupied. Had to make one more i
 with the day's progress.
 -----
 
-Ellie has done a query for availability, incorporate it into a view somewhere as a precursor to getting it in functions....
+Ellie has done a query for availability, which I made an ID -> object tweak to for readability which tests well, see console output as we make 
+one booking, and then do a query that doesn't cross the dates and then does. Note this testing was done with one room type and asset
+in the system.
+
+1 Welcome page List these bookings[] and this many registered guests 1
+Setting bookingRoomAsset toOne as matches request and is believed to be available.
+Added Reserved Booking Date: 2023-06-26
+Added Reserved Booking Date: 2023-06-27
+Added Reserved Booking Date: 2023-06-28
+4 Added guest 1 to booking 1 on room assetcom.marriott.booking.model.RoomAsset@708e646b
+5 I'm post save of booking G1_26_FirstName and guests 
+1 Welcome page List these bookings and this many registered guests 1
+1a createStrangerBooking Form displayed
+New unknown booker with Name: G2_29_FN G2_30_LN .
+Booking Startdate: 2023-06-29.
+Booking Enddate: 2023-06-30.
+Found this roomAsset One and type: com.marriott.booking.model.RoomType@77a146a as a potential for booking.
+3a Save Created New Guest: 2With first name G2_29_FNWith last name .G2_30_LN
+New unknown booker with Name: G3_29_FN G3_30_LN .
+Booking Startdate: 2023-06-26.
+Booking Enddate: 2023-06-28.
+3a Save Created New Guest: 3With first name G3_29_FNWith last name .G3_30_LN
+
+Availability only needs to work from booking at the moment although there will doubtless be
+backend views that require it, but I will the endpoint leave this part as Ellie's scope, as she has indicated non working
+but I find the query good so far. . Notes on git management,
+the features in Intellj are excellent for git, and I am gaining confidence in group participation with this.
+It is easy to put the decision about ID vs object on the backburner, it's a two min tweak to make
+the transtion as it comes in.
+
+Looking at the unit testing options which become more pressing as the complexity builds.
+
+Need to check with Ellie re intent behind Ids, maybe is a security or performance thing I don't know about.

@@ -40,24 +40,6 @@ public class BookingController {
     @Autowired
     AssetBookingRepository assetBookingRepository;
 
-    // Show available rooms to book
-   /* @GetMapping("/allavailable")
-    public String showAvailableRooms(@RequestParam("start_date")
-                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start_date,
-                                     @RequestParam("end_date") @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
-                                     LocalDate end_date, Model model)
-            throws RoomNotFoundException{
-        List<RoomAsset> rooms = roomAssetRepository.findAvailableRooms(start_date, end_date);
-        List<RoomAsset> availableRooms = new ArrayList<RoomAsset>();
-        for (RoomAsset room : rooms) {
-            RoomAsset room = roomAssetRepository.findById(room.getId()).orElseThrow(() -> new RoomNotFoundException(room));
-            availableRooms.add(room);
-        }
-        model.addAttribute("rooms", availableRooms);
-        return "room";
-    }*/
-
-    // Get a Single Booking
     @GetMapping("/bookings/{id}")
     public String getBookingById(@PathVariable(value="id") Long bookingId, Model model)
             throws BookingNotFoundException, GuestNotFoundException{
@@ -199,7 +181,7 @@ public class BookingController {
 
         List<RoomAsset> roomAssets = roomAssetRepository.findAvailableRooms(booking.getStartDate(),booking.getEndDate());
         for (RoomAsset roomAsset : roomAssets) {
-            System.out.println("Found this roomAsset " + roomAsset.room_name + " as a potential for booking: " + booking.getId());
+            System.out.println("Found this roomAsset " + roomAsset.getroomasset_name() + " and type: "+ roomAsset.getroomType() + " as a potential for booking.");
         }
 
 
