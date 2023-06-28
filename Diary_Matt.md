@@ -249,3 +249,14 @@ terse elegant query is returning available rooms reliably, we can tidy up the bl
 Now it gives a v dirty error page when you try an existing resource.
 
 Next - undo the bloat......
+
+---------------
+
+End of the day notes on 28/06, some good progress here now, going to look at adding other bookings to reservation in the morning, 
+thinking there needs to be a option in a page to add another booking to the reservation before progressing to payment page.
+
+I've left notes in the controller where I've spend time debugging as I shift from a list to an item on the next 
+page, and it should help speed things up as the features are developed.
+
+We also need to error handle the attempted bookings where a room is not available as well remove type options from the
+dropdown where there are no available room assets of that type.

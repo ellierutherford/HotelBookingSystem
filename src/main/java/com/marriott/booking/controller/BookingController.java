@@ -200,15 +200,9 @@ public class BookingController {
 
         Reservation reservation = (Reservation) session.getAttribute("reservation");
         Guest leadguest = (Guest) session.getAttribute("leadguest");
-        /*System.out.println("Work with res: " + reservation.getBooking().getleadguest_first_name() + " work with booking: " + booking.getleadguest_last_name() + " .");
-        System.out.println("New anon booking FIRSTNAME: " + booking.getleadguest_first_name() + " New anon booking LASTNAME: " + booking.getleadguest_last_name() + " .");
-        System.out.println("STARTDATE" + booking.getStartDate() + " ENDDATE" + booking.getEndDate() + ". ");*/
-
         RoomType roomType = roomTypeRepository.findById(roomTypeId).orElseThrow(() -> new RoomNotFoundException(roomTypeId));
-        System.out.println("Attempt set room type to: " + roomType.getRoom_name() + " on booking.");
         model.addAttribute("roomTypeId", roomTypeId);
 
-        /*Code smell starts*/
         List<RoomAsset> bookedRoomAssets = new ArrayList<>();
         List<RoomAsset> availableRoomAssets = new ArrayList<>();
 
