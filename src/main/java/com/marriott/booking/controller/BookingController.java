@@ -46,12 +46,8 @@ public class BookingController {
         model.addAttribute("booking", booking);
 
         List<Guest> guests = reservationRepository.findGuestByBookingId(booking.getId());
-        //System.out.println("2GETsingle booking by IDing a Single Booking for: " +booking.getleadguest_first_name() +" and guest its guest" + reservationRepository.findGuestByBookingId(booking.getId()));
-
         model.addAttribute("listguests", guests);
         model.addAttribute("missingGuests", reservationRepository.findGuestsNotInBooking(booking.getId()));
-        //System.out.println("2GETSingle We can send the guests that are not in this booking to edit screen and they are: " + reservationRepository.findGuestsNotInBooking(booking.getId()) +" !!!");
-
         return "editform";
     }
 
@@ -59,10 +55,11 @@ public class BookingController {
     public String viewHomePage(Model model){
         List<Booking> listBookings = bookingRepository.findAll();
         model.addAttribute("listBookings", listBookings);
+
         List<Guest> listGuests = guestRepository.findAll();
         int guestCount = listGuests.size(); // Get the number of guests in the list
         model.addAttribute("guestCount", guestCount); // Add the guest count to the model*/
-        System.out.println("1 Welcome page List these bookings" + listBookings + " and this many registered guests "+guestCount );
+
 
         return "welcome";
     }
@@ -77,15 +74,6 @@ public class BookingController {
     }
     @PostMapping("/bookings")
     public String saveCreatedBooking(@ModelAttribute("booking") Booking booking, @RequestParam("guestIds") Long[] guestIds, @RequestParam("listroomType") Long listroomType, Model model) throws GuestNotFoundException {
-        //make array of our dates
-        LocalDate startDate = booking.getStartDate();
-        LocalDate endDate = booking.getEndDate();
-        List<LocalDate> bookingDates = new ArrayList<>();
-        LocalDate currentDate = startDate;
-        while (!currentDate.isAfter(endDate)) {
-            bookingDates.add(currentDate);
-            currentDate = currentDate.plusDays(1);
-        }
 
         List<RoomAsset> bookedRoomAssets = new ArrayList<>();
         List<RoomAsset> availableRoomAssets = new ArrayList<>();
@@ -191,9 +179,6 @@ public class BookingController {
         System.out.println("New unknown booker with Name: " + booking.getleadguest_first_name() + " " + booking.getleadguest_last_name() +" .");
         System.out.println("Booking Startdate: " + booking.getStartDate() + ". ");
         System.out.println("Booking Enddate: " + booking.getEndDate() + ". ");
-
-
-
 
         List<RoomType> listroomTypes = roomTypeRepository.findAll();
         model.addAttribute("listroomTypes", listroomTypes);
