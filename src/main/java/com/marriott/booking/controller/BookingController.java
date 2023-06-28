@@ -89,17 +89,14 @@ public class BookingController {
             currentDate = currentDate.plusDays(1);
         }
 
-
         try {
             List<Booking> otrBooksInDate = reservationRepository.findBookingsByDateRange(booking.getStartDate(),booking.getEndDate());
             for (Booking otrBookInDate : otrBooksInDate) {
-                System.out.println("Found another Room Asset already booked on that date " + otrBookInDate.getRoomAsset().getroomasset_name() + " ");
+                System.out.println("Found another Room Asset already booked in that date range " + otrBookInDate.getRoomAsset().getroomasset_name() + " ");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
 
 
         try {

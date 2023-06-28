@@ -29,8 +29,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("select a.booking from Reservation a where a.guest.id = ?1")
     List<Guest> findBookingByGuestId(Long guest_id) throws GuestNotFoundException;
 
-    @Query("SELECT a.booking FROM Reservation a WHERE a.booking.startDate = :startDate AND a.booking.endDate = :endDate")
-    List<Booking> findBookingsByDateRange(@Param("startDate") LocalDate startDate,@Param("endDate") LocalDate endDate);
+    @Query("SELECT a.booking FROM Reservation a WHERE a.booking.startDate <= :endDate AND a.booking.endDate >= :startDate")
+    List<Booking> findBookingsByDateRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+
 
 
     @Query("select a from Guest a where a not in (select aut.guest from Reservation aut where aut.booking.id = ?1)")
