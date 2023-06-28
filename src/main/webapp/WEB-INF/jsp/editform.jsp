@@ -59,7 +59,7 @@
                 </c:forEach>
             </tr>
             <tr>
-                <th>Missing Guests: </th>
+                <th>All Guests: (should just be missing) </th>
                 <c:forEach var="missingGuests" items="${missingGuests}">
                     <td>
                         <label>

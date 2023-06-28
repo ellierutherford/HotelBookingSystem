@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<h1>Room ASSET Management</h1>
+<h1>Welcome to Room Assets</h1>
 <h2>
     <ul class="menu">
         <li><a href="/list">The Bookings</a></li>
@@ -38,6 +38,7 @@
                 <td><c:out value="${roomasset.id}" /></td>
                 <td><c:out value="${roomasset.roomasset_name}" /></td>
                 <td><c:out value="${roomasset.roomType.room_name}" /></td>
+
 
                 <td>
                     <a href="/roomassets/${roomasset.id}"/>Edit</a>

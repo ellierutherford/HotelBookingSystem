@@ -8,10 +8,7 @@
     <link href="${jstlCss}" rel="stylesheet" >
 </head>
 <body>
-
     <h1>Transaction STEP 2</h1>
-
-
 <div>
 
     <form action="/bookingsanonstep2" method="post">
@@ -23,7 +20,16 @@
         <input type="hidden" name="leadguest_last_name" value="${booking.leadguest_last_name}" />
 
         <p>Hi ${guest.guest_first_name}, a Booking date of: ${booking.startDate} to ${booking.endDate}?</p>
-        <!------- Note there are different types in and out -------------->
+
+
+        <!-------requirement:                                                           -------------->
+        <!-------users should be able to view available room*s*                         -------------->
+        <!-------between specific dates, they may want more than one type               -------------->
+        <!-------Matt:The available room requirement can be satisfied in the drop down  -------------->
+        <!-------show rooms only with available. Specific date already in action here   -------------->
+
+        <!------- Note there are different types in and out in this drop down from list to single----->
+
         <th>Select your Preferred Room Type:</th>
             <td>
                 <select name="listroomType">
@@ -36,7 +42,6 @@
     </form>
 
 </div>
-
 
 <script>
     // JavaScript code to set default values for the date fields

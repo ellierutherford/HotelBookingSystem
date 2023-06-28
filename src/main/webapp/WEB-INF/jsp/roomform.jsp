@@ -36,10 +36,19 @@
                 <td>
                     <input type="text" name="room_name" size="45"
                            value="<c:out value='${room.room_name}' />"
+
                     />
                 </td>
             </tr>
+            <tr>
+                <th>Room Type Rate: </th>
+                <td>
+                    <input type="text" name="night_rate" size="45"
+                           value="<c:out value='${room.night_rate}' />"
 
+                    />
+                </td>
+            </tr>
 
             <tr>
                 <td colspan="2" >

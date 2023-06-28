@@ -27,6 +27,7 @@
                 <td><c:out value="${room.room_type}" /></td>
                 <td><c:out value="${room.max_guests}" /></td>
 
+
             </tr>
         </c:forEach>
     </table>

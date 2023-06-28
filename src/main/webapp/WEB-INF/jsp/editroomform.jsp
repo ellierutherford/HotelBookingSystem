@@ -29,7 +29,7 @@
         <table>
             <caption>
                 <h2>
-                    Edit Room
+                    Edit Room Type
                 </h2>
             </caption>
             <input type="hidden" name="id" value="<c:out value='${room.id}' />"  />
@@ -40,7 +40,14 @@
                            value="<c:out value='${room.room_name}' />"
                     />
                 </td>
+                <th>Nightly Rate </th>
+                <td>
+                    <input type="text" name="night_rate" size="45"
+                           value="<c:out value='${room.night_rate}' />"
+                    />
+                </td>
             </tr>
+
 
 
 

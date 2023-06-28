@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<h1>Room ASSETs Management</h1>
+<h1>ADD NEW ROOM ASSET</h1>
 <h2>
     <ul class="menu">
         <li><a href="/list">The Bookings</a></li>
@@ -44,7 +44,10 @@
                            value="<c:out value='${roomasset.roomasset_name}' />"
                     />
                 </td>
+
             </tr>
+
+
 
             <tr>
                 <th>Room Type:</th>

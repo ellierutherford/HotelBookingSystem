@@ -47,6 +47,7 @@
                     />
                 </td>
             </tr>
+
             <tr>
                 <th>Room Type:</th>
                 <td>
