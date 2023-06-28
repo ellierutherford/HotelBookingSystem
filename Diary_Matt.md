@@ -243,3 +243,9 @@ query by breaking it into steps.
 Successful in spotting other queries on same start date
 
 ------
+
+Got a rough availability check going on ELlie's model of checking the booking table, rather than extra AssetBooking controller. When the 
+terse elegant query is returning available rooms reliably, we can tidy up the bloated Booking Controller. 
+Now it gives a v dirty error page when you try an existing resource.
+
+Next - undo the bloat......
