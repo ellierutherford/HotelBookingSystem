@@ -33,8 +33,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Booking> findBookingsByDateRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
 
-
-
     @Query("select a from Guest a where a not in (select aut.guest from Reservation aut where aut.booking.id = ?1)")
     List<Guest> findGuestsNotInBooking(Long booking_id);
 

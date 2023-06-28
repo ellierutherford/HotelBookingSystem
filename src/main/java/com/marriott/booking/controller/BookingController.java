@@ -89,10 +89,14 @@ public class BookingController {
             currentDate = currentDate.plusDays(1);
         }
 
+        List<RoomAsset> bookedRoomAssets = new ArrayList<>();
+        List<RoomAsset> availableRoomAssets = new ArrayList<>();
+
         try {
-            List<Booking> otrBooksInDate = reservationRepository.findBookingsByDateRange(booking.getStartDate(),booking.getEndDate());
-            for (Booking otrBookInDate : otrBooksInDate) {
-                System.out.println("Found another Room Asset already booked in that date range " + otrBookInDate.getRoomAsset().getroomasset_name() + " ");
+            List<Booking> otrBookingsInDate = reservationRepository.findBookingsByDateRange(booking.getStartDate(),booking.getEndDate());
+            for (Booking otrBookInDate : otrBookingsInDate) {
+                System.out.println("Found another Room Asset already booked in that date range " + otrBookInDate.getRoomAsset().getroomasset_name() + " and added it to array of booked rooms we can't book.");
+                bookedRoomAssets.add(otrBookInDate.getRoomAsset());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -100,20 +104,29 @@ public class BookingController {
 
 
         try {
-            List<RoomAsset> availableRoomAssets = roomAssetRepository.findAvailableRoomsByType(booking.getStartDate(), booking.getEndDate(), listroomType);
+            List<RoomAsset> RoomAssets = roomAssetRepository.findByRoomTypeId(listroomType);
+            for (RoomAsset availableRoomAsset : RoomAssets) {
+                System.out.println("All room assets by type " + availableRoomAsset.getroomasset_name() + " and added it to array of suitable rooms by type");
+                availableRoomAssets.add(availableRoomAsset);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //let's put nice error page here.
+
+        try {
+            availableRoomAssets.removeAll(bookedRoomAssets);
             for (RoomAsset roomAsset : availableRoomAssets) {
-                System.out.println("Setting bookingRoomAsset for " + roomAsset.getroomasset_name() + " as matches request and could be available.");
+                System.out.println("Setting bookingRoomAsset for " + roomAsset.getroomasset_name() + " as matches request and is available.");
                 booking.setRoomAsset(roomAsset);
                 bookingRepository.save(booking);
-                // Run the availability routine for booking dates
-                break; // just one asset pls
-            }
+                break;
+        }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
 
         for (Long guestId : guestIds) {
             Guest guest = guestRepository.findById(guestId).orElseThrow(() -> new GuestNotFoundException(guestId));
