@@ -232,3 +232,12 @@ the transtion as it comes in.
 Looking at the unit testing options which become more pressing as the complexity builds.
 
 Need to check with Ellie re intent behind Ids, maybe is a security or performance thing I don't know about.
+
+
+------
+
+28/6 a few days to the orginal deadline, breaking out the problem of the availability. If Ellie's query can be made to work we 
+don't need my table of assets and dates, it would be tidier, so forget the AssetBooking class and see what's happening with the 
+query by breaking it into steps.
+
+------

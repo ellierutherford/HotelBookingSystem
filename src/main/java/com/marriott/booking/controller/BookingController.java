@@ -89,10 +89,21 @@ public class BookingController {
             currentDate = currentDate.plusDays(1);
         }
 
-        List<Long> roomAssetIds = roomAssetRepository.findAvailableRooms(booking.getStartDate(),booking.getEndDate());
+        /*List<Long> roomAssetIds = roomAssetRepository.findAvailableRooms(booking.getStartDate(),booking.getEndDate());
         for (Long roomAssetId : roomAssetIds) {
-            System.out.println("DEBUG Found this roomAsset " + roomAssetId + " ID open");
+            System.out.println("DEBUG Found these free roomAssets using Ellie's method" + roomAssetId + " ID open");
+        }*/
+
+        try {
+            List<Booking> otrBooksInDate = reservationRepository.findBookingsByDateRange(booking.getStartDate());
+            for (Booking otrBookInDate : otrBooksInDate) {
+                System.out.println("Found another Room Asset already booked on that date " + otrBookInDate.getRoomAsset().getroomasset_name() + " ");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+
 
 
         try {
