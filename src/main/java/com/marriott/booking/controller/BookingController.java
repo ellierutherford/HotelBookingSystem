@@ -100,8 +100,6 @@ public class BookingController {
             e.printStackTrace();
         }
 
-        //let's put nice error page here.
-
         try {
             availableRoomAssets.removeAll(bookedRoomAssets);
             for (RoomAsset roomAsset : availableRoomAssets) {
@@ -183,17 +181,14 @@ public class BookingController {
         List<RoomType> listroomTypes = roomTypeRepository.findAll();
         model.addAttribute("listroomTypes", listroomTypes);
 
-        bookingRepository.save(booking);
-
         Guest guest = new Guest();
         guest.setGuest_first_name(booking.getleadguest_first_name());
         guest.setGuest_last_name(booking.getleadguest_last_name());
         guestRepository.save(guest);
 
         Reservation reservation = new Reservation(booking, guest);
-        reservationRepository.save(reservation);
-
         session.setAttribute("reservation", reservation);
+        session.setAttribute("leadguest", guest);
 
         System.out.println("3a Save Created New Guest: " + guest.getId() + "With first name " + guest.getGuest_first_name() + "With last name ." + guest.getGuest_last_name() );
         model.addAttribute("guest", guest);
@@ -201,25 +196,60 @@ public class BookingController {
     }
 
     @PostMapping("/bookingsanonstep2")
-    public String saveCreatedStrangerBookingStep2(@ModelAttribute("booking") Booking booking, Model model, @RequestParam("listroomTypes") Long[] roomTypeIds, HttpSession session) throws RoomNotFoundException, GuestNotFoundException {
+    public String saveCreatedStrangerBookingStep2(@ModelAttribute("booking") Booking booking, Model model, @RequestParam("listroomType") Long roomTypeId, HttpSession session) throws RoomNotFoundException, GuestNotFoundException {
 
         Reservation reservation = (Reservation) session.getAttribute("reservation");
-        System.out.println("New anon booking FIRSTNAME: " + booking.getleadguest_first_name() + " .");
-        System.out.println("New anon booking LASTNAME: " + booking.getleadguest_last_name() + " .");
-        System.out.println("STARTDATE" + booking.getStartDate() + ". ");
-        System.out.println("ENDDATE" + booking.getEndDate() + ". ");
-        //lets get available roomtypes for their dates by looking for roomtypes that have room assets that have Null for each date in between reservation.start and reservation.end
+        Guest leadguest = (Guest) session.getAttribute("leadguest");
+        System.out.println("Work with res: " + reservation.getBooking().getleadguest_first_name() + " work with booking: " + booking.getleadguest_last_name() + " .");
+        System.out.println("New anon booking FIRSTNAME: " + booking.getleadguest_first_name() + " New anon booking LASTNAME: " + booking.getleadguest_last_name() + " .");
+        System.out.println("STARTDATE" + booking.getStartDate() + " ENDDATE" + booking.getEndDate() + ". ");
 
-        for (Long roomTypeId : roomTypeIds) {
-            //Find the room type from the room type ID
-            RoomType roomType = roomTypeRepository.findById(roomTypeId).orElseThrow(() -> new RoomNotFoundException(roomTypeId));
-            System.out.println("Attempt set room type to" + roomType.getRoom_name() + " on booking ID" + booking.getId());
-            /*should run once*/
-            model.addAttribute("roomTypeId", roomTypeId);
+        RoomType roomType = roomTypeRepository.findById(roomTypeId).orElseThrow(() -> new RoomNotFoundException(roomTypeId));
+        System.out.println("Attempt set room type to: " + roomType.getRoom_name() + " on booking ID" + reservation.getBooking().getId());
+        model.addAttribute("roomTypeId", roomTypeId);
+
+        System.out.println("But should be able to divert this later" + reservation.getBooking().getRoomAsset() + ". ");
+        /*Code smell starts*/
+        List<RoomAsset> bookedRoomAssets = new ArrayList<>();
+        List<RoomAsset> availableRoomAssets = new ArrayList<>();
+
+        try {
+            List<Booking> otrBookingsInDate = reservationRepository.findBookingsByDateRange(reservation.getBooking().getStartDate(),reservation.getBooking().getEndDate());
+            for (Booking otrBookingInDate : otrBookingsInDate) {
+                System.out.println("Found another Room Asset already booked in that date range with asset ID" + otrBookingInDate.getRoomAsset() + " and added it to array of booked rooms we can't book.");
+                bookedRoomAssets.add(otrBookingInDate.getRoomAsset());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        System.out.println("............redirect on saving of a brand new booking for this asset" + reservation.getBooking().getRoomAsset() + ". ");
 
+        try {
+            List<RoomAsset> RoomAssets = roomAssetRepository.findByRoomTypeId(roomTypeId);
+            for (RoomAsset availableRoomAsset : RoomAssets) {
+                System.out.println("All room assets by type " + availableRoomAsset.getroomasset_name() + " and added it to array of suitable rooms by type");
+                availableRoomAssets.add(availableRoomAsset);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            availableRoomAssets.removeAll(bookedRoomAssets);
+            for (RoomAsset roomAsset : availableRoomAssets) {
+                System.out.println("Setting bookingRoomAsset for " + roomAsset.getroomasset_name() + " as matches request and is available.");
+                booking.setRoomAsset(roomAsset);
+                bookingRepository.save(booking);
+
+                break; //run once
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Save reservation");
+        reservationRepository.save(new Reservation(booking, leadguest));
         model.addAttribute("reservation", reservation);
 
         return "bookingsanonstep3";

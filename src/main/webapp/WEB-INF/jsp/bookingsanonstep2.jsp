@@ -29,12 +29,14 @@
 
         <th>Room Asset Type:</th>
         <td>
-            <select name="listroomTypes">
-                <c:forEach items="${listroomTypes}" var="listroomTypes">
-                    <option value="${listroomTypes.id}">${listroomTypes.room_name}</option>
+            <select name="listroomType">
+                <c:forEach items="${listroomTypes}" var="listroomType">
+                    <option value="${listroomType.id}">${listroomType.room_name}</option>
                 </c:forEach>
             </select>
         </td>
+
+        <! ------- types in type out    -------------- >
 
 
 
