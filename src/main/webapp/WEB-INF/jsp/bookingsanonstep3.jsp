@@ -9,16 +9,12 @@
 </head>
 <body>
 <div>
-    <h1>Transaction CONFIRMATION!</h1>
+    <h1>LAST STEP</h1>
     <p>Hi ${guest.guest_first_name},</p>
-    <p>You seek a ${guest.guest_first_name},</p>
     <p>Booking dates: ${booking.startDate} </p>
     <p>First Name: ${booking.leadguest_first_name} + "");</p>
 
-
-
     <form action="/bookingsanonstep3" method="post">
-
 
         < ! ---  we must hold these vars --- >
         <input type="hidden" name="startDate" value="${booking.startDate}" />
@@ -26,12 +22,7 @@
         <input type="hidden" name="leadguest_first_name" value="${booking.leadguest_first_name}" />
         <input type="hidden" name="leadguest_last_name" value="${booking.leadguest_last_name}" />
 
-
-
-
-
-
-        <input type="submit" value="OK" />
+        <input type="submit" value="BOOK THE ROOM!" />
     </form>
 
 </div>

@@ -8,47 +8,35 @@
     <link href="${jstlCss}" rel="stylesheet" >
 </head>
 <body>
-<div>
+
     <h1>Transaction STEP 2</h1>
-    <p>Hi ${guest.guest_first_name},</p>
-    <p>You seek a ${guest.guest_first_name},</p>
-    <p>Booking dates: ${booking.startDate} </p>
-    <p>First Name: ${booking.leadguest_first_name} + "");</p>
 
 
+<div>
 
     <form action="/bookingsanonstep2" method="post">
 
-
-        < ! ---  we must hold these vars --- >
+        <!---  we must hold these vars --->
         <input type="hidden" name="startDate" value="${booking.startDate}" />
         <input type="hidden" name="endDate" value="${booking.endDate}" />
         <input type="hidden" name="leadguest_first_name" value="${booking.leadguest_first_name}" />
         <input type="hidden" name="leadguest_last_name" value="${booking.leadguest_last_name}" />
 
-
-        <th>Room Asset Type:</th>
-        <td>
-            <select name="listroomType">
-                <c:forEach items="${listroomTypes}" var="listroomType">
-                    <option value="${listroomType.id}">${listroomType.room_name}</option>
-                </c:forEach>
-            </select>
-        </td>
-
-        <! ------- types in type out    -------------- >
-
-
-
-        <input type="submit" value="OK" />
+        <p>Hi ${guest.guest_first_name}, a Booking date of: ${booking.startDate} to ${booking.endDate}?</p>
+        <!------- Note there are different types in and out -------------->
+        <th>Select your Preferred Room Type:</th>
+            <td>
+                <select name="listroomType">
+                    <c:forEach items="${listroomTypes}" var="listroomType">
+                        <option value="${listroomType.id}">${listroomType.room_name}</option>
+                    </c:forEach>
+                </select>
+            </td>
+        <input type="submit" value="Next Step....." />
     </form>
 
 </div>
-<h3>
-    <ul class="menu">
-        <li><a href="/list">Arrange Your Bookings (and everyone else's too), until #task Login Security</a></li>
-    </ul>
-</h3>
+
 
 <script>
     // JavaScript code to set default values for the date fields

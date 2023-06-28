@@ -200,19 +200,19 @@ public class BookingController {
 
         Reservation reservation = (Reservation) session.getAttribute("reservation");
         Guest leadguest = (Guest) session.getAttribute("leadguest");
-        System.out.println("Work with res: " + reservation.getBooking().getleadguest_first_name() + " work with booking: " + booking.getleadguest_last_name() + " .");
+        /*System.out.println("Work with res: " + reservation.getBooking().getleadguest_first_name() + " work with booking: " + booking.getleadguest_last_name() + " .");
         System.out.println("New anon booking FIRSTNAME: " + booking.getleadguest_first_name() + " New anon booking LASTNAME: " + booking.getleadguest_last_name() + " .");
-        System.out.println("STARTDATE" + booking.getStartDate() + " ENDDATE" + booking.getEndDate() + ". ");
+        System.out.println("STARTDATE" + booking.getStartDate() + " ENDDATE" + booking.getEndDate() + ". ");*/
 
         RoomType roomType = roomTypeRepository.findById(roomTypeId).orElseThrow(() -> new RoomNotFoundException(roomTypeId));
-        System.out.println("Attempt set room type to: " + roomType.getRoom_name() + " on booking ID" + reservation.getBooking().getId());
+        System.out.println("Attempt set room type to: " + roomType.getRoom_name() + " on booking.");
         model.addAttribute("roomTypeId", roomTypeId);
 
-        System.out.println("But should be able to divert this later" + reservation.getBooking().getRoomAsset() + ". ");
         /*Code smell starts*/
         List<RoomAsset> bookedRoomAssets = new ArrayList<>();
         List<RoomAsset> availableRoomAssets = new ArrayList<>();
 
+        //other bookings by date range
         try {
             List<Booking> otrBookingsInDate = reservationRepository.findBookingsByDateRange(reservation.getBooking().getStartDate(),reservation.getBooking().getEndDate());
             for (Booking otrBookingInDate : otrBookingsInDate) {
@@ -222,26 +222,24 @@ public class BookingController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
+        //room assets
         try {
             List<RoomAsset> RoomAssets = roomAssetRepository.findByRoomTypeId(roomTypeId);
             for (RoomAsset availableRoomAsset : RoomAssets) {
                 System.out.println("All room assets by type " + availableRoomAsset.getroomasset_name() + " and added it to array of suitable rooms by type");
                 availableRoomAssets.add(availableRoomAsset);
-
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        //take the booked assets out of the roomsAssets of desired type and book something that's left
         try {
+
             availableRoomAssets.removeAll(bookedRoomAssets);
             for (RoomAsset roomAsset : availableRoomAssets) {
-                System.out.println("Setting bookingRoomAsset for " + roomAsset.getroomasset_name() + " as matches request and is available.");
+                System.out.println("Make the booking on the RoomAsset " + roomAsset.getroomasset_name() + " as matches request and is available.");
                 booking.setRoomAsset(roomAsset);
                 bookingRepository.save(booking);
-
                 break; //run once
             }
         } catch (Exception e) {
@@ -252,7 +250,7 @@ public class BookingController {
         reservationRepository.save(new Reservation(booking, leadguest));
         model.addAttribute("reservation", reservation);
 
-        return "bookingsanonstep3";
+        return "redirect:/list";
     }
 
 
