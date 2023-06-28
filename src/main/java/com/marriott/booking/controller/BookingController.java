@@ -73,43 +73,19 @@ public class BookingController {
         return "bookingform";
     }
     @PostMapping("/bookings")
-    public String saveCreatedBooking(@ModelAttribute("booking") Booking booking, @RequestParam("guestIds") Long[] guestIds, @RequestParam("listroomType") Long listroomType, Model model) throws GuestNotFoundException {
+    public String saveCreatedBooking(@ModelAttribute("booking") Booking booking, @RequestParam("guestIds") Long[] guestIds, @RequestParam("listroomType") Long listroomType, Model model) throws GuestNotFoundException, Exception {
 
         List<RoomAsset> bookedRoomAssets = new ArrayList<>();
         List<RoomAsset> availableRoomAssets = new ArrayList<>();
 
-        try {
-            List<Booking> otrBookingsInDate = reservationRepository.findBookingsByDateRange(booking.getStartDate(),booking.getEndDate());
-            for (Booking otrBookInDate : otrBookingsInDate) {
-                System.out.println("Found another Room Asset already booked in that date range " + otrBookInDate.getRoomAsset().getroomasset_name() + " and added it to array of booked rooms we can't book.");
-                bookedRoomAssets.add(otrBookInDate.getRoomAsset());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        availableRoomAssets = roomAssetRepository.findAvailableRoomsByType(booking.getStartDate(), booking.getEndDate(), listroomType);
+
+        if(availableRoomAssets.size()==0){
+            throw new Exception("No room available!"); //throw better exception
         }
-
-
-        try {
-            List<RoomAsset> RoomAssets = roomAssetRepository.findByRoomTypeId(listroomType);
-            for (RoomAsset availableRoomAsset : RoomAssets) {
-                System.out.println("All room assets by type " + availableRoomAsset.getroomasset_name() + " and added it to array of suitable rooms by type");
-                availableRoomAssets.add(availableRoomAsset);
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            availableRoomAssets.removeAll(bookedRoomAssets);
-            for (RoomAsset roomAsset : availableRoomAssets) {
-                System.out.println("Setting bookingRoomAsset for " + roomAsset.getroomasset_name() + " as matches request and is available.");
-                booking.setRoomAsset(roomAsset);
-                bookingRepository.save(booking);
-                break;
-        }
-        } catch (Exception e) {
-            e.printStackTrace();
+        else {
+            booking.setRoomAsset(availableRoomAssets.get(0));
+            bookingRepository.save(booking);
         }
 
         for (Long guestId : guestIds) {
