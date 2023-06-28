@@ -9,15 +9,15 @@
 </head>
 <body>
 <div>
-    <h1>Transaction Completed</h1>
+    <h1>Transaction CONFIRMATION!</h1>
     <p>Hi ${guest.guest_first_name},</p>
     <p>You seek a ${guest.guest_first_name},</p>
     <p>Booking dates: ${booking.startDate} </p>
     <p>First Name: ${booking.leadguest_first_name} + "");</p>
-    roomTypeId
 
 
-    <form action="/newguestbookingsstep2" method="post">
+
+    <form action="/bookingsanonstep3" method="post">
 
 
         < ! ---  we must hold these vars --- >

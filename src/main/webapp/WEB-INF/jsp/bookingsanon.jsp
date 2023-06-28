@@ -13,7 +13,7 @@
 <h2>So Get one of our Available rooms</h2>
 
 <div>
-    <form action="newguestbookings" method="post">
+    <form action="bookingsanon" method="post">
         <table>
             <caption>
                 <h3>Add New Booking. Rest assured the Book-a-lator 3000 has no idea what a free room is yet, but that's no impediment, it soon will</h3>
