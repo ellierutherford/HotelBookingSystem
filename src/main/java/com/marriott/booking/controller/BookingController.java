@@ -37,8 +37,6 @@ public class BookingController {
     @Autowired
     RoomAssetRepository roomAssetRepository;
 
-    @Autowired
-    AssetBookingRepository assetBookingRepository;
 
     @GetMapping("/bookings/{id}")
     public String getBookingById(@PathVariable(value="id") Long bookingId, Model model)
