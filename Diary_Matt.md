@@ -240,4 +240,6 @@ Need to check with Ellie re intent behind Ids, maybe is a security or performanc
 don't need my table of assets and dates, it would be tidier, so forget the AssetBooking class and see what's happening with the 
 query by breaking it into steps.
 
+Successful in spotting other queries on same start date
+
 ------
