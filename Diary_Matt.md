@@ -198,3 +198,65 @@ THis is going great, the room Assets and types make sense now and we're ready to
 Getting a record down now of when the rooms are occupied. Had to make one more interface, but nothing too bad. Very happy 
 with the day's progress.
 -----
+
+Ellie has done a query for availability, which I made an ID -> object tweak to for readability which tests well, see console output as we make 
+one booking, and then do a query that doesn't cross the dates and then does. Note this testing was done with one room type and asset
+in the system.
+
+1 Welcome page List these bookings[] and this many registered guests 1
+Setting bookingRoomAsset toOne as matches request and is believed to be available.
+Added Reserved Booking Date: 2023-06-26
+Added Reserved Booking Date: 2023-06-27
+Added Reserved Booking Date: 2023-06-28
+4 Added guest 1 to booking 1 on room assetcom.marriott.booking.model.RoomAsset@708e646b
+5 I'm post save of booking G1_26_FirstName and guests 
+1 Welcome page List these bookings and this many registered guests 1
+1a createStrangerBooking Form displayed
+New unknown booker with Name: G2_29_FN G2_30_LN .
+Booking Startdate: 2023-06-29.
+Booking Enddate: 2023-06-30.
+Found this roomAsset One and type: com.marriott.booking.model.RoomType@77a146a as a potential for booking.
+3a Save Created New Guest: 2With first name G2_29_FNWith last name .G2_30_LN
+New unknown booker with Name: G3_29_FN G3_30_LN .
+Booking Startdate: 2023-06-26.
+Booking Enddate: 2023-06-28.
+3a Save Created New Guest: 3With first name G3_29_FNWith last name .G3_30_LN
+
+Availability only needs to work from booking at the moment although there will doubtless be
+backend views that require it, but I will the endpoint leave this part as Ellie's scope, as she has indicated non working
+but I find the query good so far. . Notes on git management,
+the features in Intellj are excellent for git, and I am gaining confidence in group participation with this.
+It is easy to put the decision about ID vs object on the backburner, it's a two min tweak to make
+the transtion as it comes in.
+
+Looking at the unit testing options which become more pressing as the complexity builds.
+
+Need to check with Ellie re intent behind Ids, maybe is a security or performance thing I don't know about.
+
+
+------
+
+28/6 a few days to the orginal deadline, breaking out the problem of the availability. If Ellie's query can be made to work we 
+don't need my table of assets and dates, it would be tidier, so forget the AssetBooking class and see what's happening with the 
+query by breaking it into steps.
+
+Successful in spotting other queries on same start date
+
+------
+
+Got a rough availability check going on ELlie's model of checking the booking table, rather than extra AssetBooking controller. When the 
+terse elegant query is returning available rooms reliably, we can tidy up the bloated Booking Controller. 
+Now it gives a v dirty error page when you try an existing resource.
+
+Next - undo the bloat......
+
+---------------
+
+End of the day notes on 28/06, some good progress here now, going to look at adding other bookings to reservation in the morning, 
+thinking there needs to be a option in a page to add another booking to the reservation before progressing to payment page.
+
+I've left notes in the controller where I've spend time debugging as I shift from a list to an item on the next 
+page, and it should help speed things up as the features are developed.
+
+We also need to error handle the attempted bookings where a room is not available as well remove type options from the
+dropdown where there are no available room assets of that type.

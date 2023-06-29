@@ -13,10 +13,11 @@
 <h2>So Get one of our Available rooms</h2>
 
 <div>
-    <form action="newguestbookings" method="post">
+    <form action="bookingsanon" method="post">
         <table>
             <caption>
-                <h3>Add New Booking. Rest assured the Book-a-lator 3000 has no idea what a free room is yet, but that's no impediment, it soon will</h3>
+                <h3>Add New Booking. The latest Book-a-lator 3000 will give you an available room or crash horribly.</h3>
+                <h4>There's no point in complaining, because all our rooms cost nothing and we can't take payments yet anyway</h4>
             </caption>
             <tr>
                 <th>Lead Guest:</th>
@@ -64,18 +65,14 @@
 
             <tr>
                 <td colspan="2">
-                    <input type="submit" id="saveButton" value="Save"  />
+                    <input type="submit" id="saveButton" value="NEXT STEP....."  />
                 </td>
             </tr>
         </table>
     </form>
 
 </div>
-<h3>
-    <ul class="menu">
-        <li><a href="/list">Arrange Your Bookings (and everyone else's too), until #task Login Security</a></li>
-    </ul>
-</h3>
+
 
 <script>
     // JavaScript code to set default values for the date fields

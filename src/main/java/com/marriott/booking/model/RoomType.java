@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
+import java.util.Currency;
 
 import javax.validation.constraints.NotBlank;
 
@@ -16,13 +18,18 @@ public class RoomType {
     @NotBlank
     private String room_name;
 
+    @NotBlank
+    private BigDecimal night_rate;
+    private static Currency currency;
+
     public RoomType(){
         super();
     }
-    public RoomType(Long id, String room_name) {
+    public RoomType(Long id, String room_name, BigDecimal night_rate) {
         super();
         this.id = id;
         this.room_name = room_name;
+        this.night_rate = night_rate;
     }
 
     public Long getId() {
@@ -36,6 +43,22 @@ public class RoomType {
     }
     public void setRoom_name(String room_name) {
         this.room_name = room_name;
+    }
+
+    public BigDecimal getNight_rate() {
+        return night_rate;
+    }
+
+    public void setNight_rate(BigDecimal night_rate) {
+        this.night_rate = night_rate;
+    }
+
+    public static Currency getCurrency() {
+        return currency;
+    }
+
+    public static void setCurrency(Currency currency) {
+        RoomType.currency = currency;
     }
 
 

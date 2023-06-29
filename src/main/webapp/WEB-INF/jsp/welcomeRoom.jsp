@@ -31,12 +31,14 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Last Name</th>
+            <th>Rate</th>
         </tr>
         <c:forEach var="room" items="${listRooms}" varStatus="loop">
             <tr>
                 <td><c:out value="${room.id}" /></td>
                 <td><c:out value="${room.room_name}" /></td>
+                <td><c:out value="${room.night_rate}" /></td>
+
                 <td>
                     <a href="/rooms/${room.id}"/>Edit</a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
