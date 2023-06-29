@@ -260,3 +260,8 @@ page, and it should help speed things up as the features are developed.
 
 We also need to error handle the attempted bookings where a room is not available as well remove type options from the
 dropdown where there are no available room assets of that type.
+
+
+--------------
+
+Ellie has rewritten the availability query with the roomtype parameter and it works, time to merge
