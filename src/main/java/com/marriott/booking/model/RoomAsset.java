@@ -61,10 +61,4 @@ public class RoomAsset {
     public void setroomasset_type(RoomType roomType) {
         this.roomType = roomType;
     }
-
-
-
-
-
-
 }
