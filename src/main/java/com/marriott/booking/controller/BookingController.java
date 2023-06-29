@@ -68,6 +68,29 @@ public class BookingController {
         model.addAttribute("listroomTypes", listroomTypes);
         return "bookingform";
     }
+
+    @RequestMapping("/search")
+    public String searchAvailability(Model model) {
+        System.out.println("in search...");
+        return "searchform";
+    }
+
+    @PostMapping("/availability")
+    public String searchAvailability(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate,
+                                     @RequestParam("numGuests") int numGuests, Model model) throws Exception{
+
+        List<RoomAsset> availableRoomAssets = roomAssetRepository.findAvailableRoomsByCapacity(startDate, endDate, numGuests);
+
+        if(availableRoomAssets.size()==0){
+            throw new Exception("No room available!"); //throw better exception
+        }
+        else {
+            model.addAttribute("availableRooms", availableRoomAssets);
+        }
+
+        return "room";
+    }
+
     @PostMapping("/bookings")
     public String saveCreatedBooking(@ModelAttribute("booking") Booking booking, @RequestParam("guestIds") Long[] guestIds, @RequestParam("listroomType") Long listroomType, Model model) throws GuestNotFoundException, Exception {
 
