@@ -6,27 +6,24 @@ You will need to install IntelliJ + MySQL.
 Once you have these installed, you will need to create a database called "hotelBookingSystem" and a table called "bookings" in this database.
 Use the following commands to connect to mysql, create the db, table and populate it with some information.
 ```
-mysql -u root -p 
-# When prompted, supply your password
 
-# create db + switch to it
-CREATE DATABASE hotelBookingSystem;
-USE hotelBookingSystem;
+//No need for injection into table. THis will get you going with the current Application configuration.
 
-# create a table called bookings - doesn't have all necessary fields, it's just to get set up
-CREATE TABLE bookings(id INT NOT NULL AUTO_INCREMENT, guestFirstName VARCHAR(20) NOT NULL, guestLastName VARCHAR(20) NOT NULL, PRIMARY KEY (id));
+CREATE USER 'springuser'@'localhost' IDENTIFIED BY 'ThePassword';
 
-# populate with some data
-INSERT INTO bookings(guestFirstName, guestLastName) VALUES ("Matt", "McGee");
-INSERT INTO bookings(guestFirstName, guestLastName) VALUES ("Clodagh", "Durkan");
-INSERT INTO bookings(guestFirstName, guestLastName) VALUES ("Eleanor", "Rutherford");
+CREATE DATABASE `hotelbookingsystem`;
+-- Grant privileges to the user
+GRANT ALL PRIVILEGES ON example.* TO 'springuser'@'localhost';
+-- Flush privileges to apply the changes
+FLUSH PRIVILEGES;
 
-# check it's populated correctly
-select * from bookings;
 
-# commit if happy
-commit;
-```
+NOTE: 'Create' Database in application properties is a really good idea when doing structural data stuff :)
+Only turn it down to update when sure nothings changing or see errors that look like this:
+
+There was an unexpected error (type=Internal Server Error, status=500).
+could not execute statement [Field 'id_booking' doesn't have a default value]
+ [insert into reservation (booking,id_credit_card,guest,id) values (?,?,?,?)]
 
 Once your DB is up and running, replace the password place holder in the "src/main/resources/application.properties" file to your MySQL password.
 
