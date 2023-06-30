@@ -41,7 +41,7 @@
                 <h2> Add New Booking</h2>
             </caption>
             <tr>
-                <th>Lead Guest First Name:</th>
+                <th>First Name:</th>
                 <td>
                     <input type="text" name="leadguest_first_name" size="45"
                            value="<c:out value='${booking.leadguest_first_name}' />"
@@ -50,24 +50,12 @@
             </tr>
 
             <tr>
-                <th>Lead Guest Last Name: </th>
+                <th>Last Name: </th>
                 <td>
                     <input type="text" name="leadguest_last_name" size="45"
                            value="<c:out value='${booking.leadguest_last_name}' />"
                     />
                 </td>
-            </tr>
-
-            <tr>
-                <th>Guests: </th>
-                <c:forEach var="listGuests" items="${listGuests}">
-                    <td>
-                        <label>
-                            <input type="checkbox" name="guestIds" value="<c:out value='${listGuests.id}'/>" onchange="countCheckedCheckboxes()">
-                            <c:out value='${listGuests.guest_first_name} ${listGuests.guest_last_name}'/>
-                        </label>
-                    </td>
-                </c:forEach>
             </tr>
 
             <tr>
