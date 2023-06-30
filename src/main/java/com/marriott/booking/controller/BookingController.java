@@ -73,11 +73,15 @@ public class BookingController {
     }
 
     @RequestMapping("/bookel")
-    public String bookEl(@RequestParam("startDate") LocalDate start_date, @RequestParam("endDate") LocalDate endDate,
+    public String bookEl(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate,
                          @RequestParam("numGuests") int numGuests, @RequestParam("roomId") Long room_id,
                          Model model){
-        System.out.println("debug ellie " + start_date + " room id " + room_id);
-        return "continueOrLogin";
+        model.addAttribute("startDate", startDate );
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("numGuests", numGuests);
+        model.addAttribute("roomId", room_id);
+        System.out.println("debug ellie " + startDate + " room id " + room_id);
+        return "bookingform";
     }
 
     @RequestMapping("/search")
