@@ -265,3 +265,9 @@ dropdown where there are no available room assets of that type.
 --------------
 
 Ellie has rewritten the availability query with the roomtype parameter and it works, time to merge
+
+--------------
+
+Stepped back from development to work through zapping the Goat, and is it is fun.
+Took a while to get going , but run it on another machine with a hostsfile entry and change the localhost entry to 0.0.0.0 on the server machine when starting the goat. On the workstation run the Windows manual Proxy server on 127.0.0.1 8100, and hook up Zap as per lecture. Point Firefox at the Windows manual entry and it works.
+Clarified on json payload and how to constructe one and did the 1st 2 exercises. Need encryption on our sessions!
