@@ -5,10 +5,12 @@ So far;
 - Set up bare bones template project in repo
 - Created entity relationship diagram to get sense of data model
 - Created queries and repository methods for retrieving only available rooms 
-- Added search page so user can search for available rooms for given date range and number of guests
+- Added search page so user can search for available rooms for given date range and number of guests;
+  - TRY IT OUT: navigate to http://localhost:8080/search. Note you will have to populate the room type and room asset tables first!
 - Allow a user to book a room from list of available rooms and use provided guest details to create guest object.
   (Verified that if a room has already been booked using this flow, it won't show up as an available room within that date range for the next user.)
 - Added register functionality to allow people to register as Starwood users
+  - TRY IT OUT: navigate to http://localhost:8080/register
 
 So what have I covered from the assignment brief?
 
