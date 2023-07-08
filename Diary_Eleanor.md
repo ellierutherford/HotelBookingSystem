@@ -22,6 +22,6 @@ So what have I covered from the assignment brief?
   - TODO: this is currently horribly insecure. Need to encrypt password/use hash + salt
 
 NOTE: I had to make changes to the db schema to implement the above, so now some of Matt's code doesn't work. I commented out for now, but will tidy up and fix tomorrow. 
-We need to start rationalising and tidying up the code, I've added so much mess to it!! I'll try unify our approaches and write up a summary tomorrow. 
+We need to start rationalising and tidying up the code, I've added so much mess to it!! I'll try unify our approaches and write up a summary tomorrow. I WILL NOT MERGE THIS BRANCH INTO MAIN UNTIL THAT'S DONE or otherwise I will break all of Matt's stuff!
 I also want to work on the TODOs listed above, plus starting on the login functionality. 
 
