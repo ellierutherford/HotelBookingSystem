@@ -6,7 +6,22 @@ So far;
 - Created entity relationship diagram to get sense of data model
 - Created queries and repository methods for retrieving only available rooms 
 - Added search page so user can search for available rooms for given date range and number of guests
+- Allow a user to book a room from list of available rooms and use provided guest details to create guest object.
+  (Verified that if a room has already been booked using this flow, it won't show up as an available room within that date range for the next user.)
+- Added register functionality to allow people to register as Starwood users
 
-Next;
-- Tie in Matt's code to allow user book an available room from list of available rooms. Ensure we have hit all requirements from brief.
+So what have I covered from the assignment brief?
+
+- Show available rooms between specific dates and for a certain number of guests - DONE (some UI work may be needed)
+- Guest users can book one or more available rooms, provide details + credit card:
+  - Guest users can only book ONE room. TODO: add capability to book more than one. Need to dig into Matt's implementation of Registration vs Booking to do this.
+  - Guest users must provide name, surname, address, phone number, email address: DONE. Nice to have would be to add validation for all this input
+  - TODO: Guest users must provide credit card details
+- Users can register as Starwood members;
+  - Users can register by providing name, username and password - DONE. TODO: split the flow into two - step 1: user provides ALL details (phone etc as well), step 2: user creates username and password
+  - TODO: this is currently horribly insecure. Need to encrypt password/use hash + salt
+
+NOTE: I had to make changes to the db schema to implement the above, so now some of Matt's code doesn't work. I commented out for now, but will tidy up and fix tomorrow. 
+We need to start rationalising and tidying up the code, I've added so much mess to it!! I'll try unify our approaches and write up a summary tomorrow. 
+I also want to work on the TODOs listed above, plus starting on the login functionality. 
 
