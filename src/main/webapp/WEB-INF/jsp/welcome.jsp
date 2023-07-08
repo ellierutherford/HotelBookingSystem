@@ -36,29 +36,29 @@
         <caption><h2>List of Bookings</h2></caption>
         <tr>
             <th>ID</th>
-            <th>FirstName</th>
-            <th>LastName</th>
+            <th>Guest id</th>
+            <%--<th>LastName</th>--%>
             <th>Asset</th>
             <th>RoomType</th>
         </tr>
         <c:forEach var="booking" items="${listBookings}">
             <tr>
                 <td><c:out value="${booking.id}" /></td>
-                <td><c:out value="${booking.leadguest_first_name}" /></td>
-                <td><c:out value="${booking.leadguest_last_name}" /></td>
+                <td><c:out value="${booking.guest_id}" /></td>
+                    <%--<td><c:out value="${booking.leadguest_last_name}" /></td>--%>
                 <td><c:out value="${booking.roomAsset.roomasset_name}" /></td>
                 <td><c:out value="${booking.roomAsset.roomType.room_name}" /></td>
 
 
 
-                <td>
-                    <a href="/bookings/${booking.id}"/>Edit</a>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="/delete/${booking.id}"  />Delete</a>
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
+            <%--<td>
+                <a href="/bookings/${booking.id}"/>Edit</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="/delete/${booking.id}"  />Delete</a>
+            </td>--%>
+        </tr>
+    </c:forEach>
+</table>
 </div>
 </body>
 </html>

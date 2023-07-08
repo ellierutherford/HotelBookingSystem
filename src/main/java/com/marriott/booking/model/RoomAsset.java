@@ -56,7 +56,6 @@ public class RoomAsset {
         this.roomasset_name = roomasset_name;
     }
 
-
     public int getroomasset_number() {
         return roomasset_number;
     }

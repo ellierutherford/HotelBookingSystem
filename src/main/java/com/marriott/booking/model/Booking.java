@@ -17,12 +17,8 @@ public class Booking {
     @GeneratedValue
     private Long id;
     @NotBlank
-    private String leadguest_first_name;
+    private Long guest_id;
 
-    @NotBlank
-    private String leadguest_last_name;
-    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
-    Set<Reservation> guests;
     @Column(name = "bookingRef")
     private String bookingRef;
 
@@ -32,24 +28,28 @@ public class Booking {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @ManyToOne()
-    @JoinColumn(name = "roomasset")
-    private RoomAsset roomasset;
+    //@Column(name = "room_id")
+    //private String roomId;
 
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
 
-    @OneToMany(mappedBy = "booking")
+    @OneToMany(mappedBy = "booking") // figure this out
     private List<Reservation> reservations;
+
+    @ManyToOne()
+    @JoinColumn(name = "roomasset")
+    private RoomAsset roomasset;
+
 
     public Booking() {
         super();
     }
 
-    public Booking(Long id, String leadguest_first_name, String leadguest_last_name, String bookingRef, LocalDate startDate, LocalDate endDate, BookingStatus status) {
+    public Booking(Long id, Long guest_id, String bookingRef, LocalDate startDate, LocalDate endDate, BookingStatus status) {
         this.id = id;
-        this.leadguest_first_name = leadguest_first_name;
-        this.leadguest_last_name = leadguest_last_name;
+        this.guest_id = guest_id;
+        //this.roomId = room_id;
         this.bookingRef = bookingRef;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -62,13 +62,6 @@ public class Booking {
 
     public Long getId() {
         return id;
-    }
-
-    public String getleadguest_first_name() {
-        return leadguest_first_name;
-    }
-    public String getleadguest_last_name() {
-        return leadguest_last_name;
     }
 
     public LocalDate getStartDate() {
@@ -95,21 +88,15 @@ public class Booking {
         this.roomasset = roomAsset;
     }
 
-
-    public void setleadguest_first_name(String leadguest_first_name) {
-        this.leadguest_first_name = leadguest_first_name;
+    /*public String getRoomId() {
+        return roomId;
     }
 
-    public void setleadguest_last_name(String leadguest_last_name) {
-        this.leadguest_last_name = leadguest_last_name;
-    }
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
+    }*/
 
-
-
-    // Modify the setter for guests to accept a Set<Reservation>
-    public void setGuests(Set<Reservation> guests) {
-        this.guests = guests;
-    }
-
+    public Long getGuest_id() { return this.guest_id; }
+    public void setGuest_id(Long guest_id) { this.guest_id = guest_id; }
 
 }

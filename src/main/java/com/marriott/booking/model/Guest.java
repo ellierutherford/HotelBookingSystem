@@ -16,9 +16,6 @@ public class Guest {
     @NotBlank
     private String guest_last_name;
 
-    @OneToMany(mappedBy ="guest", cascade = CascadeType.ALL)
-    Set<Reservation> reservedRooms;
-
     @NotBlank
     private String guest_address;
     @NotBlank
@@ -29,11 +26,15 @@ public class Guest {
     public Guest(){
         super();
     }
-    public Guest(Long id, String guest_first_name, String guest_last_name) {
+    public Guest(Long id, String guest_first_name, String guest_last_name,
+                 String guest_address, String guest_phone_number, String guest_email) {
         super();
         this.id = id;
         this.guest_first_name = guest_first_name;
         this.guest_last_name = guest_last_name;
+        this.guest_address = guest_address;
+        this.guest_phone_number = guest_phone_number;
+        this.guest_email = guest_email;
     }
 
     public Long getId() {
@@ -55,5 +56,15 @@ public class Guest {
         this.guest_last_name = guest_last_name;
     }
 
+    public String getGuest_address(){ return guest_address; }
+    public void setGuest_address(String guest_address) { this.guest_address = guest_address; }
+
+    public String getGuest_phone_number(){ return guest_phone_number; }
+
+    public void setGuest_phone_number(String guest_phone_number) {this.guest_phone_number = guest_phone_number; }
+
+    public String getGuest_email() { return guest_email; }
+
+    public void setGuest_email(String guest_email) { this.guest_email = guest_email; }
 
 }

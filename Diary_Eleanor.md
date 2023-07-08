@@ -10,4 +10,3 @@ So far;
 Next;
 - Tie in Matt's code to allow user book an available room from list of available rooms. Ensure we have hit all requirements from brief.
 
-Next update - 30/6
