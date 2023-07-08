@@ -25,7 +25,7 @@ public class UserController {
     @PostMapping("/registration")
     public String register(Model model, @ModelAttribute User user) {
         userRepo.save(user);
-        return "registerSuccess.jsp";
+        return "registerSuccess";
     }
 
     @GetMapping("/listusers")
