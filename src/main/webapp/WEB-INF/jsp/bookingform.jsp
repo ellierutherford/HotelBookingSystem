@@ -35,7 +35,6 @@
 
 
     <form action="bookingsel" method="post">
-        <input type="hidden" name="start_date" value="${booking.startDate}" />
         <table >
             <caption>
                 <h2> Your Details </h2>
