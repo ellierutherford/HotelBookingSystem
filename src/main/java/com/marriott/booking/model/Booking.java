@@ -28,6 +28,8 @@ public class Booking {
     @Column(name = "end_date")
     private LocalDate endDate;
 
+    @Column(name = "num_guests")
+    private int numGuests;
     //@Column(name = "room_id")
     //private String roomId;
 
@@ -46,10 +48,10 @@ public class Booking {
         super();
     }
 
-    public Booking(Long id, Long guest_id, String bookingRef, LocalDate startDate, LocalDate endDate, BookingStatus status) {
+    public Booking(Long id, Long guest_id, int numGuests, String bookingRef, LocalDate startDate, LocalDate endDate, BookingStatus status) {
         this.id = id;
         this.guest_id = guest_id;
-        //this.roomId = room_id;
+        this.numGuests = numGuests;
         this.bookingRef = bookingRef;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -80,7 +82,7 @@ public class Booking {
         this.endDate = endDate;
     }
 
-    public RoomAsset getRoomAsset() {
+    public RoomAsset getRoomasset() {
         return roomasset;
     }
 
@@ -88,13 +90,13 @@ public class Booking {
         this.roomasset = roomAsset;
     }
 
-    /*public String getRoomId() {
-        return roomId;
+    public int getNumGuests() {
+        return numGuests;
     }
 
-    public void setRoomId(String roomId) {
-        this.roomId = roomId;
-    }*/
+    public void setNumGuests(int numGuests) {
+        this.numGuests = numGuests;
+    }
 
     public Long getGuest_id() { return this.guest_id; }
     public void setGuest_id(Long guest_id) { this.guest_id = guest_id; }

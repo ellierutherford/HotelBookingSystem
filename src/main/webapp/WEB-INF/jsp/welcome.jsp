@@ -46,8 +46,8 @@
                 <td><c:out value="${booking.id}" /></td>
                 <td><c:out value="${booking.guest_id}" /></td>
                     <%--<td><c:out value="${booking.leadguest_last_name}" /></td>--%>
-                <td><c:out value="${booking.roomAsset.roomasset_name}" /></td>
-                <td><c:out value="${booking.roomAsset.roomType.room_name}" /></td>
+                <td><c:out value="${booking.roomasset.roomasset_name}" /></td>
+                <td><c:out value="${booking.roomasset.roomType.room_name}" /></td>
 
 
 

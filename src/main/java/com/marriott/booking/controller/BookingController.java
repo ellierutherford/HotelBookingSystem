@@ -2,13 +2,10 @@ package com.marriott.booking.controller;
 
 import com.marriott.booking.exception.GuestNotFoundException;
 import com.marriott.booking.exception.BookingNotFoundException;
-import com.marriott.booking.exception.RoomAssetNotFoundException;
-import com.marriott.booking.exception.RoomNotFoundException;
 import com.marriott.booking.model.*;
 import com.marriott.booking.repository.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -75,11 +72,16 @@ public class BookingController {
     @RequestMapping("/bookel")
     public String bookEl(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate,
                          @RequestParam("numGuests") int numGuests, @RequestParam("roomId") Long room_id,
-                         Model model){
-        model.addAttribute("startDate", startDate );
-        model.addAttribute("endDate", endDate);
-        model.addAttribute("numGuests", numGuests);
-        model.addAttribute("roomId", room_id);
+                         Model model, HttpSession session){
+        Optional<RoomAsset> roomAsset = roomAssetRepository.findById(room_id);
+        Booking booking = new Booking();
+        booking.setEndDate(endDate);
+        booking.setStartDate(startDate);
+        booking.setNumGuests(numGuests);
+        roomAsset.ifPresent(room -> booking.setRoomAsset(room)); //throw instead?
+        // do this in one step?
+        session.setAttribute("booking", booking);
+        model.addAttribute("booking", booking);
         return "bookingform";
     }
 
@@ -109,12 +111,11 @@ public class BookingController {
     }
 
     @PostMapping("/bookingsel")
-    public String saveCreatedBookingEl(@ModelAttribute("guest") Guest guest, Model m){
-        //Booking b = new Booking(m)
-        //Guest g = new Guest();
+    public String saveCreatedBookingEl(@ModelAttribute("guest") Guest guest, HttpSession session){
         guestRepository.save(guest);
-        //booking.setGuest_id(guest.getId());
-        //bookingRepository.save(booking);
+        Booking booking = (Booking) session.getAttribute("booking");
+        booking.setGuest_id(guest.getId());
+        bookingRepository.save(booking);
         return "redirect:/list";
     }
 

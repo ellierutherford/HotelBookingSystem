@@ -18,16 +18,16 @@
             <h2> Booking Details</h2>
         </caption>
         <tr>
-            <th>Start Date: ${startDate}</th>
+            <th>Start Date: ${booking.startDate}</th>
         </tr>
         <tr>
-            <th>End Date: ${endDate}</th>
+            <th>End Date: ${booking.endDate}</th>
         </tr>
         <tr>
-            <th>Number of Guests: ${numGuests}</th>
+            <th>Number of Guests: ${booking.numGuests}</th>
         </tr>
         <tr>
-            <th>Room ID: ${roomId}</th>
+            <th>Room ID: ${booking.roomasset.roomasset_name}</th>
         </tr>
     </table>
 </div>
@@ -35,22 +35,15 @@
 
 
     <form action="bookingsel" method="post">
+        <input type="hidden" name="start_date" value="${booking.startDate}" />
         <table >
             <caption>
                 <h2> Your Details </h2>
             </caption>
             <tr>
-                <th>Id: </th>
-                <td>
-                    <input type="text" name="Last name" size="45"
-                           value="<c:out value='${guest.id}' />"
-                    />
-                </td>
-            </tr>
-            <tr>
                 <th>First Name:</th>
                 <td>
-                    <input type="text" name="First name" size="45"
+                    <input type="text" name="guest_first_name" size="45"
                            value="<c:out value='${guest.guest_first_name}' />"
                     />
                 </td>
@@ -59,7 +52,7 @@
             <tr>
                 <th>Last Name: </th>
                 <td>
-                    <input type="text" name="Last name" size="45"
+                    <input type="text" name="guest_last_name" size="45"
                            value="<c:out value='${guest.guest_last_name}' />"
                     />
                 </td>
@@ -68,7 +61,7 @@
             <tr>
                 <th>Phone: </th>
                 <td>
-                    <input type="text" name="Last name" size="45"
+                    <input type="text" name="guest_phone_number" size="45"
                            value="<c:out value='${guest.guest_phone_number}' />"
                     />
                 </td>
@@ -77,7 +70,7 @@
             <tr>
                 <th>Address: </th>
                 <td>
-                    <input type="text" name="Address" size="10"
+                    <input type="text" name="guest_address" size="10"
                            value="<c:out value='${guest.guest_address}' />"
                     />
                 </td>
@@ -86,7 +79,7 @@
             <tr>
                 <th>Guest email: </th>
                 <td>
-                    <input type="text" name="Guest email" size="20"
+                    <input type="text" name="guest_email" size="20"
                            value="<c:out value='${guest.guest_email}' />"
                     />
                 </td>
