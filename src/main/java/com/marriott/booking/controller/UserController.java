@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class UserController {
 
@@ -24,5 +26,12 @@ public class UserController {
     public String register(Model model, @ModelAttribute User user) {
         userRepo.save(user);
         return "registerSuccess.jsp";
+    }
+
+    @GetMapping("/listusers")
+    public String listUsers(Model model){
+        List<User> users = userRepo.findAll();
+        model.addAttribute("users", users);
+        return "listusers";
     }
 }
