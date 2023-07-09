@@ -305,3 +305,5 @@ Notes; Room asset now holds the number of max guests, not room type. Usually thi
 but this could give more flexibility and maybe make it easier to store the current capacity? Let's see where this goes, we're here
 to be experimental and innovative. Populate data and play around.....
 
+Lovely booking, pulling available rooms.:) 
+
