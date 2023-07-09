@@ -301,4 +301,7 @@ Not compiling for me. Pull whole current state next. Remove any differences apar
 Some reason no Ellie diary in my diff, maybe other stuff wrong. Messages, relative. Oops. I did goof.
 THere looks to be real availablility in new, exciting. And compiling.
 
+Notes; Room asset now holds the number of max guests, not room type. Usually this info associated with type in large hotels ie double twin, family 
+but this could give more flexibility and maybe make it easier to store the current capacity? Let's see where this goes, we're here
+to be experimental and innovative. Populate data and play around.....
 
