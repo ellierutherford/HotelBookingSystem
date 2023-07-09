@@ -4,6 +4,7 @@ import com.marriott.booking.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -25,8 +26,6 @@ public class UserController {
     private UserRepository userRepo;
 
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     @GetMapping("/register")
     public String registrationForm(Model model) {
@@ -40,22 +39,16 @@ public class UserController {
         return "registerSuccess";
     }
 
-    @GetMapping("/login")
+    /*@GetMapping("/login")
     public String login(){
         return "login";
-    }
+    }*/
 
     @PostMapping("/loginAction")
     public String loginAction(HttpServletRequest request, @ModelAttribute User user) {
         User u = userRepo.findByUsername(user.getUsername());
         if(u.getPassword().equals(user.getPassword())){
-            Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword());
-            SecurityContext context = SecurityContextHolder.getContext();
-            context.setAuthentication(authentication);
-            //request.getSession().setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
 
-            SecurityContextHolder.setContext(context);
-            securityContextRepository.saveContext(securityContext, httpServletRequest, httpServletResponse);
             return "loginSuccess";
         }
         else{
@@ -63,12 +56,13 @@ public class UserController {
         }
     }
 
+
     @GetMapping("/test")
     public String test(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getPrincipal().toString();
         return "test";
     }
-
 
     @GetMapping("/listusers")
     public String listUsers(Model model){

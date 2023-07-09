@@ -1,60 +1,53 @@
 package com.marriott.booking;
 
+import com.marriott.booking.model.StarwoodUserDetails;
+import com.marriott.booking.services.StarwoodUserDetailsSvc;
 import jakarta.servlet.DispatcherType;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.metamodel.mapping.ModelPart;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import javax.sql.DataSource;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class WebSecurityConfig {
+
+
+    private final StarwoodUserDetailsSvc starwoodUserDetailsSvc;
+
+    public WebSecurityConfig(StarwoodUserDetailsSvc userDetailsSvc){
+        this.starwoodUserDetailsSvc = userDetailsSvc;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> {
+                .authorizeHttpRequests(auth -> auth
+                            .requestMatchers("/**").permitAll()
                             // nb this line is needed for spring security to work with jsp
-                            auth.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll();
-                            auth.requestMatchers("/loginAction", "/**").permitAll();
-                            auth.anyRequest().authenticated();
-                        }
+                            .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+                            .anyRequest().authenticated()
                 )
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .permitAll()
-                )
+                .userDetailsService(starwoodUserDetailsSvc)
+                .formLogin(withDefaults())
                 .build();
     }
 
     @Bean
-    AuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new CustomAuthenticationSuccessHandler();
-    }
-
-    /*@Bean
-    AuthenticationFailureHandler authenticationFailureHandler() {
-        return new CustomAuthenticationFailureHandler();
-    }*/
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    PasswordEncoder passwordEncoder(){
+        return NoOpPasswordEncoder.getInstance();
     }
 }

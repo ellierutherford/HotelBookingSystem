@@ -1,8 +1,10 @@
 package com.marriott.booking.model;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class StarwoodUserDetails implements UserDetails {
@@ -15,7 +17,11 @@ public class StarwoodUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Arrays.stream(user
+                        .getRoles()
+                        .split(","))
+                .map(SimpleGrantedAuthority::new)
+                .toList();
     }
 
     @Override
@@ -46,10 +52,6 @@ public class StarwoodUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public String getFullName() {
-        return user.getFirstName() + " " + user.getLastName();
     }
 
 }

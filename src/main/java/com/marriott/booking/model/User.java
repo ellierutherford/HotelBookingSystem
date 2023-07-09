@@ -16,11 +16,25 @@ public class User {
     @Column(nullable = false, length = 64)
     private String password;
 
-    @Column(name = "first_name", nullable = false, length = 20)
+    @Column(nullable = false, length = 120)
+    private String roles;
+    /*@Column(name = "first_name", nullable = false, length = 20)
     private String firstName;
 
     @Column(name = "last_name", nullable = false, length = 20)
-    private String lastName;
+    private String lastName;*/
+
+
+    public User(){
+
+    }
+
+    public User(String username, String password, String roles){
+        this.password = password;
+        this.username = username;
+        this.roles = roles;
+    }
+
 
     public Long getId() {
         return id;
@@ -37,8 +51,24 @@ public class User {
     public void setUsername(String username){
         this.username = username;
     }
+    public String getRoles() {
+        return roles;
+    }
 
-    public String getFirstName() {
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "SecurityUser{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", roles='" + roles + '\'' +
+                '}';
+    }
+    /*public String getFirstName() {
         return firstName;
     }
 
@@ -52,7 +82,7 @@ public class User {
 
     public void setLastName(String lastName){
         this.lastName = lastName;
-    }
+    }*/
 
     // password getter and setter?? is this right??
     public String getPassword(){
