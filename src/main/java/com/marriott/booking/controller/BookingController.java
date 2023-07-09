@@ -120,16 +120,13 @@ public class BookingController {
     }
 
     // Delete a Booking
-    /*@RequestMapping("/delete/{id}")
+    @RequestMapping("/delete/{id}")
     public String deleteBooking(@PathVariable(value = "id") Long bookingId, Model model) throws BookingNotFoundException {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new BookingNotFoundException(bookingId));
-
-        System.out.println("1 ID Action Booking Deleted: " + booking.getId() + "With " + booking.getleadguest_first_name() );
         bookingRepository.delete(booking);
         return "redirect:/list";
-
-    }*/
+    }
 
     /*@RequestMapping(value = "bookings/save", method = RequestMethod.POST)
     public String updateNote( @ModelAttribute("booking")  Booking booking, @RequestParam("missingGuests") Long[] guestIds, Model model) throws BookingNotFoundException, GuestNotFoundException {
@@ -164,7 +161,6 @@ public class BookingController {
     public String createStrangerBooking(Model model) {
         System.out.println("1a createStrangerBooking Form displayed" );
         //need to send out roomtypes, full list for drop down
-
         return "bookingsanon";
     }
     /*@PostMapping("/bookingsanon")

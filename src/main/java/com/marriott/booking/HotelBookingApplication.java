@@ -4,7 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
-@SpringBootApplication(exclude={SecurityAutoConfiguration.class})
+// use our custom security config instead of default one
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class HotelBookingApplication {
 
     public static void main(String[] args) {

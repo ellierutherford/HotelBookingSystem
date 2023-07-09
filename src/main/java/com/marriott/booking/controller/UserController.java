@@ -28,6 +28,17 @@ public class UserController {
         return "registerSuccess";
     }
 
+    @GetMapping("/login")
+    public String login(){
+        return "welcome";
+    }
+
+    @GetMapping("/test")
+    public String test(){
+        return "test";
+    }
+
+
     @GetMapping("/listusers")
     public String listUsers(Model model){
         List<User> users = userRepo.findAll();
