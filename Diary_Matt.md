@@ -268,6 +268,28 @@ Ellie has rewritten the availability query with the roomtype parameter and it wo
 
 --------------
 
-Stepped back from development to work through zapping the Goat, and is it is fun.
+Stepped back from development to work through zapping the Goat, and it is fun.
 Took a while to get going , but run it on another machine with a hostsfile entry and change the localhost entry to 0.0.0.0 on the server machine when starting the goat. On the workstation run the Windows manual Proxy server on 127.0.0.1 8100, and hook up Zap as per lecture. Point Firefox at the Windows manual entry and it works.
 Clarified on json payload and how to constructe one and did the 1st 2 exercises. Need encryption on our sessions!
+
+
+-------------
+
+Webgoat exercises complete to File Traversal level, but have been completely unable to get the Goat, Zap and a Proxy working on my windows machine
+but learning something re Firefox configuration I don't think I'll be able to get this working, so to get a single physical instance running, I'm 
+going to try again with Virtualbox, and see if any hacks are available with extra virtual network adapters. But now returning to spring boot to see 
+where things are and what's next to be added to the software. Explained my approach so far to springboot to the team in terms of one feature all the way through 
+to the front end, and building out what I need using the Uncle Bob principles as best I understand them about (keeping functions in the right place, avoiding hacks etc), but
+focussing getting it going at DM, controller and front end as a skelton of working software, and then refining, but not concerning with an over 
+all plan. From the lecture last week and the webgoat, it's apparent that used properly the Spring Frame work does a lot of the 'heavy lifting' 
+in securing against SQL attacks and other common by parameterising queries etc.
+
+Hacking using the Pen test tools is fiddly and demands a lot of 'frobbing' to see what kinds of changes can be observed from error messages. 
+It's immediately obvious from using the fuzzing tools why entropy in passwords is important, not disclosing error messages. My experience in
+securing systems in the past has either come from a dynamic situation, where I'm dealing with a system in crisis, and I'm using the big details 
+to reduce risk (L2/L3 on network) or from setting up systems (e.g. active directory,powerapps) and setting policy in line with RTM and least 
+privilige, up to airgapping. The insights of the GOAT and Zap give me  the black hat's perspective and explain a lot of log file entries that 
+I have seen. This will help giving me more insight into working with pen testers, but also enough insight to know I don't want to do it very 
+much, and I'll using it to augment the white hat perspective. Secure design and engineering focus will give operational security as an emergent property.
+
+---------
