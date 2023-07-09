@@ -19,12 +19,18 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
+                            // nb this line is needed for spring security to work with jsp
                             auth.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll();
-                            auth.requestMatchers(new AntPathRequestMatcher("/test")).permitAll();
+                            auth.requestMatchers("/loginAction", "/**").permitAll();
+                            auth.anyRequest().authenticated();
                         }
                 )
-                .formLogin(withDefaults())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .permitAll()
+                )
                 .build();
     }
 

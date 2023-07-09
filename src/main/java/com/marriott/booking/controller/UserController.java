@@ -30,7 +30,18 @@ public class UserController {
 
     @GetMapping("/login")
     public String login(){
-        return "welcome";
+        return "login";
+    }
+
+    @PostMapping("/loginAction")
+    public String loginAction(Model model, @ModelAttribute User user) {
+        User u = userRepo.findByUsername(user.getUsername());
+        if(u.getPassword().equals(user.getPassword())){
+            return "loginSuccess";
+        }
+        else{
+            return "loginFailure";
+        }
     }
 
     @GetMapping("/test")
