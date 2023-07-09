@@ -293,3 +293,9 @@ I have seen. This will help giving me more insight into working with pen testers
 much, and I'll using it to augment the white hat perspective. Secure design and engineering focus will give operational security as an emergent property.
 
 ---------
+
+See latest commit is Ellie on search, max guests is changing. Reading Ellie's diary there is some Work in Progress, but there is search to try :)
+
+------
+Not compiling for me. Pull whole current state next.
+

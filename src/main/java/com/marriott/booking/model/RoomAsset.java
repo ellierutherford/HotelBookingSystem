@@ -18,14 +18,14 @@ public class RoomAsset {
     @JoinColumn(name = "roomtype_id")
     private RoomType roomType;
 
-
+    //max_guests moved
     @NotBlank
     private int roomasset_number;
 
     public RoomAsset(){
         super();
     }
-    public RoomAsset(Long id, int roomasset_number, String roomasset_name, RoomType roomType) {
+    public RoomAsset(Long id, int roomasset_number, String roomasset_name, RoomType roomType, int max_guests) {
         super();
         this.id = id;
         this.roomasset_number = roomasset_number;

@@ -44,6 +44,12 @@
                            value="<c:out value='${roomasset.roomasset_name}' />"
                     />
                 </td>
+                <th>Max guests: </th>
+                <td>
+                    <input type="number" name="max_guests"
+                           value="<c:out value='${roomasset.max_guests}' />"
+                    />
+                </td><!-----   check this still goes  ------>
 
             </tr>
 

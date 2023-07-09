@@ -55,8 +55,6 @@ public class BookingController {
         List<Guest> listGuests = guestRepository.findAll();
         int guestCount = listGuests.size(); // Get the number of guests in the list
         model.addAttribute("guestCount", guestCount); // Add the guest count to the model*/
-
-
         return "welcome";
     }
 
@@ -68,6 +66,49 @@ public class BookingController {
         model.addAttribute("listroomTypes", listroomTypes);
         return "bookingform";
     }
+
+    @RequestMapping("/auth")
+    public String continueAsGuestOrLogin(){
+        return "continueOrLogin";
+    }
+
+    @RequestMapping("/bookel")
+    public String bookEl(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate,
+                         @RequestParam("numGuests") int numGuests, @RequestParam("roomId") Long room_id,
+                         Model model){
+        model.addAttribute("startDate", startDate );
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("numGuests", numGuests);
+        model.addAttribute("roomId", room_id);
+        System.out.println("debug ellie " + startDate + " room id " + room_id);
+        return "bookingform";
+    }
+
+    @RequestMapping("/search")
+    public String searchAvailability(Model model) {
+        System.out.println("in search...");
+        return "searchform";
+    }
+
+    @PostMapping("/availability")
+    public String searchAvailability(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate,
+                                     @RequestParam("numGuests") int numGuests, Model model) throws Exception{
+
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("numGuests", numGuests);
+        List<RoomAsset> availableRoomAssets = roomAssetRepository.findAvailableRoomsByCapacity(startDate, endDate, numGuests);
+
+        if(availableRoomAssets.size()==0){
+            throw new Exception("No room available!"); //throw better exception
+        }
+        else {
+            model.addAttribute("availableRooms", availableRoomAssets);
+        }
+
+        return "AvailableRooms";
+    }
+
     @PostMapping("/bookings")
     public String saveCreatedBooking(@ModelAttribute("booking") Booking booking, @RequestParam("guestIds") Long[] guestIds, @RequestParam("listroomType") Long listroomType, Model model) throws GuestNotFoundException, Exception {
 

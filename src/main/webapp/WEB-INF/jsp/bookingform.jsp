@@ -34,14 +34,34 @@
     <a href="/list">List All Bookings</a>
 </h2>
 
-<div >
+<div>
+    <table>
+        <caption>
+            <h2> Add New Booking</h2>
+        </caption>
+        <tr>
+            <th>Start Date: ${startDate}</th>
+        </tr>
+        <tr>
+            <th>End Date: ${endDate}</th>
+        </tr>
+        <tr>
+            <th>Number of Guests: ${numGuests}</th>
+        </tr>
+        <tr>
+            <th>Room ID: ${roomId}</th>
+        </tr>
+    </table>
+</div>
+<div>
+
     <form action="bookings" method="post">
         <table >
             <caption>
-                <h2> Add New Booking</h2>
+                <h2> Your Details </h2>
             </caption>
             <tr>
-                <th>Lead Guest First Name:</th>
+                <th>First Name:</th>
                 <td>
                     <input type="text" name="leadguest_first_name" size="45"
                            value="<c:out value='${booking.leadguest_first_name}' />"
@@ -50,61 +70,12 @@
             </tr>
 
             <tr>
-                <th>Lead Guest Last Name: </th>
+                <th>Last Name: </th>
                 <td>
                     <input type="text" name="leadguest_last_name" size="45"
                            value="<c:out value='${booking.leadguest_last_name}' />"
                     />
                 </td>
-            </tr>
-
-            <tr>
-                <th>Guests: </th>
-                <c:forEach var="listGuests" items="${listGuests}">
-                    <td>
-                        <label>
-                            <input type="checkbox" name="guestIds" value="<c:out value='${listGuests.id}'/>" onchange="countCheckedCheckboxes()">
-                            <c:out value='${listGuests.guest_first_name} ${listGuests.guest_last_name}'/>
-                        </label>
-                    </td>
-                </c:forEach>
-            </tr>
-
-            <tr>
-                <th>Booking Start Date:</th>
-                <td>
-                    <input type="date" name="startDate" id="startDate" />
-                </td>
-            </tr>
-
-            <tr>
-                <th>Booking End Date:</th>
-                <td>
-                    <input type="date" name="endDate" id="endDate" />
-                </td>
-            </tr>
-
-            <th>Room Asset Type:</th>
-            <td>
-                <select name="listroomType">
-                    <c:forEach items="${listroomTypes}" var="listroomType">
-                        <option value="${listroomType.id}">${listroomType.room_name}</option>
-                    </c:forEach>
-                </select>
-            </td>
-
-            <tr>
-                <th>Ref: </th>
-                <td>
-                    <input type="text" name="bookingRef" size="45"
-                           value="<c:out value='${booking.bookingRef}' />"
-                    />
-                </td>
-            </tr>
-
-            <tr>
-                <th>Number of Checked Guests: </th>
-                <td id="guestCount">0</td>
             </tr>
 
             <tr>
@@ -125,4 +96,5 @@
         document.getElementById("endDate").value = nextweekFormatted;
     </script>
 </div>
-</
+</body>
+</html>

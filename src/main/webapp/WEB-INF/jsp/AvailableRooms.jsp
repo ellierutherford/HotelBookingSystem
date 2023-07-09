@@ -11,8 +11,6 @@
 
 <h1>Room Management</h1>
 
-
-
 <div>
     <table>
         <caption><h2>List of Rooms</h2></caption>
@@ -24,7 +22,7 @@
             <tr>
                 <td><c:out value="${room.roomasset_name}" /></td>
                 <td><c:out value="${room.max_guests}" /></td>
-                <!--- check this still works --->
+                <td><a href="/bookel?startDate=${startDate}&endDate=${endDate}&numGuests=${numGuests}&roomId=${room.id}">Book this room</a></td>
             </tr>
         </c:forEach>
     </table>
