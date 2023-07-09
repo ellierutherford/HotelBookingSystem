@@ -32,9 +32,13 @@ public class User {
     public User(String username, String password, String roles){
         this.password = password;
         this.username = username;
-        this.roles = roles;
+        if(roles.isEmpty()){
+            roles = "user"; //hack hack, better to see can we do without
+        }
+        else{
+            this.roles = roles;
+        }
     }
-
 
     public Long getId() {
         return id;

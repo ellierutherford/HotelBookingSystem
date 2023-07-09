@@ -36,22 +36,14 @@
                 </td>
             </tr>
             <tr>
-                <th>First Name:</th>
+                <th>Roles </th>
                 <td>
-                    <input type="text" name="firstName" size="45"
-                           value="<c:out value='${user.firstName}' />"
+                    <input type="text" name="roles" size="45"
+                           value="<c:out value='${user.roles}' />"
                     />
                 </td>
             </tr>
 
-            <tr>
-                <th>Last Name: </th>
-                <td>
-                    <input type="text" name="lastName" size="45"
-                           value="<c:out value='${user.lastName}' />"
-                    />
-                </td>
-            </tr>
             <tr>
                 <td colspan="2" >
                     <input type="submit" id="saveButton" value="Register" />
