@@ -297,5 +297,5 @@ much, and I'll using it to augment the white hat perspective. Secure design and 
 See latest commit is Ellie on search, max guests is changing. Reading Ellie's diary there is some Work in Progress, but there is search to try :)
 
 ------
-Not compiling for me. Pull whole current state next.
+Not compiling for me. Pull whole current state next. Remove any differences apart from db settings. Max guests in DM again or I goofed on the merge, see.
 

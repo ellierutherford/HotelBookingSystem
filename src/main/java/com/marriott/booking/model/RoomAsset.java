@@ -18,7 +18,8 @@ public class RoomAsset {
     @JoinColumn(name = "roomtype_id")
     private RoomType roomType;
 
-    //max_guests moved
+    @NotBlank
+    private int max_guests;
     @NotBlank
     private int roomasset_number;
 
@@ -31,6 +32,7 @@ public class RoomAsset {
         this.roomasset_number = roomasset_number;
         this.roomType = roomType;
         this.roomasset_name = roomasset_name;
+        this.max_guests = max_guests;
     }
 
     public Long getId() {
@@ -38,6 +40,13 @@ public class RoomAsset {
     }
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getmax_guests() {
+        return max_guests;
+    }
+    public void setMax_guests(int max_guests) {
+        this.max_guests = max_guests;
     }
 
     public String getroomasset_name() {
