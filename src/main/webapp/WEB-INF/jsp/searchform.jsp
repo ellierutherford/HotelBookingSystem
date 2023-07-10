@@ -10,11 +10,6 @@
 <body>
 
 <h1>Bookings Management</h1>
-<h2>
-    <a href="/new">Add New Booking</a>
-    &nbsp;&nbsp;&nbsp;
-    <a href="/list">List All Bookings</a>
-</h2>
 
 <div >
     <form action="availability" method="post">

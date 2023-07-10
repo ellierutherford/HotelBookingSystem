@@ -15,13 +15,24 @@
     <table>
         <caption><h2>List of Rooms</h2></caption>
         <tr>
-            <th>ID</th>
+            <th>Room name</th>
             <th>Num Guests</th>
+            <th>Price per night</th>
         </tr>
         <c:forEach var="room" items="${availableRooms}" varStatus="loop">
-            <tr>
+            <td>
                 <td><c:out value="${room.roomasset_name}" /></td>
                 <td><c:out value="${room.max_guests}" /></td>
+            <td>
+                <c:choose>
+                    <c:when test="${username eq 'anonymous'}">
+                        <c:out value="${room.roomType.night_rate}"/>
+                    </c:when>
+                    <c:otherwise>
+                        <c:out value="${room.roomType.night_rate/100*90}"/>
+                    </c:otherwise>
+                </c:choose>
+            </td>
                 <td><a href="/bookel?startDate=${startDate}&endDate=${endDate}&numGuests=${numGuests}&roomId=${room.id}">Book this room</a></td>
             </tr>
         </c:forEach>

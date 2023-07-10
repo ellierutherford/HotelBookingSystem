@@ -6,10 +6,15 @@ import com.marriott.booking.model.*;
 import com.marriott.booking.repository.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -44,15 +49,9 @@ public class BookingController {
         return "editform";
     }
 
-    @RequestMapping({"/", "/list"})
+    @RequestMapping({"/", "/home"})
     public String viewHomePage(Model model){
-        List<Booking> listBookings = bookingRepository.findAll();
-        model.addAttribute("listBookings", listBookings);
-
-        List<Guest> listGuests = guestRepository.findAll();
-        int guestCount = listGuests.size(); // Get the number of guests in the list
-        model.addAttribute("guestCount", guestCount); // Add the guest count to the model*/
-        return "welcome";
+        return "home";
     }
 
     @RequestMapping("/new")
@@ -98,6 +97,17 @@ public class BookingController {
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
         model.addAttribute("numGuests", numGuests);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = "";
+        if(authentication instanceof AnonymousAuthenticationToken){
+            username = "anonymous";
+        }
+        else{
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            username = userDetails.getUsername();
+        }
+        model.addAttribute("username", username);
+
         List<RoomAsset> availableRoomAssets = roomAssetRepository.findAvailableRoomsByCapacity(startDate, endDate, numGuests);
 
         if(availableRoomAssets.size()==0){
@@ -107,7 +117,7 @@ public class BookingController {
             model.addAttribute("availableRooms", availableRoomAssets);
         }
 
-        return "AvailableRooms";
+        return "availablerooms";
     }
 
     @PostMapping("/bookingsel")

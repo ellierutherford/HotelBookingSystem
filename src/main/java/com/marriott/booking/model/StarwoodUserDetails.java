@@ -25,6 +25,11 @@ public class StarwoodUserDetails implements UserDetails {
     }
 
     @Override
+    public String toString() {
+        return "StarwoodUser";
+    }
+
+    @Override
     public String getPassword() {
         return user.getPassword();
     }
