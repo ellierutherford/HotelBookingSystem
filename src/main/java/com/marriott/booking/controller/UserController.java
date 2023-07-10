@@ -64,6 +64,10 @@ public class UserController {
         return "test";
     }
 
+    @GetMapping("/logoutsuccess")
+    public String logout(){
+        return "logoutSuccess";
+    }
     @GetMapping("/listusers")
     public String listUsers(Model model){
         List<User> users = userRepo.findAll();
