@@ -1,128 +1,96 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
 <head>
     <title>Bookings Application</title>
     <c:url value="/css/main.css" var="jstlCss" />
     <link href="${jstlCss}" rel="stylesheet" >
-    <script>
-        function countCheckedCheckboxes() {
-            var checkboxes = document.getElementsByName("guestIds");
-            var checkedCount = 0;
-            for (var i = 0; i < checkboxes.length; i++) {
-                if (checkboxes[i].checked) {
-                    checkedCount++;
-                }
-            }
-            document.getElementById("guestCount").innerText = checkedCount;
-            var saveButton = document.getElementById("saveButton");
-            if (checkedCount === 0) {
-                saveButton.disabled = true;
-            } else {
-                saveButton.disabled = false;
-            }
-        }
-    </script>
 </head>
 <body>
 
 <h1>Bookings Management</h1>
-<h2>
-    <a href="/new">Add New Booking</a>
-    &nbsp;&nbsp;&nbsp;
-    <a href="/list">List All Bookings</a>
-</h2>
 
-<div >
-    <form action="bookings" method="post">
+<div>
+    <table>
+        <caption>
+            <h2> Booking Details</h2>
+        </caption>
+        <tr>
+            <th>Start Date: ${booking.startDate}</th>
+        </tr>
+        <tr>
+            <th>End Date: ${booking.endDate}</th>
+        </tr>
+        <tr>
+            <th>Number of Guests: ${booking.numGuests}</th>
+        </tr>
+        <tr>
+            <th>Room ID: ${booking.roomasset.roomasset_name}</th>
+        </tr>
+    </table>
+</div>
+<div>
+
+
+    <form action="bookingsel" method="post">
         <table >
             <caption>
-                <h2> Add New Booking</h2>
+                <h2> Your Details </h2>
             </caption>
             <tr>
-                <th>Lead Guest First Name:</th>
+                <th>First Name:</th>
                 <td>
-                    <input type="text" name="leadguest_first_name" size="45"
-                           value="<c:out value='${booking.leadguest_first_name}' />"
+                    <input type="text" name="guest_first_name" size="45"
+                           value="<c:out value='${guest.guest_first_name}' />"
                     />
                 </td>
             </tr>
 
             <tr>
-                <th>Lead Guest Last Name: </th>
+                <th>Last Name: </th>
                 <td>
-                    <input type="text" name="leadguest_last_name" size="45"
-                           value="<c:out value='${booking.leadguest_last_name}' />"
+                    <input type="text" name="guest_last_name" size="45"
+                           value="<c:out value='${guest.guest_last_name}' />"
                     />
                 </td>
             </tr>
 
             <tr>
-                <th>Guests: </th>
-                <c:forEach var="listGuests" items="${listGuests}">
-                    <td>
-                        <label>
-                            <input type="checkbox" name="guestIds" value="<c:out value='${listGuests.id}'/>" onchange="countCheckedCheckboxes()">
-                            <c:out value='${listGuests.guest_first_name} ${listGuests.guest_last_name}'/>
-                        </label>
-                    </td>
-                </c:forEach>
-            </tr>
-
-            <tr>
-                <th>Booking Start Date:</th>
+                <th>Phone: </th>
                 <td>
-                    <input type="date" name="startDate" id="startDate" />
-                </td>
-            </tr>
-
-            <tr>
-                <th>Booking End Date:</th>
-                <td>
-                    <input type="date" name="endDate" id="endDate" />
-                </td>
-            </tr>
-
-            <th>Room Asset Type:</th>
-            <td>
-                <select name="listroomType">
-                    <c:forEach items="${listroomTypes}" var="listroomType">
-                        <option value="${listroomType.id}">${listroomType.room_name}</option>
-                    </c:forEach>
-                </select>
-            </td>
-
-            <tr>
-                <th>Ref: </th>
-                <td>
-                    <input type="text" name="bookingRef" size="45"
-                           value="<c:out value='${booking.bookingRef}' />"
+                    <input type="text" name="guest_phone_number" size="45"
+                           value="<c:out value='${guest.guest_phone_number}' />"
                     />
                 </td>
             </tr>
 
             <tr>
-                <th>Number of Checked Guests: </th>
-                <td id="guestCount">0</td>
+                <th>Address: </th>
+                <td>
+                    <input type="text" name="guest_address" size="10"
+                           value="<c:out value='${guest.guest_address}' />"
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <th>Guest email: </th>
+                <td>
+                    <input type="text" name="guest_email" size="20"
+                           value="<c:out value='${guest.guest_email}' />"
+                    />
+                </td>
             </tr>
 
             <tr>
                 <td colspan="2" >
-                    <input type="submit" id="saveButton" value="Save" disabled />
+                    <input type="submit" id="saveButton" value="Save" />
                 </td>
             </tr>
         </table>
     </form>
-    <script>
-        // JavaScript code to set default values for the date fields
-        //split out the date
-        var today = new Date().toISOString().split('T')[0];
-        var future = new Date();
-        var nextweek = new Date(future.getTime() + 7 * 24 * 3600000);
-        var nextweekFormatted = nextweek.toISOString().split('T')[0];
-        document.getElementById("startDate").value = today;
-        document.getElementById("endDate").value = nextweekFormatted;
-    </script>
 </div>
-</
+</body>
+</html>

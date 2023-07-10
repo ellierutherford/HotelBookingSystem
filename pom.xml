@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>BookProject</artifactId>
+    <artifactId>HotelBookingSystem</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>BookProject</name>
-    <description>BookProject</description>
+    <name>HotelBookingSystem</name>
+    <description>HotelBookingSystem</description>
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -60,6 +60,15 @@
             <groupId>org.glassfish.web</groupId>
             <artifactId>jakarta.servlet.jsp.jstl</artifactId>
             <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>6.0.2</version>
         </dependency>
 
     </dependencies>

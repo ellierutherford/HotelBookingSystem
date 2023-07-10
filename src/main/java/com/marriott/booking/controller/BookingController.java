@@ -2,17 +2,19 @@ package com.marriott.booking.controller;
 
 import com.marriott.booking.exception.GuestNotFoundException;
 import com.marriott.booking.exception.BookingNotFoundException;
-import com.marriott.booking.exception.RoomAssetNotFoundException;
-import com.marriott.booking.exception.RoomNotFoundException;
 import com.marriott.booking.model.*;
 import com.marriott.booking.repository.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -47,17 +49,9 @@ public class BookingController {
         return "editform";
     }
 
-    @RequestMapping({"/", "/list"})
+    @RequestMapping({"/", "/home"})
     public String viewHomePage(Model model){
-        List<Booking> listBookings = bookingRepository.findAll();
-        model.addAttribute("listBookings", listBookings);
-
-        List<Guest> listGuests = guestRepository.findAll();
-        int guestCount = listGuests.size(); // Get the number of guests in the list
-        model.addAttribute("guestCount", guestCount); // Add the guest count to the model*/
-
-
-        return "welcome";
+        return "home";
     }
 
     @RequestMapping("/new")
@@ -68,30 +62,70 @@ public class BookingController {
         model.addAttribute("listroomTypes", listroomTypes);
         return "bookingform";
     }
-    @PostMapping("/bookings")
-    public String saveCreatedBooking(@ModelAttribute("booking") Booking booking, @RequestParam("guestIds") Long[] guestIds, @RequestParam("listroomType") Long listroomType, Model model) throws GuestNotFoundException, Exception {
 
-        List<RoomAsset> bookedRoomAssets = new ArrayList<>();
-        List<RoomAsset> availableRoomAssets = new ArrayList<>();
+    @RequestMapping("/auth")
+    public String continueAsGuestOrLogin(){
+        return "continueOrLogin";
+    }
 
-        availableRoomAssets = roomAssetRepository.findAvailableRoomsByType(booking.getStartDate(), booking.getEndDate(), listroomType);
+    @RequestMapping("/bookel")
+    public String bookEl(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate,
+                         @RequestParam("numGuests") int numGuests, @RequestParam("roomId") Long room_id,
+                         Model model, HttpSession session){
+        Optional<RoomAsset> roomAsset = roomAssetRepository.findById(room_id);
+        Booking booking = new Booking();
+        booking.setEndDate(endDate);
+        booking.setStartDate(startDate);
+        booking.setNumGuests(numGuests);
+        roomAsset.ifPresent(room -> booking.setRoomAsset(room)); //throw instead?
+        // do this in one step?
+        session.setAttribute("booking", booking);
+        model.addAttribute("booking", booking);
+        return "bookingform";
+    }
+
+    @RequestMapping("/search")
+    public String searchAvailability(Model model) {
+        System.out.println("in search...");
+        return "searchform";
+    }
+
+    @PostMapping("/availability")
+    public String searchAvailability(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate,
+                                     @RequestParam("numGuests") int numGuests, Model model) throws Exception{
+
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("numGuests", numGuests);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = "";
+        if(authentication instanceof AnonymousAuthenticationToken){
+            username = "anonymous";
+        }
+        else{
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            username = userDetails.getUsername();
+        }
+        model.addAttribute("username", username);
+
+        List<RoomAsset> availableRoomAssets = roomAssetRepository.findAvailableRoomsByCapacity(startDate, endDate, numGuests);
 
         if(availableRoomAssets.size()==0){
             throw new Exception("No room available!"); //throw better exception
         }
         else {
-            booking.setRoomAsset(availableRoomAssets.get(0));
-            bookingRepository.save(booking);
+            model.addAttribute("availableRooms", availableRoomAssets);
         }
 
-        for (Long guestId : guestIds) {
-            Guest guest = guestRepository.findById(guestId).orElseThrow(() -> new GuestNotFoundException(guestId));
-            Reservation reservation = new Reservation(booking, guest);
-            reservationRepository.save(reservation);
-            System.out.println("4 Added guest " + guestId + " to booking " + booking.getId() + " on room asset" + booking.getRoomAsset() );
-        }
-        model.addAttribute("bookings", booking);
-        System.out.println("5 I'm post save of booking " + booking.getleadguest_first_name() + " and guests " + Arrays.toString(guestIds) + " on room AssetName " + booking.getRoomAsset().getroomasset_name()  );
+        return "availablerooms";
+    }
+
+    @PostMapping("/bookingsel")
+    public String saveCreatedBookingEl(@ModelAttribute("guest") Guest guest, HttpSession session){
+        guestRepository.save(guest);
+        Booking booking = (Booking) session.getAttribute("booking");
+        booking.setGuest_id(guest.getId());
+        bookingRepository.save(booking);
         return "redirect:/list";
     }
 
@@ -100,14 +134,11 @@ public class BookingController {
     public String deleteBooking(@PathVariable(value = "id") Long bookingId, Model model) throws BookingNotFoundException {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new BookingNotFoundException(bookingId));
-
-        System.out.println("1 ID Action Booking Deleted: " + booking.getId() + "With " + booking.getleadguest_first_name() );
         bookingRepository.delete(booking);
         return "redirect:/list";
-
     }
 
-    @RequestMapping(value = "bookings/save", method = RequestMethod.POST)
+    /*@RequestMapping(value = "bookings/save", method = RequestMethod.POST)
     public String updateNote( @ModelAttribute("booking")  Booking booking, @RequestParam("missingGuests") Long[] guestIds, Model model) throws BookingNotFoundException, GuestNotFoundException {
         System.out.println("1e booking edit in the saving of booking: " +booking.getleadguest_first_name() + " with existing guest" + reservationRepository.findGuestByBookingId(booking.getId()) +" !!!");
         //apply guest to reservation
@@ -121,9 +152,9 @@ public class BookingController {
         }
         bookingRepository.save(booking);
         return "redirect:/list";
-    }
+    }*/
 
-    @RequestMapping(value = "bookings/add/{id}", method = RequestMethod.POST)
+    /*@RequestMapping(value = "bookings/add/{id}", method = RequestMethod.POST)
     public String addGuest(@PathVariable(value = "id") Long bookingId, @RequestParam("guestMissing") Long guestId,  Model model)  throws BookingNotFoundException, GuestNotFoundException{
 
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new BookingNotFoundException(bookingId));
@@ -133,17 +164,16 @@ public class BookingController {
         reservationRepository.save(new Reservation(booking, guest));
         return "redirect:/bookings/"+String.valueOf(bookingId);
 
-    }
+    }*/
 
 
     @RequestMapping("/experiment")
     public String createStrangerBooking(Model model) {
         System.out.println("1a createStrangerBooking Form displayed" );
         //need to send out roomtypes, full list for drop down
-
         return "bookingsanon";
     }
-    @PostMapping("/bookingsanon")
+    /*@PostMapping("/bookingsanon")
     public String saveCreatedStrangerBooking(@ModelAttribute("booking") Booking booking,  Model model, HttpSession session) throws BookingNotFoundException, GuestNotFoundException {
 
         System.out.println("New unknown booker with Name: " + booking.getleadguest_first_name() + " " + booking.getleadguest_last_name() +" .");
@@ -217,17 +247,17 @@ public class BookingController {
         model.addAttribute("reservation", reservation);
 
         return "redirect:/list";
-    }
+    }*/
 
 
-    @RequestMapping(value = "bookingsanon/save", method = RequestMethod.POST)
+    /*@RequestMapping(value = "bookingsanon/save", method = RequestMethod.POST)
     public String updateStrangerBooking( @ModelAttribute("booking")  Booking booking, Model model) throws BookingNotFoundException, GuestNotFoundException {
         System.out.println("NEVER RUN I redirect on in the saving of a new customer booking: " +booking.getleadguest_first_name() + " and guest" + reservationRepository.findGuestByBookingId(booking.getId()) +" !!!");
         bookingRepository.save(booking);
         return "redirect:/list";
-    }
+    }*/
 
-    @RequestMapping(value = "bookingsanon/add/{id}", method = RequestMethod.POST)
+    /*@RequestMapping(value = "bookingsanon/add/{id}", method = RequestMethod.POST)
     public String addGuestFromSite(@PathVariable(value = "id") Long bookingId, @RequestParam("guestMissing") Long guestId,  Model model)  throws BookingNotFoundException, GuestNotFoundException{
 
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new BookingNotFoundException(bookingId));
@@ -238,7 +268,7 @@ public class BookingController {
 
         return "redirect:/bookingsanon/"+String.valueOf(bookingId);
 
-    }
+    }*/
 
     // this chains in the deletion. but has never run or been tested, it's from the example code
     @RequestMapping("bookings/removeGuest/{id}")
