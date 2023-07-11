@@ -30,6 +30,11 @@ So what have I covered from the assignment brief?
 - Starwood users can login and logout from the system
   - Registered users can login: DONE
   - users can logout: DONE
+- Guest users can retrieve their past reservations 
+  - Guest users should be able to retrieve their reservations (by ID) and cancel them - DONE 
+  - within 24 hours from the check-in date - TODO 
+  - Reservation should indicate the rooms booked, the guest names (if necessary) and the dates for which the room was booked. - DONE except for guest names (which sounds like a nice to have)
+
 - NEXT TODO: Credit card functionality. 
 
 NOTE: I had to make changes to the db schema to implement the above, so now some of Matt's code doesn't work. I commented out for now, but will tidy up and fix tomorrow. 
@@ -40,3 +45,4 @@ Update 09/07 - didn't get a chance to do any tidy up really, I just focussed on 
 
 Update 10/07 - logout now working, plus created a home page with links to search, login and register pages. Also added conditional display of room price depending on whether user is logged in or not. Hacky, but works for now.
 
+Update 11/07 - updated end point for retrieving existing reservation to fulfill brief.
