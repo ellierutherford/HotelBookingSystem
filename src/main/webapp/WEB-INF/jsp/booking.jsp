@@ -1,13 +1,48 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+    <title>Bookings Store Application</title>
     <c:url value="/css/main.css" var="jstlCss" />
     <link href="${jstlCss}" rel="stylesheet" >
-    <title>Marriott Hotel Booking System</title>
 </head>
 <body>
-    <h1>Booking for ${booking.guestLastName}, ${booking.guestFirstName}</h1>
+<%@ include file="header.jsp" %>
+
+<div>
+        <table>
+            <caption>
+                <h2>Booking Retrieved</h2>
+            </caption>
+            <tr>
+                <th>Booking ID: </th>
+                <td>
+                    <c:out value='${booking.id}' />
+                </td>
+            </tr>
+            <tr>
+                <th>Booking Start Date: </th>
+                <td>
+                    <c:out value='${booking.startDate}' />
+                </td>
+            </tr>
+            <tr>
+                <th>Booking End Date: </th>
+                <td>
+                    <c:out value='${booking.endDate}' />
+                </td>
+            </tr>
+            <tr>
+                <th>Room booked: </th>
+                <td>
+                    <c:out value='${booking.roomasset.roomasset_name}' />
+                </td>
+            </tr>
+            <tr>
+                <td><a href="/delete/${booking.id}">Cancel booking</a></td>
+            </tr>
+
+        </table>
+</div>
 </body>
 </html>

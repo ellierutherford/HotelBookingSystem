@@ -43,10 +43,9 @@ public class BookingController {
                 .orElseThrow(() -> new BookingNotFoundException(bookingId));
         model.addAttribute("booking", booking);
 
-        List<Guest> guests = reservationRepository.findGuestByBookingId(booking.getId());
-        model.addAttribute("listguests", guests);
-        model.addAttribute("missingGuests", reservationRepository.findGuestsNotInBooking(booking.getId()));
-        return "editform";
+        Guest booker = guestRepository.findByGuestId(booking.getGuest_id());
+        model.addAttribute("guest", booker);
+        return "booking";
     }
 
     @RequestMapping({"/", "/home"})
@@ -61,11 +60,6 @@ public class BookingController {
         List<RoomType> listroomTypes = roomTypeRepository.findAll();
         model.addAttribute("listroomTypes", listroomTypes);
         return "bookingform";
-    }
-
-    @RequestMapping("/auth")
-    public String continueAsGuestOrLogin(){
-        return "continueOrLogin";
     }
 
     @RequestMapping("/bookel")
@@ -126,7 +120,7 @@ public class BookingController {
         Booking booking = (Booking) session.getAttribute("booking");
         booking.setGuest_id(guest.getId());
         bookingRepository.save(booking);
-        return "redirect:/list";
+        return "redirect:/";
     }
 
     // Delete a Booking
@@ -135,7 +129,7 @@ public class BookingController {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new BookingNotFoundException(bookingId));
         bookingRepository.delete(booking);
-        return "redirect:/list";
+        return "redirect:/";
     }
 
     /*@RequestMapping(value = "bookings/save", method = RequestMethod.POST)
