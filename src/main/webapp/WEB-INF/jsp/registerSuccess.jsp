@@ -15,5 +15,12 @@
 <div>
     <p>Congrats, you've successfully registered!</p>
 </div>
+<div>
+    <a href="/login">Click here to login</a>
+    </div>
+
+<div>
+    <a href="/home">Click here to go back to home page</a>
+</div>
 </body>
 </html>
