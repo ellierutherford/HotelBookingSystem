@@ -1,6 +1,8 @@
 package com.marriott.booking.model;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.Date;
@@ -23,6 +25,7 @@ public class CreditCard {
     @NotBlank
     private String cardNumber;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotBlank
     private Date expiry;
 
