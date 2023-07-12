@@ -38,6 +38,10 @@ public class Booking {
     @JoinColumn(name = "roomasset")
     private RoomAsset roomasset;
 
+    @OneToOne()
+    @JoinColumn(name = "card_id")
+    private CreditCard card;
+
     public Booking() {
         super();
     }
@@ -102,5 +106,9 @@ public class Booking {
     public BookingStatus getStatus() { return this.status; }
 
     public void setStatus(BookingStatus status){ this.status = status; }
+
+    public CreditCard getCard(){ return this.card; }
+
+    public void setCard(CreditCard card){ this.card = card;}
 
 }

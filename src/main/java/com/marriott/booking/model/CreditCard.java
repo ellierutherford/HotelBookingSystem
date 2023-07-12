@@ -9,12 +9,12 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "creditCards")
+@Table(name = "credit_cards")
 public class CreditCard {
 
-    @Id
     @GeneratedValue
-    private Long id;
+    @Id
+    Long id;
 
     @NotBlank
     private String cardHolderName;
@@ -48,13 +48,9 @@ public class CreditCard {
         this.status = status;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId(){ return this.id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public void setId(Long id){ this.id = id; }
 
     public void setStatus(CreditCardStatus status) {
         this.status = status;

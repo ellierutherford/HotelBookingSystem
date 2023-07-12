@@ -14,7 +14,11 @@
 
 <div>
 
-    <form action="completeBooking" method="post">
+    <c:url var="actionUrl" value="/completeBooking">
+        <c:param name="bookingId" value="${booking.id}" />
+    </c:url>
+
+    <form action="${actionUrl}" method="post">
         <table >
             <caption>
                 <h2> Your Details </h2>

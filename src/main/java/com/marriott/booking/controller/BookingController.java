@@ -119,7 +119,10 @@ public class BookingController {
     }
 
     @PostMapping("/completeBooking")
-    public String saveCardDetails(@ModelAttribute("card") CreditCard card){
+    public String saveCardDetails(@ModelAttribute("card") CreditCard card, @RequestParam Long bookingId)
+        throws BookingNotFoundException{
+        Booking b = bookingRepository.findById(bookingId).orElseThrow(() -> new BookingNotFoundException(bookingId));
+        b.setCard(card);
         cardRepository.save(card);
         return "bookingSuccess";
     }
