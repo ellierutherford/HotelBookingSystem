@@ -33,7 +33,7 @@
                     </c:otherwise>
                 </c:choose>
             </td>
-                <td><a href="/bookel?startDate=${startDate}&endDate=${endDate}&numGuests=${numGuests}&roomId=${room.id}">Book this room</a></td>
+                <td><a href="/book?startDate=${startDate}&endDate=${endDate}&numGuests=${numGuests}&roomId=${room.id}">Book this room</a></td>
             </tr>
         </c:forEach>
     </table>

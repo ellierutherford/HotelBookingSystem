@@ -25,7 +25,7 @@ public class BookingController {
     BookingRepository bookingRepository;
 
     @Autowired
-    ReservationRepository reservationRepository;
+    CardRepository cardRepository;
 
     @Autowired
     GuestRepository guestRepository;
@@ -53,17 +53,9 @@ public class BookingController {
         return "home";
     }
 
-    @RequestMapping("/new")
-    public String createBooking(Model model) {
-        List<Guest> listGuests = guestRepository.findAll();
-        model.addAttribute("listGuests", listGuests);
-        List<RoomType> listroomTypes = roomTypeRepository.findAll();
-        model.addAttribute("listroomTypes", listroomTypes);
-        return "bookingform";
-    }
 
-    @RequestMapping("/bookel")
-    public String bookEl(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate,
+    @RequestMapping("/book")
+    public String book(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate,
                          @RequestParam("numGuests") int numGuests, @RequestParam("roomId") Long room_id,
                          Model model, HttpSession session){
         Optional<RoomAsset> roomAsset = roomAssetRepository.findById(room_id);
@@ -72,7 +64,9 @@ public class BookingController {
         booking.setStartDate(startDate);
         booking.setNumGuests(numGuests);
         roomAsset.ifPresent(room -> booking.setRoomAsset(room)); //throw instead?
-        // do this in one step?
+        booking.setStatus(BookingStatus.ACTIVE);
+        String generatedBookingRef = UUID.randomUUID().toString().replaceAll("-", "");
+        booking.setBookingRef(generatedBookingRef);
         session.setAttribute("booking", booking);
         model.addAttribute("booking", booking);
         return "bookingform";
@@ -114,13 +108,20 @@ public class BookingController {
         return "availablerooms";
     }
 
-    @PostMapping("/bookingsel")
-    public String saveCreatedBookingEl(@ModelAttribute("guest") Guest guest, HttpSession session){
+    @PostMapping("/bookingForm")
+    public String saveCreatedBooking(@ModelAttribute("guest") Guest guest, HttpSession session, Model model){
         guestRepository.save(guest);
         Booking booking = (Booking) session.getAttribute("booking");
         booking.setGuest_id(guest.getId());
         bookingRepository.save(booking);
-        return "redirect:/";
+        model.addAttribute("booking", booking);
+        return "cardform";
+    }
+
+    @PostMapping("/saveCard")
+    public String saveCardDetails(@ModelAttribute("card") CreditCard card){
+        cardRepository.save(card);
+        return "bookingSuccess";
     }
 
     // Delete a Booking
@@ -265,13 +266,13 @@ public class BookingController {
     }*/
 
     // this chains in the deletion. but has never run or been tested, it's from the example code
-    @RequestMapping("bookings/removeGuest/{id}")
+    /*@RequestMapping("bookings/removeGuest/{id}")
     public String deleteReservation(@PathVariable(value = "id") Long bookingId, @RequestParam("id") Long guestId,  Model model) throws  BookingNotFoundException, GuestNotFoundException{
         Reservation aut = reservationRepository.findReservationByGuestAndBookingId(bookingId, guestId);
         reservationRepository.delete(aut);
         System.out.println("NEVER RUN We're deleting a booking so removeReservation guest ID:" +guestId + " and reservations " +aut );
         return "redirect:/bookings/" + String.valueOf(bookingId) ;
 
-    }
+    }*/
 
 }

@@ -42,10 +42,4 @@ public class Reservation {
     public void setGuest(Guest guest) {
         this.guest = guest;
     }
-
-
-
-
-
-
 }

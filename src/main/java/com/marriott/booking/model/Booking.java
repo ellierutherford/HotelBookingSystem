@@ -30,19 +30,13 @@ public class Booking {
 
     @Column(name = "num_guests")
     private int numGuests;
-    //@Column(name = "room_id")
-    //private String roomId;
 
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
 
-    @OneToMany(mappedBy = "booking") // figure this out
-    private List<Reservation> reservations;
-
-    @ManyToOne()
+    @ManyToOne() //is this needed?
     @JoinColumn(name = "roomasset")
     private RoomAsset roomasset;
-
 
     public Booking() {
         super();
@@ -100,5 +94,13 @@ public class Booking {
 
     public Long getGuest_id() { return this.guest_id; }
     public void setGuest_id(Long guest_id) { this.guest_id = guest_id; }
+
+    public String getBookingRef(){ return this.bookingRef; }
+
+    public void setBookingRef(String bookingRef) { this.bookingRef = bookingRef; }
+
+    public BookingStatus getStatus() { return this.status; }
+
+    public void setStatus(BookingStatus status){ this.status = status; }
 
 }

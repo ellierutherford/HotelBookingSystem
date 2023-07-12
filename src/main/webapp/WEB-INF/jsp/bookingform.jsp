@@ -27,14 +27,17 @@
             <th>Number of Guests: ${booking.numGuests}</th>
         </tr>
         <tr>
-            <th>Room ID: ${booking.roomasset.roomasset_name}</th>
+            <th>Room name: ${booking.roomasset.roomasset_name}</th>
+        </tr>
+        <tr>
+            <th>Booking ref: ${booking.bookingRef}</th>
         </tr>
     </table>
 </div>
 <div>
 
 
-    <form action="bookingsel" method="post">
+    <form action="bookingForm" method="post">
         <table >
             <caption>
                 <h2> Your Details </h2>
