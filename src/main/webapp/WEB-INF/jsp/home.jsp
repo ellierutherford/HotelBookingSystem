@@ -12,6 +12,12 @@
 <body>
 
 <%@ include file="header.jsp" %>
+<form action="find" method="post">
+    <label for="bookingRef">Booking Reference:</label>
+    <input type="text" name="bookingRef" size="45"
+           value='${booking.bookingRef}'/>
+    <input type="submit" id="saveButton" value="Search" />
+</form>
 
 </body>
 </html>

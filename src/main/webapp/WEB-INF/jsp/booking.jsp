@@ -15,9 +15,9 @@
                 <h2>Booking Retrieved</h2>
             </caption>
             <tr>
-                <th>Booking ID: </th>
+                <th>Booking Ref: </th>
                 <td>
-                    <c:out value='${booking.id}' />
+                    <c:out value='${booking.bookingRef}' />
                 </td>
             </tr>
             <tr>
@@ -38,9 +38,12 @@
                     <c:out value='${booking.roomasset.roomasset_name}' />
                 </td>
             </tr>
-            <tr>
-                <td><a href="/delete/${booking.id}">Cancel booking</a></td>
-            </tr>
+            <c:if test="${allowCancel}">
+                <tr>
+                    <td><a href="/delete/${booking.id}">Cancel booking</a></td>
+                </tr>
+            </c:if>
+
 
         </table>
 </div>
