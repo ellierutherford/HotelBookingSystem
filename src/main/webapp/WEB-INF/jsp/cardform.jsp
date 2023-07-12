@@ -14,7 +14,7 @@
 
 <div>
 
-    <form action="saveCard" method="post">
+    <form action="completeBooking" method="post">
         <table >
             <caption>
                 <h2> Your Details </h2>
@@ -42,6 +42,15 @@
                 <td>
                     <input type="text" name="cvv" size="45"
                            value="<c:out value='${card.cvv}' />"
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <th>Expiry date: </th>
+                <td>
+                    <input type="date" name="expiry" size="45"
+                           value="<c:out value='${card.expiry}' />"
                     />
                 </td>
             </tr>

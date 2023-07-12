@@ -118,7 +118,7 @@ public class BookingController {
         return "cardform";
     }
 
-    @PostMapping("/saveCard")
+    @PostMapping("/completeBooking")
     public String saveCardDetails(@ModelAttribute("card") CreditCard card){
         cardRepository.save(card);
         return "bookingSuccess";
