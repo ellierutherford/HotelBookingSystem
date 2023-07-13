@@ -10,8 +10,15 @@
 
 </head>
 <body>
-
+<h1>Welcome to our hotel!</h1>
 <%@ include file="header.jsp" %>
+<h3>
+<ul class="menu">
+    <li><a href="/home">Home</a></li>
+    <li><a href="/search">Search for availability</a></li>
+</ul>
+</h3>
+
 <form action="find" method="post">
     <label for="bookingRef">Booking Reference:</label>
     <input type="text" name="bookingRef" size="45"
