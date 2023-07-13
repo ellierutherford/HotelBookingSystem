@@ -3,11 +3,10 @@ package com.marriott.booking.model;
 import jakarta.persistence.*;
 
 import javax.validation.constraints.NotBlank;
-import java.util.Set;
 
 @Entity
 @Table(name = "guests")
-public class Guest {
+public class Customer {
     @Id
     @GeneratedValue
     private Long id;
@@ -23,11 +22,11 @@ public class Guest {
     @NotBlank
     private String guest_email;
 
-    public Guest(){
+    public Customer(){
         super();
     }
-    public Guest(Long id, String guest_first_name, String guest_last_name,
-                 String guest_address, String guest_phone_number, String guest_email) {
+    public Customer(Long id, String guest_first_name, String guest_last_name,
+                    String guest_address, String guest_phone_number, String guest_email) {
         super();
         this.id = id;
         this.guest_first_name = guest_first_name;

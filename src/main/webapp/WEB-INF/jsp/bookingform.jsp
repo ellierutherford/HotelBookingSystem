@@ -46,7 +46,7 @@
                 <th>First Name:</th>
                 <td>
                     <input type="text" name="guest_first_name" size="45"
-                           value="<c:out value='${guest.guest_first_name}' />"
+                           value="<c:out value='${customer.guest_first_name}' />"
                     />
                 </td>
             </tr>
@@ -55,7 +55,7 @@
                 <th>Last Name: </th>
                 <td>
                     <input type="text" name="guest_last_name" size="45"
-                           value="<c:out value='${guest.guest_last_name}' />"
+                           value="<c:out value='${customer.guest_last_name}' />"
                     />
                 </td>
             </tr>
@@ -64,7 +64,7 @@
                 <th>Phone: </th>
                 <td>
                     <input type="text" name="guest_phone_number" size="45"
-                           value="<c:out value='${guest.guest_phone_number}' />"
+                           value="<c:out value='${customer.guest_phone_number}' />"
                     />
                 </td>
             </tr>
@@ -73,7 +73,7 @@
                 <th>Address: </th>
                 <td>
                     <input type="text" name="guest_address" size="10"
-                           value="<c:out value='${guest.guest_address}' />"
+                           value="<c:out value='${customer.guest_address}' />"
                     />
                 </td>
             </tr>
@@ -82,7 +82,7 @@
                 <th>Guest email: </th>
                 <td>
                     <input type="text" name="guest_email" size="20"
-                           value="<c:out value='${guest.guest_email}' />"
+                           value="<c:out value='${customer.guest_email}' />"
                     />
                 </td>
             </tr>

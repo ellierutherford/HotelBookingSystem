@@ -1,8 +1,8 @@
 package com.marriott.booking.exception;
 
-public class GuestNotFoundException extends Exception{
+public class CustomerNotFoundException extends Exception{
     private long author_id;
-    public GuestNotFoundException(long guest_id) {
+    public CustomerNotFoundException(long guest_id) {
         super(String.format("THIS GUEST IS NOT FOUND! '%s'", guest_id));
     }
 

@@ -22,12 +22,12 @@
                     Edit Guest
                 </h2>
             </caption>
-            <input type="hidden" name="id" value="<c:out value='${guest.id}' />"  />
+            <input type="hidden" name="id" value="<c:out value='${customer.id}' />"  />
             <tr>
                 <th>The First Name: </th>
                 <td>
                     <input type="text" name="guest_first_name" size="45"
-                           value="<c:out value='${guest.guest_first_name}' />"
+                           value="<c:out value='${customer.guest_first_name}' />"
                     />
                 </td>
             </tr>
@@ -37,7 +37,7 @@
                 <th>Last Name: </th>
                 <td>
                     <input type="text" name="guest_last_name" size="45"
-                           value="<c:out value='${guest.guest_last_name}' />"
+                           value="<c:out value='${customer.guest_last_name}' />"
                     />
                 </td>
             </tr>

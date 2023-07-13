@@ -45,7 +45,7 @@ Guest users can retrieve their past reservations.
 Guest users should be able to retrieve their reservations and cancel them within (//assume LP means 'up to' 24 hours from the check-in date). 
 Change status to canceled WHERE utcnow +24hrs < reservation
 
-Reservation should indicate the rooms booked, the guest names (if necessary) and the dates for which the room was booked.
+Reservation should indicate the rooms booked, the customer names (if necessary) and the dates for which the room was booked.
 
 Users can register as Starwood members: Users can register by providing their details (name, surname, address, phone number, email address). They will then
 //then after being sent an email to finish off registrations to verify.
@@ -135,7 +135,7 @@ Payments etc
 
 ----
 24/6/2023
-Start the build out of the new guest interface, based on the 'Add Booking' from Admin UI.
+Start the build out of the new customer interface, based on the 'Add Booking' from Admin UI.
 removing the menu items, and reseting the things I send to the view completely, because I want to be careful 
 about what I put out there, and do it bit by bit. THis is an alternative to planning a whole load of stuff. Start with nothing
 each time in the pres layer and add in as little as possible to make it meet the bare function.
@@ -208,7 +208,7 @@ Setting bookingRoomAsset toOne as matches request and is believed to be availabl
 Added Reserved Booking Date: 2023-06-26
 Added Reserved Booking Date: 2023-06-27
 Added Reserved Booking Date: 2023-06-28
-4 Added guest 1 to booking 1 on room assetcom.marriott.booking.model.RoomAsset@708e646b
+4 Added customer 1 to booking 1 on room assetcom.marriott.booking.model.RoomAsset@708e646b
 5 I'm post save of booking G1_26_FirstName and guests 
 1 Welcome page List these bookings and this many registered guests 1
 1a createStrangerBooking Form displayed

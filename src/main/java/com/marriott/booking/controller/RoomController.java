@@ -6,7 +6,6 @@ import com.marriott.booking.exception.RoomNotFoundException;
 import com.marriott.booking.model.RoomType;
 import com.marriott.booking.repository.BookingRepository;
 import com.marriott.booking.repository.RoomTypeRepository;
-import com.marriott.booking.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -20,8 +19,6 @@ public class RoomController {
 
     @Autowired
     BookingRepository bookingRepository;
-    @Autowired
-    ReservationRepository ReservationRepository;
     @Autowired
     RoomTypeRepository roomRepository;
 

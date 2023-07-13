@@ -27,7 +27,7 @@
                 <th>Guest 1st Name: </th>
                 <td>
                     <input type="text" name="guest_first_name" size="45"
-                           value="<c:out value='${guest.guest_first_name}' />"
+                           value="<c:out value='${customer.guest_first_name}' />"
                     />
                 </td>
             </tr>
@@ -36,7 +36,7 @@
                 <th>Guest 2st Name:</th>
                 <td>
                     <input type="text" name="guest_last_name" size="45"
-                           value="<c:out value='${guest.guest_last_name}' />"
+                           value="<c:out value='${customer.guest_last_name}' />"
                     />
                 </td>
             </tr>

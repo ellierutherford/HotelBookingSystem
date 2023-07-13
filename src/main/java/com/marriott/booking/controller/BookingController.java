@@ -1,6 +1,6 @@
 package com.marriott.booking.controller;
 
-import com.marriott.booking.exception.GuestNotFoundException;
+import com.marriott.booking.exception.CustomerNotFoundException;
 import com.marriott.booking.exception.BookingNotFoundException;
 import com.marriott.booking.model.*;
 import com.marriott.booking.repository.*;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.*;
@@ -29,7 +28,7 @@ public class BookingController {
     CardRepository cardRepository;
 
     @Autowired
-    GuestRepository guestRepository;
+    CustomerRepository customerRepository;
 
     @Autowired
     RoomTypeRepository roomTypeRepository;
@@ -44,7 +43,7 @@ public class BookingController {
 
     @GetMapping("/bookings/{ref}")
     public String getBookingByRef(@PathVariable(value="ref") String bookingRef, Model model)
-            throws BookingNotFoundException, GuestNotFoundException{
+            throws BookingNotFoundException {
         Booking booking = bookingRepository.findByBookingRef(bookingRef);
         model.addAttribute("booking", booking);
 
@@ -62,7 +61,7 @@ public class BookingController {
     }
 
     @RequestMapping({"/", "/home"})
-    public String viewHomePage(Model model){
+    public String viewHomePage(){
         return "home";
     }
 
@@ -121,10 +120,10 @@ public class BookingController {
     }
 
     @PostMapping("/bookingForm")
-    public String saveCreatedBooking(@ModelAttribute("guest") Guest guest, HttpSession session, Model model){
-        guestRepository.save(guest);
+    public String saveCreatedBooking(@ModelAttribute("guest") Customer customer, HttpSession session, Model model){
+        customerRepository.save(customer);
         Booking booking = (Booking) session.getAttribute("booking");
-        booking.setGuest_id(guest.getId());
+        booking.setGuest_id(customer.getId());
         bookingRepository.save(booking);
         model.addAttribute("booking", booking);
         return "cardform";
@@ -146,11 +145,5 @@ public class BookingController {
                 .orElseThrow(() -> new BookingNotFoundException(bookingId));
         bookingRepository.delete(booking);
         return "redirect:/";
-    }
-
-    @RequestMapping("/experiment")
-    public String createStrangerBooking(Model model) {
-        System.out.println("1a createStrangerBooking Form displayed" );
-        return "bookingsanon";
     }
 }

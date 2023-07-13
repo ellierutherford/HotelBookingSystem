@@ -7,7 +7,7 @@ So far;
 - Created queries and repository methods for retrieving only available rooms 
 - Added search page so user can search for available rooms for given date range and number of guests;
   - TRY IT OUT: navigate to http://localhost:8080/search. Note you will have to populate the room type and room asset tables first!
-- Allow a user to book a room from list of available rooms and use provided guest details to create guest object.
+- Allow a user to book a room from list of available rooms and use provided customer details to create customer object.
   (Verified that if a room has already been booked using this flow, it won't show up as an available room within that date range for the next user.)
 - Added register functionality to allow people to register as Starwood users
   - TRY IT OUT: navigate to http://localhost:8080/register
@@ -33,7 +33,7 @@ So what have I covered from the assignment brief?
 - Guest users can retrieve their past reservations 
   - Guest users should be able to retrieve their reservations (by ID) and cancel them - DONE 
   - within 24 hours from the check-in date - TODO 
-  - Reservation should indicate the rooms booked, the guest names (if necessary) and the dates for which the room was booked. - DONE except for guest names (which sounds like a nice to have)
+  - Reservation should indicate the rooms booked, the customer names (if necessary) and the dates for which the room was booked. - DONE except for customer names (which sounds like a nice to have)
 
 - NEXT TODO: Credit card functionality. 
 

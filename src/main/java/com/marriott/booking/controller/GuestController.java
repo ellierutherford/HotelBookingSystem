@@ -1,29 +1,28 @@
 package com.marriott.booking.controller;
 
 import com.marriott.booking.exception.GuestDeleteException;
-import com.marriott.booking.exception.GuestNotFoundException;
+import com.marriott.booking.exception.CustomerNotFoundException;
 import com.marriott.booking.exception.BookingNotFoundException;
-import com.marriott.booking.model.Guest;
-import com.marriott.booking.repository.GuestRepository;
+import com.marriott.booking.model.Customer;
+import com.marriott.booking.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class GuestController {
 
     @Autowired
-    GuestRepository guestRepository;
+    CustomerRepository guestRepository;
 
     @RequestMapping({ "/guests"})
     public String viewGuestHomePage(Model model){
-        List<Guest> listGuests = guestRepository.findAll();
-        model.addAttribute("listGuests", listGuests);
+        List<Customer> listCustomers = guestRepository.findAll();
+        model.addAttribute("listGuests", listCustomers);
 
         System.out.println("All the guests" );
         return "welcomeGuest";
@@ -31,11 +30,11 @@ public class GuestController {
 
     @GetMapping("/guests/{id}")
     public String getGuestById(@PathVariable(value="id") Long guestId, Model model)
-            throws GuestNotFoundException, BookingNotFoundException{
-        Guest guest = guestRepository.findById(guestId)/*add the guest to the model*/
-                .orElseThrow(() -> new GuestNotFoundException(guestId));
-        model.addAttribute("guest", guest);
-        System.out.println("Get Guests: " + guest.getId() + "With first name" + guest.getGuest_first_name() );
+            throws CustomerNotFoundException, BookingNotFoundException{
+        Customer customer = guestRepository.findById(guestId)/*add the guest to the model*/
+                .orElseThrow(() -> new CustomerNotFoundException(guestId));
+        model.addAttribute("guest", customer);
+        System.out.println("Get Guests: " + customer.getId() + "With first name" + customer.getGuest_first_name() );
 
         return "editguestform";
     }
@@ -47,11 +46,12 @@ public class GuestController {
     }
     // Delete a Guest
     @RequestMapping("/deleteguest/{id}")
-    public String deleteGuest(@PathVariable(value = "id") Long guestId, Model model) throws GuestNotFoundException{
-        try {Guest guest = guestRepository.findById(guestId)
-                .orElseThrow(() -> new GuestNotFoundException(guestId));
-            System.out.println("Guest Deleted: " + guest.getId() + "With first name" + guest.getGuest_first_name() );
-            guestRepository.delete(guest);
+    public String deleteGuest(@PathVariable(value = "id") Long guestId, Model model) throws CustomerNotFoundException {
+        try {
+            Customer customer = guestRepository.findById(guestId)
+                .orElseThrow(() -> new CustomerNotFoundException(guestId));
+            System.out.println("Guest Deleted: " + customer.getId() + "With first name" + customer.getGuest_first_name() );
+            guestRepository.delete(customer);
             return viewGuestHomePage(model); }
         catch (DataIntegrityViolationException e){
             throw new GuestDeleteException(e);
@@ -60,16 +60,16 @@ public class GuestController {
     }
     // Save Created Guest
     @PostMapping("/guests")
-    public String saveCreatedGuest(@ModelAttribute("guest") Guest guest, Model model){
-        guestRepository.save(guest);
-        System.out.println("Save Created Guest: " + guest.getId() + "With first name " + guest.getGuest_first_name() );
+    public String saveCreatedGuest(@ModelAttribute("guest") Customer customer, Model model){
+        guestRepository.save(customer);
+        System.out.println("Save Created Guest: " + customer.getId() + "With first name " + customer.getGuest_first_name() );
         return viewGuestHomePage(model);
     }
 
     @RequestMapping(value="/guests/save", method=RequestMethod.POST)
-    public String updateGuest(@ModelAttribute("guest") Guest guest, Model model){
-        guestRepository.save(guest);
-        System.out.println("Updated : " + guest.getId() + "With first name " + guest.getGuest_first_name() );
+    public String updateGuest(@ModelAttribute("guest") Customer customer, Model model){
+        guestRepository.save(customer);
+        System.out.println("Updated : " + customer.getId() + "With first name " + customer.getGuest_first_name() );
         return viewGuestHomePage(model);
     }
 
