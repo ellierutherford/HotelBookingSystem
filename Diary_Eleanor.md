@@ -46,3 +46,9 @@ Update 09/07 - didn't get a chance to do any tidy up really, I just focussed on 
 Update 10/07 - logout now working, plus created a home page with links to search, login and register pages. Also added conditional display of room price depending on whether user is logged in or not. Hacky, but works for now.
 
 Update 11/07 - updated end point for retrieving existing reservation to fulfill brief.
+
+
+NEXT - 
+make sure you can't register if already logged in
+show credit cards of existing user, or allow them add a new card
+make the logged in UI better
