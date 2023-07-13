@@ -8,7 +8,12 @@
     <c:url value="/css/main.css" var="jstlCss" />
     <link href="${jstlCss}" rel="stylesheet" >
 </head>
+
+<h1>
+    Select a card to use for this booking
+</h1>
 <body>
+
 
 <div>
     <form action="selectCard" method="post">
@@ -18,8 +23,10 @@
                     ${creditCard.cardNumber} - ${creditCard.cardHolderName}
             </label><br>
         </c:forEach>
-        <input type="submit" value="Submit">
     </form>
-</div>
+    </div>
+        <div style="clear:both">
+            <input type="submit" value="Submit">
+        </div>
 </body>
 </html>

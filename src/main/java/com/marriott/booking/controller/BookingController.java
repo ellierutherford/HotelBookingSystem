@@ -159,21 +159,6 @@ public class BookingController {
         return "bookingSuccess";
     }
 
-    /*public String bookAnon(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Boolean anonUser = authentication instanceof AnonymousAuthenticationToken;
-        String displayPage = "bookingform";
-        if(!anonUser) {
-            displayPage = "cardform";
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            User user = userRepository.findByUsername(userDetails.getUsername());
-            Customer customer = customerRepository.findByCustomerId(user.getUser_id());
-            booking.setGuest_id(customer.getId());
-            bookingRepository.save(booking);
-        }
-        return "";
-    }*/
-
     @PostMapping("/bookingForm")
     public String saveCreatedBooking(@ModelAttribute("guest") Customer customer, HttpSession session, Model model){
         customerRepository.save(customer);
