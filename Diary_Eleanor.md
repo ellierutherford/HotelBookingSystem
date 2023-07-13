@@ -35,11 +35,10 @@ So what have I covered from the assignment brief?
   - Guest users should be able to retrieve their reservations (by ID) and cancel them - DONE 
   - within 24 hours from the check-in date - DONE 
   - Reservation should indicate the rooms booked, the customer names (if necessary) and the dates for which the room was booked. - DONE except for customer names (which sounds like a nice to have)
- 
-
-NOTE: I had to make changes to the db schema to implement the above, so now some of Matt's code doesn't work. I commented out for now, but will tidy up and fix tomorrow. 
-We need to start rationalising and tidying up the code, I've added so much mess to it!! I'll try unify our approaches and write up a summary tomorrow. I WILL NOT MERGE THIS BRANCH INTO MAIN UNTIL THAT'S DONE or otherwise I will break all of Matt's stuff!
-I also want to work on the TODOs listed above, plus starting on the login functionality. 
+- Show available rooms to Starwood members - DONE
+  - users who successfully log in can book available rooms at discounted prices (10%): DONE
+- Starwood users can book one or more available rooms: DONE
+  - the user will only have to select the credit card that’s/he wants to use for payment: DONE
 
 Update 09/07 - didn't get a chance to do any tidy up really, I just focussed on login functionality today. Was a bit of a slog, but finally have the login working. Next step for me - get logout working. 
 
@@ -49,10 +48,13 @@ Update 11/07 - updated end point for retrieving existing reservation to fulfill 
 
 Update 12/07 - split booking + registration flows into two steps, plus added credit card support
 
-Update 13/07 - allow logged in users to book rooms, fix cancel logic
+Update 13/07 - allow logged in users to book rooms using previously created cards, fix cancel logic
 
 NEXT - 
 make sure you can't register if already logged in
-show credit cards of existing user, or allow them add a new card
 make the logged in UI better
-make sure a logged in user can add a new card if they don't already have one saved
+
+Notes; 
+
+saving the booking too soon - we should only save once the card details have been associated. Leave for now but better to fix.
+(Saving once user is associated and then again once card is associated. Works fine if both user and card details are saved, but if the user terminates too soon, the booking is still in the DB.)
