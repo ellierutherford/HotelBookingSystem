@@ -22,40 +22,40 @@
             <tr>
                 <th>First name</th>
                 <td>
-                    <input type="text" name="firstName" size="45"
-                           value="<c:out value='${user.firstName}' />"
+                    <input type="text" name="guest_first_name" size="45"
+                           value="<c:out value='${user.guest_first_name}' />"
                     />
                 </td>
             </tr>
             <tr>
                 <th>Surname </th>
                 <td>
-                    <input type="text" name="lastName" size="45"
-                           value="<c:out value='${user.lastName}' />"
+                    <input type="text" name="guest_last_name" size="45"
+                           value="<c:out value='${user.guest_last_name}' />"
                     />
                 </td>
             </tr>
             <tr>
                 <th>Address </th>
                 <td>
-                    <input type="text" name="address" size="45"
-                           value="<c:out value='${user.address}' />"
+                    <input type="text" name="guest_address" size="45"
+                           value="<c:out value='${user.guest_address}' />"
                     />
                 </td>
             </tr>
             <tr>
                 <th>Phone </th>
                 <td>
-                    <input type="text" name="phone" size="45"
-                           value="<c:out value='${user.phone}' />"
+                    <input type="text" name="guest_phone_number" size="45"
+                           value="<c:out value='${user.guest_phone_number}' />"
                     />
                 </td>
             </tr>
             <tr>
                 <th>Email </th>
                 <td>
-                    <input type="text" name="email" size="45"
-                           value="<c:out value='${user.email}' />"
+                    <input type="text" name="guest_email" size="45"
+                           value="<c:out value='${user.guest_email}' />"
                     />
                 </td>
             </tr>

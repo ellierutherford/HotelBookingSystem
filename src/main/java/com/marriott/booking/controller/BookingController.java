@@ -81,29 +81,25 @@ public class BookingController {
         booking.setStatus(BookingStatus.ACTIVE);
         String generatedBookingRef = UUID.randomUUID().toString().replaceAll("-", "");
         booking.setBookingRef(generatedBookingRef);
-        session.setAttribute("booking", booking);
-        model.addAttribute("booking", booking);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Boolean anonUser = authentication instanceof AnonymousAuthenticationToken;
-        if(anonUser) {
-            return "bookingform";
-        }
-        else{
-            return "cardform";
-        }
-        /*if(!(authentication instanceof AnonymousAuthenticationToken)){
-            userLoggedIn = true;
+        String displayPage = "bookingform";
+        if(!anonUser) {
+            displayPage = "cardform";
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             User user = userRepository.findByUsername(userDetails.getUsername());
             Customer customer = customerRepository.findByCustomerId(user.getUser_id());
-            model.addAttribute("loggedInUser", customer);
-            model.addAttribute("loggedIn", userLoggedIn);
-        }*/
+            booking.setGuest_id(customer.getId());
+            bookingRepository.save(booking);
+        }
+        session.setAttribute("booking", booking);
+        model.addAttribute("booking", booking);
+        return displayPage;
     }
 
     @RequestMapping("/search")
-    public String searchAvailability(Model model) {
+    public String searchAvailability() {
         System.out.println("in search...");
         return "searchform";
     }
@@ -153,6 +149,7 @@ public class BookingController {
         throws BookingNotFoundException{
         Booking b = bookingRepository.findById(bookingId).orElseThrow(() -> new BookingNotFoundException(bookingId));
         b.setCard(card);
+        card.setUserId(b.getGuest_id()); //this is a bit gross
         cardRepository.save(card);
         return "bookingSuccess";
     }

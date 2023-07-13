@@ -25,9 +25,9 @@ public class UserController {
         return "registerDetails";
     }
     @PostMapping("/registerDetails")
-    public String registerDetails(@ModelAttribute Customer customer, Model model) {
-        customerRepository.save(customer);
-        model.addAttribute("userId", customer.getId());
+    public String registerDetails(@ModelAttribute Customer user, Model model) {
+        customerRepository.save(user);
+        model.addAttribute("userId", user.getId());
         return "registerCredentials";
     }
 

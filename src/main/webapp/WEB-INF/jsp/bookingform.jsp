@@ -35,7 +35,7 @@
     </table>
 </div>
 <div>
-    
+
     <form action="bookingForm" method="post">
         <table >
             <caption>
