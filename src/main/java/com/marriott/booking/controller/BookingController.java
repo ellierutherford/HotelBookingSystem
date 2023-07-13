@@ -39,6 +39,11 @@ public class BookingController {
     @Autowired
     RoomAssetRepository roomAssetRepository;
 
+    @RequestMapping({"/", "/home"})
+    public String viewHomePage(){
+        return "home";
+    }
+
     @PostMapping("/find")
     public String retrieveBooking(@ModelAttribute("booking") Booking b){
         return "redirect:/bookings/" + b.getBookingRef();
@@ -63,9 +68,38 @@ public class BookingController {
         return "booking";
     }
 
-    @RequestMapping({"/", "/home"})
-    public String viewHomePage(){
-        return "home";
+    @RequestMapping("/search")
+    public String searchAvailability() {
+        return "searchform";
+    }
+
+    @PostMapping("/availability")
+    public String searchAvailability(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate,
+                                     @RequestParam("numGuests") int numGuests, Model model) throws Exception{
+
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("numGuests", numGuests);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = "";
+        if(authentication instanceof AnonymousAuthenticationToken){
+            username = "anonymous";
+        }
+        else{
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            username = userDetails.getUsername();
+        }
+        model.addAttribute("username", username);
+
+        List<RoomAsset> availableRoomAssets = roomAssetRepository.findAvailableRoomsByCapacity(startDate, endDate, numGuests);
+
+        if(availableRoomAssets.size()==0){
+            throw new Exception("No room available!"); //throw better exception
+        }
+        else {
+            model.addAttribute("availableRooms", availableRoomAssets);
+        }
+        return "availablerooms";
     }
 
     @RequestMapping("/book")
@@ -98,42 +132,6 @@ public class BookingController {
         return displayPage;
     }
 
-    @RequestMapping("/search")
-    public String searchAvailability() {
-        System.out.println("in search...");
-        return "searchform";
-    }
-
-    @PostMapping("/availability")
-    public String searchAvailability(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate,
-                                     @RequestParam("numGuests") int numGuests, Model model) throws Exception{
-
-        model.addAttribute("startDate", startDate);
-        model.addAttribute("endDate", endDate);
-        model.addAttribute("numGuests", numGuests);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = "";
-        if(authentication instanceof AnonymousAuthenticationToken){
-            username = "anonymous";
-        }
-        else{
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            username = userDetails.getUsername();
-        }
-        model.addAttribute("username", username);
-
-        List<RoomAsset> availableRoomAssets = roomAssetRepository.findAvailableRoomsByCapacity(startDate, endDate, numGuests);
-
-        if(availableRoomAssets.size()==0){
-            throw new Exception("No room available!"); //throw better exception
-        }
-        else {
-            model.addAttribute("availableRooms", availableRoomAssets);
-        }
-
-        return "availablerooms";
-    }
-
     @PostMapping("/bookingForm")
     public String saveCreatedBooking(@ModelAttribute("guest") Customer customer, HttpSession session, Model model){
         customerRepository.save(customer);
@@ -155,11 +153,12 @@ public class BookingController {
     }
 
     // Delete a Booking
-    @RequestMapping("/delete/{id}")
-    public String deleteBooking(@PathVariable(value = "id") Long bookingId, Model model) throws BookingNotFoundException {
+    @RequestMapping("/cancel/{id}")
+    public String cancelBooking(@PathVariable(value = "id") Long bookingId, Model model) throws BookingNotFoundException {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new BookingNotFoundException(bookingId));
-        bookingRepository.delete(booking);
+        booking.setStatus(BookingStatus.CANCELLED);
+        bookingRepository.save(booking);
         return "redirect:/";
     }
 }

@@ -40,7 +40,7 @@
             </tr>
             <c:if test="${allowCancel}">
                 <tr>
-                    <td><a href="/delete/${booking.id}">Cancel booking</a></td>
+                    <td><a href="/cancel/${booking.id}">Cancel booking</a></td>
                 </tr>
             </c:if>
 

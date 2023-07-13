@@ -19,7 +19,7 @@ public interface RoomAssetRepository extends JpaRepository<RoomAsset, Long> {
     List<RoomAsset> findAvailableRoomsByTypeAndCapacity(@Param("start_date") LocalDate start_date, @Param("end_date") LocalDate end_date,
                                                         @Param("roomType_id") Long room_type ,@Param("num_guests") int num_guests);
 
-    @Query("SELECT r FROM RoomAsset r WHERE r.max_guests >= :num_guests AND r.id NOT IN (SELECT g.roomasset FROM Booking g WHERE (:start_date >= g.startDate AND :start_date < g.endDate OR :end_date >= g.startDate and :end_date < g.endDate))")
+    @Query("SELECT r FROM RoomAsset r WHERE r.max_guests >= :num_guests AND r.id NOT IN (SELECT g.roomasset FROM Booking g WHERE g.status = 'ACTIVE' and (:start_date >= g.startDate AND :start_date < g.endDate OR :end_date >= g.startDate and :end_date < g.endDate))")
     List<RoomAsset> findAvailableRoomsByCapacity(@Param("start_date") LocalDate start_date, @Param("end_date") LocalDate end_date, @Param("num_guests") int num_guests);
 
     @Query("SELECT r FROM RoomAsset r WHERE r.roomType.id = :roomType_id AND r.id NOT IN (SELECT g.roomasset FROM Booking g WHERE (:start_date >= g.startDate AND :start_date < g.endDate OR :end_date >= g.startDate and :end_date < g.endDate))")

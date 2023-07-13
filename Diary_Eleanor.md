@@ -52,3 +52,6 @@ NEXT -
 make sure you can't register if already logged in
 show credit cards of existing user, or allow them add a new card
 make the logged in UI better
+
+fix returning only active bookings
+make sure that the cancel endpoint updates to cancelled status
