@@ -1,5 +1,6 @@
 package com.marriott.booking.controller;
 
+import com.marriott.booking.exception.CardNotFoundException;
 import com.marriott.booking.exception.CustomerNotFoundException;
 import com.marriott.booking.exception.BookingNotFoundException;
 import com.marriott.booking.model.*;
@@ -116,6 +117,49 @@ public class BookingController {
         String generatedBookingRef = UUID.randomUUID().toString().replaceAll("-", "");
         booking.setBookingRef(generatedBookingRef);
 
+        session.setAttribute("booking", booking);
+        model.addAttribute("booking", booking);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Boolean anonUser = authentication instanceof AnonymousAuthenticationToken;
+
+        if(!anonUser) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            return bookAsUser(booking, userDetails.getUsername());
+        }
+
+        return "bookingform";
+    }
+
+    public String bookAsUser(Booking b, String username) throws CustomerNotFoundException{
+        User user = userRepository.findByUsername(username);
+        Customer customer = customerRepository.findByCustomerId(user.getUser_id());
+        b.setGuest_id(customer.getId());
+        bookingRepository.save(b);
+        return "redirect:/cards?userId="+customer.getId();
+    }
+
+    @GetMapping("/cards")
+    public String getCardsForUser(@RequestParam Long userId, Model model) throws CardNotFoundException {
+        List<CreditCard> cards = cardRepository.findByUserId(userId);
+        model.addAttribute("cards", cards);
+        if(cards.size()==0){
+            return "cardform";
+        }
+        return "selectcard";
+    }
+
+    @PostMapping("/selectCard")
+    public String selectCard(@RequestParam("selectedCardNumber") String selectedCardNumber, HttpSession session)
+    throws CardNotFoundException{
+        Booking booking = (Booking) session.getAttribute("booking");
+        CreditCard card = cardRepository.findByCardNumber(selectedCardNumber);
+        booking.setCard(card);
+        bookingRepository.save(booking);
+        return "bookingSuccess";
+    }
+
+    /*public String bookAnon(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Boolean anonUser = authentication instanceof AnonymousAuthenticationToken;
         String displayPage = "bookingform";
@@ -127,10 +171,8 @@ public class BookingController {
             booking.setGuest_id(customer.getId());
             bookingRepository.save(booking);
         }
-        session.setAttribute("booking", booking);
-        model.addAttribute("booking", booking);
-        return displayPage;
-    }
+        return "";
+    }*/
 
     @PostMapping("/bookingForm")
     public String saveCreatedBooking(@ModelAttribute("guest") Customer customer, HttpSession session, Model model){

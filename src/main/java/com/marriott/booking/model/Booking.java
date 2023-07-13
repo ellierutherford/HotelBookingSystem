@@ -38,7 +38,7 @@ public class Booking {
     @JoinColumn(name = "roomasset")
     private RoomAsset roomasset;
 
-    @OneToOne()
+    @ManyToOne()
     @JoinColumn(name = "card_id")
     private CreditCard card;
 

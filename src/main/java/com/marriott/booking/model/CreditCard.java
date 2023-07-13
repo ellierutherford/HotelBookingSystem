@@ -23,6 +23,7 @@ public class CreditCard {
     private Long userId;
 
     @NotBlank
+    @Column(nullable = false, unique = true, length = 16)
     private String cardNumber;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

@@ -21,21 +21,21 @@ So what have I covered from the assignment brief?
 
 - Show available rooms between specific dates and for a certain number of guests - DONE
 - Guest users can book one or more available rooms, provide details + credit card:
-  - Guest users can only book ONE room. TODO: add capability to book more than one. Need to dig into Matt's implementation of Registration vs Booking to do this.
+  - Guest users can only book ONE room. Will not get a chance to extend this to more than one room.
   - Guest users must provide name, surname, address, phone number, email address: DONE. Nice to have would be to add validation for all this input
-  - TODO: Guest users must provide credit card details
+  - Guest users must provide credit card details - DONE
 - Users can register as Starwood members;
-  - Users can register by providing name, username and password - DONE. TODO: split the flow into two - step 1: user provides ALL details (phone etc as well), step 2: user creates username and password
+  - Users can register by providing name, username and password - DONE. 
+  - split the flow into two - step 1: user provides ALL details (phone etc as well), step 2: user creates username and password - DONE
   - TODO: this is currently horribly insecure. Need to encrypt password/use hash + salt
 - Starwood users can login and logout from the system
   - Registered users can login: DONE
   - users can logout: DONE
 - Guest users can retrieve their past reservations 
   - Guest users should be able to retrieve their reservations (by ID) and cancel them - DONE 
-  - within 24 hours from the check-in date - TODO 
+  - within 24 hours from the check-in date - DONE 
   - Reservation should indicate the rooms booked, the customer names (if necessary) and the dates for which the room was booked. - DONE except for customer names (which sounds like a nice to have)
-
-- NEXT TODO: Credit card functionality. 
+ 
 
 NOTE: I had to make changes to the db schema to implement the above, so now some of Matt's code doesn't work. I commented out for now, but will tidy up and fix tomorrow. 
 We need to start rationalising and tidying up the code, I've added so much mess to it!! I'll try unify our approaches and write up a summary tomorrow. I WILL NOT MERGE THIS BRANCH INTO MAIN UNTIL THAT'S DONE or otherwise I will break all of Matt's stuff!
@@ -47,11 +47,12 @@ Update 10/07 - logout now working, plus created a home page with links to search
 
 Update 11/07 - updated end point for retrieving existing reservation to fulfill brief.
 
+Update 12/07 - split booking + registration flows into two steps, plus added credit card support
+
+Update 13/07 - allow logged in users to book rooms, fix cancel logic
 
 NEXT - 
 make sure you can't register if already logged in
 show credit cards of existing user, or allow them add a new card
 make the logged in UI better
-
-fix returning only active bookings
-make sure that the cancel endpoint updates to cancelled status
+make sure a logged in user can add a new card if they don't already have one saved
