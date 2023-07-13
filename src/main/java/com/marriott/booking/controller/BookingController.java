@@ -31,6 +31,9 @@ public class BookingController {
     CustomerRepository customerRepository;
 
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     RoomTypeRepository roomTypeRepository;
 
     @Autowired
@@ -68,7 +71,7 @@ public class BookingController {
     @RequestMapping("/book")
     public String book(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate,
                          @RequestParam("numGuests") int numGuests, @RequestParam("roomId") Long room_id,
-                         Model model, HttpSession session){
+                         Model model, HttpSession session) throws CustomerNotFoundException {
         Optional<RoomAsset> roomAsset = roomAssetRepository.findById(room_id);
         Booking booking = new Booking();
         booking.setEndDate(endDate);
@@ -80,7 +83,23 @@ public class BookingController {
         booking.setBookingRef(generatedBookingRef);
         session.setAttribute("booking", booking);
         model.addAttribute("booking", booking);
-        return "bookingform";
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Boolean anonUser = authentication instanceof AnonymousAuthenticationToken;
+        if(anonUser) {
+            return "bookingform";
+        }
+        else{
+            return "cardform";
+        }
+        /*if(!(authentication instanceof AnonymousAuthenticationToken)){
+            userLoggedIn = true;
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            User user = userRepository.findByUsername(userDetails.getUsername());
+            Customer customer = customerRepository.findByCustomerId(user.getUser_id());
+            model.addAttribute("loggedInUser", customer);
+            model.addAttribute("loggedIn", userLoggedIn);
+        }*/
     }
 
     @RequestMapping("/search")

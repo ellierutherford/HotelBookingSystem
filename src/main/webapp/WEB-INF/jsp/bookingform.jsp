@@ -35,8 +35,7 @@
     </table>
 </div>
 <div>
-
-
+    
     <form action="bookingForm" method="post">
         <table >
             <caption>
@@ -50,7 +49,6 @@
                     />
                 </td>
             </tr>
-
             <tr>
                 <th>Last Name: </th>
                 <td>
@@ -59,7 +57,6 @@
                     />
                 </td>
             </tr>
-
             <tr>
                 <th>Phone: </th>
                 <td>
@@ -68,7 +65,6 @@
                     />
                 </td>
             </tr>
-
             <tr>
                 <th>Address: </th>
                 <td>
@@ -77,7 +73,6 @@
                     />
                 </td>
             </tr>
-
             <tr>
                 <th>Guest email: </th>
                 <td>
@@ -86,7 +81,6 @@
                     />
                 </td>
             </tr>
-
             <tr>
                 <td colspan="2" >
                     <input type="submit" id="saveButton" value="Save" />
@@ -94,6 +88,8 @@
             </tr>
         </table>
     </form>
+
 </div>
+
 </body>
 </html>
