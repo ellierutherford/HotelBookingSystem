@@ -22,7 +22,7 @@
             <tr>
                 <th>Username</th>
                 <td>
-                    <input type="hidden" name="userId" value="${userId}">
+                    <input type="hidden" name="user_id" value="${customer.id}">
                     <input type="text" name="username" size="45"
                            value="<c:out value='${user.username}' />"
                     />

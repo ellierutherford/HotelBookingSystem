@@ -35,17 +35,16 @@ public class UserController {
         return "registerDetails";
     }
     @PostMapping("/registerDetails")
-    public String registerDetails(@ModelAttribute Customer user, Model model) {
-        customerRepository.save(user);
-        model.addAttribute("userId", user.getId());
+    public String registerDetails(@ModelAttribute Customer customer, Model model) {
+        customerRepository.save(customer);
+        model.addAttribute("customer", customer);
         return "registerCredentials";
     }
 
     @PostMapping("/registerCredentials")
-    public String registerCreds(@ModelAttribute User user, @RequestParam Long userId) {
+    public String registerCreds(@ModelAttribute User user) {
         // by default, add everyone who registers through the GUI as a user
         user.setRoles("user");
-        user.setUser_id(userId);
         userRepository.save(user);
         return "registerSuccess";
     }
