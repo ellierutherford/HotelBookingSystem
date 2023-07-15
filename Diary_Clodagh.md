@@ -2,14 +2,21 @@ Starting diary again on fresh branch.
 
 Finally working 13.07.23 after HUNDREDS (690 Pages of screenshots) of restarts and re installs
 
-Learning - If you dont code day by day the learning curve is akin to learning a completely new language, e.g. operating in russian never having learned russian before and without haveing any direction on the grammer. 
-Security professionals know the general frameworks and analyse code for flaws, however rarely code full time as it is prohibitively expensive and not a great use of resources - possibly a conflict of interest (you cant be objective on code flaws you might have created) of resources, having never really used github before that was a learning too as constantly wary of breaking what had been implemented already. 
+Learning - If you dont code day by day the learning curve is akin to learning a completely new language, Am just starting a new role and waiting on a new laptop (arrived 14.07.23) so had to be super careful with stuff I was downloading and so much here was just pull without verification, I had to check every link. I had an issue that destroyed all my kit (unbelieveably expensive) back in may so super cautious and only now recovering  (Police report given) 
+
+This felt like e.g. operating in russian never having learned russian before and without having any direction on the grammer. 
+
+Security professionals know the general frameworks and analyse code for flaws, however rarely code full time as it is not our core skill not a great use of resources (hats off to the devs its a fantastic skill of tracking multiple threads)  - possibly a conflict of interest for security people, devsecops its only beginning to start really now (you cant be objective on code flaws you might have created) of resources, having never really used github before that was a learning too as constantly wary of breaking what had been implemented already. I tried so much I was getting so litle sleep. 
+
 Turns out there was a conflict with visual studio install I had added on matts recommendation as thats how he got everything working so easily, i just had too many other Ellie helped me hugely with the sql startup code so team have been great
 1507.have added some entries,
-theres a radio button to nowhere on newroomasset will see if I can fix and
+
+Theres a radio button to nowhere on newroomasset will see if I can fix and
 whitelabel error pops up on save will see if I can get a funkier and more informative error page
 It can be disabled in applicationproperties using spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
-That worked better now get a tomcat 404 error message still ugly just not as long so will try to replace page will try some of the code inspection tool I found earlier listed in
+
+That worked better now get a tomcat 404 error message still ugly just not as long so will try to replace page will try some of the code inspection tool I found earlier listed.
+
 Installed Zap to test and trying through Kali toolset I have on virtualbox.
 At moments seeing how to resolve whitelabel /error page when you click on save on roomassets
 Question - If I have port 8080 open through SQL on my local machine - doesnt that mean my local machine 10.0.2.2 on a local network arp is exposed through my tethered mobile internet public IP
