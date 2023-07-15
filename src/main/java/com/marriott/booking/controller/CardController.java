@@ -26,9 +26,8 @@ public class CardController {
     @Autowired
     CardRepository cardRepository;
 
-    @PostMapping("/cards")
+    @GetMapping("/cards")
     public String addCardToBooking(@RequestParam Long userId, Model model) throws CardNotFoundException {
-
         List<CreditCard> cards = cardRepository.findByUserId(userId);
         model.addAttribute("cards", cards);
         if(cards.size()==0){
