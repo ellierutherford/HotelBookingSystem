@@ -10,7 +10,7 @@
 <body>
 <div>
     <h1>LAST STEP</h1>
-    <p>Hi ${guest.guest_first_name},</p>
+    <p>Hi ${customer.guest_first_name},</p>
     <p>Booking dates: ${booking.startDate} </p>
     <p>First Name: ${booking.leadguest_first_name} + "");</p>
 

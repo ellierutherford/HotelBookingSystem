@@ -34,23 +34,23 @@
             <th>First Name</th>
             <th>Last Name</th>
         </tr>
-        <c:forEach var="guest" items="${listGuests}" varStatus="loop">
+        <c:forEach var="customer" items="${listCustomers}" varStatus="loop">
             <tr>
-                <td><c:out value="${guest.id}" /></td>
-                <td><c:out value="${guest.guest_first_name}" /></td>
-                <td><c:out value="${guest.guest_last_name}" /></td>
+                <td><c:out value="${customer.id}" /></td>
+                <td><c:out value="${customer.guest_first_name}" /></td>
+                <td><c:out value="${customer.guest_last_name}" /></td>
                 <td>
-                    <a href="/guests/${guest.id}"/>Edit</a>
+                    <a href="/guests/${customer.id}"/>Edit</a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <c:choose>
                     <c:when test="${bookingCounts[loop.index] > 0}">
                 <td class="disabled">
-                    <a href="/deleteguest/${guest.id}">Delete</a>
+                    <a href="/deleteguest/${customer.id}">Delete</a>
                 </td>
                 </c:when>
                 <c:otherwise>
                     <td>
-                        <a href="/deleteguest/${guest.id}">Delete</a>
+                        <a href="/deleteguest/${customer.id}">Delete</a>
                     </td>
                 </c:otherwise>
                 </c:choose>

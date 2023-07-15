@@ -23,7 +23,7 @@ Only turn it down to update when sure nothings changing or see errors that look 
 
 There was an unexpected error (type=Internal Server Error, status=500).
 could not execute statement [Field 'id_booking' doesn't have a default value]
- [insert into reservation (booking,id_credit_card,guest,id) values (?,?,?,?)]
+ [insert into reservation (booking,id_credit_card,customer,id) values (?,?,?,?)]
 
 Once your DB is up and running, replace the password place holder in the "src/main/resources/application.properties" file to your MySQL password.
 

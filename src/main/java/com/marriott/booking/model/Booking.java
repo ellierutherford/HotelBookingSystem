@@ -17,12 +17,8 @@ public class Booking {
     @GeneratedValue
     private Long id;
     @NotBlank
-    private String leadguest_first_name;
+    private Long guest_id;
 
-    @NotBlank
-    private String leadguest_last_name;
-    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
-    Set<Reservation> guests;
     @Column(name = "bookingRef")
     private String bookingRef;
 
@@ -32,24 +28,28 @@ public class Booking {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @ManyToOne()
-    @JoinColumn(name = "roomasset")
-    private RoomAsset roomasset;
+    @Column(name = "num_guests")
+    private int numGuests;
 
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
 
-    @OneToMany(mappedBy = "booking")
-    private List<Reservation> reservations;
+    @ManyToOne() //is this needed?
+    @JoinColumn(name = "roomasset")
+    private RoomAsset roomasset;
+
+    @ManyToOne()
+    @JoinColumn(name = "card_id")
+    private CreditCard card;
 
     public Booking() {
         super();
     }
 
-    public Booking(Long id, String leadguest_first_name, String leadguest_last_name, String bookingRef, LocalDate startDate, LocalDate endDate, BookingStatus status) {
+    public Booking(Long id, Long guest_id, int numGuests, String bookingRef, LocalDate startDate, LocalDate endDate, BookingStatus status) {
         this.id = id;
-        this.leadguest_first_name = leadguest_first_name;
-        this.leadguest_last_name = leadguest_last_name;
+        this.guest_id = guest_id;
+        this.numGuests = numGuests;
         this.bookingRef = bookingRef;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -62,13 +62,6 @@ public class Booking {
 
     public Long getId() {
         return id;
-    }
-
-    public String getleadguest_first_name() {
-        return leadguest_first_name;
-    }
-    public String getleadguest_last_name() {
-        return leadguest_last_name;
     }
 
     public LocalDate getStartDate() {
@@ -87,7 +80,7 @@ public class Booking {
         this.endDate = endDate;
     }
 
-    public RoomAsset getRoomAsset() {
+    public RoomAsset getRoomasset() {
         return roomasset;
     }
 
@@ -95,21 +88,27 @@ public class Booking {
         this.roomasset = roomAsset;
     }
 
-
-    public void setleadguest_first_name(String leadguest_first_name) {
-        this.leadguest_first_name = leadguest_first_name;
+    public int getNumGuests() {
+        return numGuests;
     }
 
-    public void setleadguest_last_name(String leadguest_last_name) {
-        this.leadguest_last_name = leadguest_last_name;
+    public void setNumGuests(int numGuests) {
+        this.numGuests = numGuests;
     }
 
+    public Long getGuest_id() { return this.guest_id; }
+    public void setGuest_id(Long guest_id) { this.guest_id = guest_id; }
 
+    public String getBookingRef(){ return this.bookingRef; }
 
-    // Modify the setter for guests to accept a Set<Reservation>
-    public void setGuests(Set<Reservation> guests) {
-        this.guests = guests;
-    }
+    public void setBookingRef(String bookingRef) { this.bookingRef = bookingRef; }
 
+    public BookingStatus getStatus() { return this.status; }
+
+    public void setStatus(BookingStatus status){ this.status = status; }
+
+    public CreditCard getCard(){ return this.card; }
+
+    public void setCard(CreditCard card){ this.card = card;}
 
 }
