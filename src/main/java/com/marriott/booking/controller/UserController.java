@@ -2,11 +2,14 @@ package com.marriott.booking.controller;
 import com.marriott.booking.exception.BookingNotFoundException;
 import com.marriott.booking.exception.CustomerNotFoundException;
 import com.marriott.booking.model.Booking;
+import com.marriott.booking.model.BookingStatus;
 import com.marriott.booking.model.Customer;
 import com.marriott.booking.model.User;
 import com.marriott.booking.repository.BookingRepository;
 import com.marriott.booking.repository.CustomerRepository;
 import com.marriott.booking.repository.UserRepository;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,10 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -78,5 +78,13 @@ public class UserController {
         List<Booking> bookings = bookingRepository.findByUserId(user.getUser_id());
         model.addAttribute("bookings", bookings);
         return "userbookings";
+    }
+
+    @RequestMapping("/deleteRegistration")
+    public String deleteRegistration(HttpServletRequest request) throws ServletException {
+        User user = userRepository.findByUsername(getLoggedOnUser());
+        userRepository.delete(user);
+        request.logout();
+        return "deletionSuccess";
     }
 }

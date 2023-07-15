@@ -17,7 +17,7 @@
         <ul class="menu">
             <li><a href="/list">Manage cards</a></li>
             <li><a href="/mybookings">View past reservations</a></li>
-            <li><a href="/rooms">Delete my account</a></li>
+            <li><a href="/deleteRegistration">Delete my account</a></li>
         </ul>
     </h2>
 
