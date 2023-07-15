@@ -9,9 +9,7 @@
     <link href="${jstlCss}" rel="stylesheet" >
 </head>
 <body>
-
-<h1>Bookings Management</h1>
-
+<%@ include file="header.jsp" %>
 <div>
     <table>
         <caption>

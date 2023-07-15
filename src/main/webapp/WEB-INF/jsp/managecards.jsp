@@ -9,7 +9,7 @@
     <link href="${jstlCss}" rel="stylesheet" >
 </head>
 <body>
-
+<%@ include file="header.jsp" %>
 <h2><a href="/newcard">Add a new card</a></h2>
 <h1>Your cards</h1>
 

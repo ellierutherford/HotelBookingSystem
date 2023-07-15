@@ -15,7 +15,7 @@ public class RoomAsset {
     private String roomasset_name;
 
     @ManyToOne
-    @JoinColumn(name = "roomtype_id")
+    @JoinColumn(name = "roomtype_id", referencedColumnName = "id")
     private RoomType roomType;
 
     @NotBlank

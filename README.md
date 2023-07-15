@@ -1,30 +1,21 @@
 # HotelBookingSystem
 Web app for UCD COMP47910
 
-You will need to install IntelliJ + MySQL.
+First, please install IntelliJ + MySQL.
 
-Once you have these installed, you will need to create a database called "hotelBookingSystem" and a table called "bookings" in this database.
-Use the following commands to connect to mysql, create the db, table and populate it with some information.
-```
+Then, open a terminal/command line and run 'mysql -u <USERNAME> -p', and enter your SQL password when prompted.
 
-//No need for injection into table. THis will get you going with the current Application configuration.
+Now, run the "setupDb.sql" file found in the root of this repo by running "source setupDb.sql" in the mysql prompt. (You will have to provide the full path to this sql file.) 
+This file creates a new sql user, creates the database and grants the newly created user permissions on the database.
 
-CREATE USER 'springuser'@'localhost' IDENTIFIED BY 'ThePassword';
+Next, run the "populateDb.sql" file, also found in the root of this repo by running "source populateDb.sql". This set of commands 
+populates the database with some hotel rooms so you can start booking rooms!
 
-CREATE DATABASE `hotelbookingsystem`;
--- Grant privileges to the user
-GRANT ALL PRIVILEGES ON example.* TO 'springuser'@'localhost';
--- Flush privileges to apply the changes
-FLUSH PRIVILEGES;
+Once these are run, please open the project in IntelliJ and run it. THERE IS NO NEED TO MAKE ANY UPDATES TO THE application.properties file. All necessary updates are already made.
 
+All going well, the app will now be running at http://localhost:8080!
 
-NOTE: 'Create' Database in application properties is a really good idea when doing structural data stuff :)
-Only turn it down to update when sure nothings changing or see errors that look like this:
+Troubleshooting;
 
-There was an unexpected error (type=Internal Server Error, status=500).
-could not execute statement [Field 'id_booking' doesn't have a default value]
- [insert into reservation (booking,id_credit_card,customer,id) values (?,?,?,?)]
-
-Once your DB is up and running, replace the password place holder in the "src/main/resources/application.properties" file to your MySQL password.
-
-Now you are ready to run the project from IntelliJ and navigate to http://localhost:8080/ to try it out.
+1. Make sure you don't already have a user called 'springuser' set up. If you do, please delete it, or else run the commands found in setupDb.sql individually and leave out creation of the user again.
+2. Likewise with the database - if you already have a database called 'hotelbookingsystem', just drop it and start again.

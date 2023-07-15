@@ -9,8 +9,6 @@
 <body>
 <%@ include file="header.jsp" %>
 
-
-
 <h1>Welcome to the member area ${customer.guest_first_name}</h1>
 
     <h2>

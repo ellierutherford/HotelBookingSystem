@@ -9,8 +9,8 @@
     <link href="${jstlCss}" rel="stylesheet" >
 </head>
 <body>
-
+<%@ include file="header.jsp" %>
 <h1>You have successfully deleted your registration!</h1>
-
+<div>Click&nbsp;<a href="/home">here</a> &nbsp;to return home</div>
 </body>
 </html>

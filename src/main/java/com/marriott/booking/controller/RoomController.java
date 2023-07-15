@@ -8,10 +8,12 @@ import com.marriott.booking.repository.BookingRepository;
 import com.marriott.booking.repository.RoomTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Controller
@@ -22,35 +24,32 @@ public class RoomController {
     @Autowired
     RoomTypeRepository roomRepository;
 
+
     // Get a Single Room
+    @PreAuthorize("hasAuthority('ROLE_admin')")
     @GetMapping("/rooms/{id}")
     public String getRoomById(@PathVariable(value="id") Long roomId, Model model)
-            throws RoomNotFoundException, BookingNotFoundException{
+            throws RoomNotFoundException{
         RoomType room = roomRepository.findById(roomId)/*add the room to the model*/
                 .orElseThrow(() -> new RoomNotFoundException(roomId));
         model.addAttribute("room", room);
-
-        System.out.println("RoomType Controller getRoomById" );
         return "editroomform";
     }
 
 
     // See All Rooms on Homepage
+    @PreAuthorize("hasAuthority('ROLE_admin')")
     @RequestMapping({ "/rooms"})
     public String viewRoomHomePage(Model model){
         List<RoomType> listRooms = roomRepository.findAll();
         model.addAttribute("listRooms", listRooms);
-
-        System.out.println("RoomType Controller viewRoomHomePage" );
-
         return "welcomeRoom";
     }
 
     // Delete a Room
+    @PreAuthorize("hasAuthority('ROLE_admin')")
     @RequestMapping("/deleteroom/{id}")
     public String deleteRoom(@PathVariable(value = "id") Long roomId, Model model) throws RoomNotFoundException{
-
-        System.out.println("RoomType Controller deleteRoom" );
         try {
             RoomType room = roomRepository.findById(roomId)
                 .orElseThrow(() -> new RoomNotFoundException(roomId));
@@ -63,14 +62,15 @@ public class RoomController {
     }
 
     // Create a Room
+    @PreAuthorize("hasAuthority('ROLE_admin')")
     @RequestMapping("/newroom")
     public String createRoom(){
         return "roomform";
     }
     // Save Created Room
+    @PreAuthorize("hasAuthority('ROLE_admin')")
     @PostMapping("/rooms")
     public String saveCreatedRoom(@ModelAttribute("room") RoomType room, Model model){
-        System.out.println("RoomType Controller saveCreatedRoom " );
         roomRepository.save(room);
         return viewRoomHomePage(model);
     }
@@ -79,6 +79,7 @@ public class RoomController {
     // Get Room By ID and open the editform
 
     // Save Updated Details
+    @PreAuthorize("hasAuthority('ROLE_admin')")
     @RequestMapping(value="/rooms/save", method=RequestMethod.POST)
     public String updateRoom(@ModelAttribute("room") RoomType room, Model model){
         System.out.println("RoomType Controller updateRoom " );

@@ -9,18 +9,14 @@
     <link href="${jstlCss}" rel="stylesheet" >
 </head>
 <body>
+<%@ include file="header.jsp" %>
+<h2>Find your booking by entering your booking reference below.</h2>
+<form action="find" method="post">
+    <label for="bookingRef">Booking Reference:</label>
+    <input type="text" name="bookingRef" size="45"
+           value='${reservation.bookingRef}'/>
+    <input type="submit" id="saveButton" value="Search" />
+</form>
 
-<h1>List out our users (incl. passwords), terribly insecure!</h1>
-
-<div>
-    <c:forEach var="user" items="${users}" varStatus="loop">
-        <tr>
-            <td><c:out value="${user.username}" /></td>
-            <td><c:out value="${user.password}" /></td>
-            <td><c:out value="${user.firstName}" /></td>
-            <td><c:out value="${user.lastName}" /></td>
-        </tr>
-    </c:forEach>
-</div>
 </body>
 </html>

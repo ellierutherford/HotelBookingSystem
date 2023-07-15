@@ -34,7 +34,7 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
 
-    @ManyToOne() //is this needed?
+    @ManyToOne()
     @JoinColumn(name = "roomasset")
     private RoomAsset roomasset;
 

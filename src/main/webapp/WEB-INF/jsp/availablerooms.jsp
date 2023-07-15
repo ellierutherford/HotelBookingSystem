@@ -8,9 +8,7 @@
     <title>Room Addition</title>
 </head>
 <body>
-
-<h1>Room Management</h1>
-
+<%@ include file="header.jsp" %>
 <div>
     <table>
         <caption><h2>List of Rooms</h2></caption>
@@ -20,9 +18,8 @@
             <th>Price per night</th>
         </tr>
         <c:forEach var="room" items="${availableRooms}" varStatus="loop">
-            <td>
-                <td><c:out value="${room.roomasset_name}" /></td>
-                <td><c:out value="${room.max_guests}" /></td>
+            <td><c:out value="${room.roomasset_name}" /></td>
+            <td><c:out value="${room.max_guests}" /></td>
             <td>
                 <c:choose>
                     <c:when test="${username eq 'anonymous'}">
@@ -33,7 +30,7 @@
                     </c:otherwise>
                 </c:choose>
             </td>
-                <td><a href="/book?startDate=${startDate}&endDate=${endDate}&numGuests=${numGuests}&roomId=${room.id}">Book this room</a></td>
+            <td><a href="/book?startDate=${startDate}&endDate=${endDate}&numGuests=${numGuests}&roomId=${room.id}">Book this room</a></td>
             </tr>
         </c:forEach>
     </table>

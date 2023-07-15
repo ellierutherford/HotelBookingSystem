@@ -10,6 +10,6 @@
 
 </head>
 <body>
-401 NOT AUTHORIZED
+<h2>401 NOT AUTHORIZED</h2>
 </body>
 </html>

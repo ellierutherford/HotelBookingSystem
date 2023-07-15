@@ -1,8 +1,6 @@
 package com.marriott.booking.repository;
 
-import com.marriott.booking.exception.BookingNotFoundException;
 import com.marriott.booking.exception.CardNotFoundException;
-import com.marriott.booking.model.Booking;
 import com.marriott.booking.model.CreditCard;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

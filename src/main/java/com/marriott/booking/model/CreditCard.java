@@ -26,9 +26,8 @@ public class CreditCard {
     @Column(nullable = false, unique = true, length = 16)
     private String cardNumber;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotBlank
-    private Date expiry;
+    private String expiry;
 
     @NotBlank String cvv;
 
@@ -39,7 +38,7 @@ public class CreditCard {
         super();
     }
 
-    public CreditCard(Long id, Long userId, String cardHolderName, String cardNumber, Date expiry, String cvv, CreditCardStatus status) {
+    public CreditCard(Long id, Long userId, String cardHolderName, String cardNumber, String expiry, String cvv, CreditCardStatus status) {
         this.id = id;
         this.userId = userId;
         this.cardHolderName = cardHolderName;
@@ -69,9 +68,9 @@ public class CreditCard {
 
     public void setCvv(String cvv) { this.cvv = cvv; }
 
-    public Date getExpiry() { return this.expiry; }
+    public String getExpiry() { return this.expiry; }
 
-    public void setExpiry(Date expiry) { this.expiry = expiry; }
+    public void setExpiry(String expiry) { this.expiry = expiry; }
 
     public String getCardNumber() { return this.cardNumber; }
 

@@ -12,19 +12,16 @@
 <body>
 <h1>Welcome to our hotel!</h1>
 <%@ include file="header.jsp" %>
-<h3>
-<ul class="menu">
-    <li><a href="/home">Home</a></li>
-    <li><a href="/search">Search for availability</a></li>
-</ul>
-</h3>
-
-<form action="find" method="post">
-    <label for="bookingRef">Booking Reference:</label>
-    <input type="text" name="bookingRef" size="45"
-           value='${booking.bookingRef}'/>
-    <input type="submit" id="saveButton" value="Search" />
-</form>
+<div>
+    <h2>
+        <a href="/search">Search for availability</a>
+    </h2>
+</div>
+<div>
+    <h2>
+        <a href="/findbooking">Find a booking</a>
+    </h2>
+</div>
 
 </body>
 </html>

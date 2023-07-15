@@ -9,7 +9,7 @@
     <link href="${jstlCss}" rel="stylesheet" >
 </head>
 <body>
-
+<%@ include file="header.jsp" %>
 <h1>You have successfully booked! Please find your details below</h1>
 <div>
     <table>
@@ -33,5 +33,6 @@
         </tr>
     </table>
 </div>
+<div>Click&nbsp;<a href="/home">here</a> &nbsp;to return home</div>
 </body>
 </html>

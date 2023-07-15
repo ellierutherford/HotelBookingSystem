@@ -9,8 +9,8 @@
     <link href="${jstlCss}" rel="stylesheet" >
 </head>
 <body>
-
+<%@ include file="header.jsp" %>
 <h1>You have logged out!</h1>
-
+<div>Click&nbsp;<a href="/home">here</a> &nbsp;to return home</div>
 </body>
 </html>
