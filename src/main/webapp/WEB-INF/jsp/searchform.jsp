@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<h1>Bookings Management</h1>
+<%@ include file="header.jsp" %>
 
 <div >
     <form action="availability" method="post">

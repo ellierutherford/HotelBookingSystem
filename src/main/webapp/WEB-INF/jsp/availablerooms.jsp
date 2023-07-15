@@ -8,9 +8,7 @@
     <title>Room Addition</title>
 </head>
 <body>
-
-<h1>Room Management</h1>
-
+<%@ include file="header.jsp" %>
 <div>
     <table>
         <caption><h2>List of Rooms</h2></caption>

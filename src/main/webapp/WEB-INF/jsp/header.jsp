@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<h3>
     <nav>
         <ul>
             <sec:authorize access="isAnonymous()">
@@ -17,3 +18,4 @@
             </sec:authorize>
         </ul>
     </nav>
+</h3>

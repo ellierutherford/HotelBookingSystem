@@ -9,6 +9,7 @@
     <link href="${jstlCss}" rel="stylesheet" >
 </head>
 <body>
+<%@ include file="header.jsp" %>
 <h2>Find your booking by entering your booking reference below.</h2>
 <form action="find" method="post">
     <label for="bookingRef">Booking Reference:</label>

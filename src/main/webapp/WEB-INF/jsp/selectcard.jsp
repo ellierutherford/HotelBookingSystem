@@ -8,7 +8,7 @@
     <c:url value="/css/main.css" var="jstlCss" />
     <link href="${jstlCss}" rel="stylesheet" >
 </head>
-
+<%@ include file="header.jsp" %>
 <h1>
     Select a card to use for this booking
 </h1>

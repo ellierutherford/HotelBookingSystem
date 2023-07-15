@@ -12,12 +12,16 @@
 <body>
 <h1>Welcome to our hotel!</h1>
 <%@ include file="header.jsp" %>
-<h2>
-<ul class="menu">
-    <li><a href="/search">Search for availability</a></li>
-    <li><a href="/findbooking">Find a booking</a></li>
-</ul>
-</h2>
+<div>
+    <h2>
+        <a href="/search">Search for availability</a>
+    </h2>
+</div>
+<div>
+    <h2>
+        <a href="/findbooking">Find a booking</a>
+    </h2>
+</div>
 
 </body>
 </html>
