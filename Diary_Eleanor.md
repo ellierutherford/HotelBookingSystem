@@ -1,5 +1,3 @@
-Starting diary again on fresh branch.
-
 So far;
 
 - Set up bare bones template project in repo
@@ -39,6 +37,12 @@ So what have I covered from the assignment brief?
   - users who successfully log in can book available rooms at discounted prices (10%): DONE
 - Starwood users can book one or more available rooms: DONE
   - the user will only have to select the credit card that’s/he wants to use for payment: DONE
+- Starwood members can visualize a history of their reservations: after a user performs the login successfully, Starwood members can visualize their reservations and their status (Active, Cancelled, Inactive):DONE
+  - If an active reservation is selected, the user can cancel it: DONE
+  - Note: all bookings are either active or cancelled, no functionality to make inactive?
+- Starwood members can delete their registration: DONE
+
+
 
 Update 09/07 - didn't get a chance to do any tidy up really, I just focussed on login functionality today. Was a bit of a slog, but finally have the login working. Next step for me - get logout working. 
 
@@ -50,11 +54,20 @@ Update 12/07 - split booking + registration flows into two steps, plus added cre
 
 Update 13/07 - allow logged in users to book rooms using previously created cards, fix cancel logic
 
+Update 15/07 - users can view past reservations + delete their registration. Fixed bug where a booking can be saved to DB before card is added. Users can view their credit card details
+
 NEXT - 
-make sure you can't register if already logged in
-make the logged in UI better
+Allow a user to add a new credit card + modify an existing one
 
-Notes; 
 
-saving the booking too soon - we should only save once the card details have been associated. Leave for now but better to fix.
-(Saving once user is associated and then again once card is associated. Works fine if both user and card details are saved, but if the user terminates too soon, the booking is still in the DB.)
+Small improvements TODO:
+Make sure you can't register if already logged in
+Make the input in password field in register form ****
+Fix table UI when booking
+Fix the expiry date in credit card
+Add header to every page
+Lock down non assignment related endpoints to admin only
+Why does the home page "find reference" box auto populate?
+General tidy up
+
+

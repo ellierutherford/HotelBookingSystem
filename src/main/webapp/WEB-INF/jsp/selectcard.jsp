@@ -23,10 +23,11 @@
                     ${creditCard.cardNumber} - ${creditCard.cardHolderName}
             </label><br>
         </c:forEach>
-    </form>
+
     </div>
-        <div style="clear:both">
+        <div>
             <input type="submit" value="Submit">
         </div>
+</form>
 </body>
 </html>

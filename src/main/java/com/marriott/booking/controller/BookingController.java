@@ -113,7 +113,6 @@ public class BookingController {
         booking.setStartDate(startDate);
         booking.setNumGuests(numGuests);
         roomAsset.ifPresent(room -> booking.setRoomAsset(room)); //throw instead?
-        booking.setStatus(BookingStatus.ACTIVE);
         String generatedBookingRef = UUID.randomUUID().toString().replaceAll("-", "");
         booking.setBookingRef(generatedBookingRef);
 
@@ -139,22 +138,14 @@ public class BookingController {
         return "redirect:/cards?userId="+customer.getId();
     }
 
-    @GetMapping("/cards")
-    public String getCardsForUser(@RequestParam Long userId, Model model) throws CardNotFoundException {
-        List<CreditCard> cards = cardRepository.findByUserId(userId);
-        model.addAttribute("cards", cards);
-        if(cards.size()==0){
-            return "cardform";
-        }
-        return "selectcard";
-    }
-
     @PostMapping("/selectCard")
     public String selectCard(@RequestParam("selectedCardNumber") String selectedCardNumber, HttpSession session)
     throws CardNotFoundException{
         Booking booking = (Booking) session.getAttribute("booking");
         CreditCard card = cardRepository.findByCardNumber(selectedCardNumber);
         booking.setCard(card);
+        // only set booking to active once a card is associated with it
+        booking.setStatus(BookingStatus.ACTIVE);
         bookingRepository.save(booking);
         return "bookingSuccess";
     }
@@ -174,6 +165,8 @@ public class BookingController {
         throws BookingNotFoundException{
         Booking b = bookingRepository.findById(bookingId).orElseThrow(() -> new BookingNotFoundException(bookingId));
         b.setCard(card);
+        // only set booking to active once a card is associated with it
+        b.setStatus(BookingStatus.ACTIVE);
         card.setUserId(b.getGuest_id()); //this is a bit gross
         cardRepository.save(card);
         return "bookingSuccess";
