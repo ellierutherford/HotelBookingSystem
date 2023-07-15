@@ -3,7 +3,7 @@ Starting diary again on fresh branch.
 Finally working 13.07.23 after HUNDREDS (690 Pages of screenshots) of restarts and re installs
 
 Learning - If you dont code day by day the learning curve is akin to learning a completely new language, e.g. operating in russian never having learned russian before and without haveing any direction on the grammer. 
-Security professionals know the general frameworks and analyse code for flaws, however rarely code full time as it is prohibitively expensive and not a great use of resources - possibly a conflict of interest (you cant be objective on code flaws you might have created) of resources
+Security professionals know the general frameworks and analyse code for flaws, however rarely code full time as it is prohibitively expensive and not a great use of resources - possibly a conflict of interest (you cant be objective on code flaws you might have created) of resources, having never really used github before that was a learning too as constantly wary of breaking what had been implemented already. 
 Turns out there was a conflict with visual studio install I had added on matts recommendation as thats how he got everything working so easily, i just had too many other Ellie helped me hugely with the sql startup code so team have been great
 1507.have added some entries,
 theres a radio button to nowhere on newroomasset will see if I can fix and
@@ -13,6 +13,10 @@ That worked better now get a tomcat 404 error message still ugly just not as lon
 Installed Zap to test and trying through Kali toolset I have on virtualbox.
 At moments seeing how to resolve whitelabel /error page when you click on save on roomassets
 Question - If I have port 8080 open through SQL on my local machine - doesnt that mean my local machine 10.0.2.2 on a local network arp is exposed through my tethered mobile internet public IP
+Have tried to run some tests with Kali VM from my local machine to see what I can enumerate
+Password analysis qould be a nice test to to break in / sql injection
+DOS through session flooding
+etc etc
 will try to run some of these before submit
 
 Storing it here
