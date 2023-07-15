@@ -10,14 +10,12 @@
 </head>
 <body>
 
+<h2><a href="/newcard">Add a new card</a></h2>
 <h1>Your cards</h1>
 
-<div>
         <c:forEach var="card" items="${cards}" varStatus="loop">
+            <div>
         <table >
-            <caption>
-                <h2> Your Details </h2>
-            </caption>
             <tr>
                 <th>Card Holder name:</th>
                 <td>
@@ -45,8 +43,11 @@
                     <c:out value='${card.expiry}' />
                 </td>
             </tr>
+            <tr>
+                <td><a href="/editcardform?cardId=${card.id}">Modify card</a></td>
+            </tr>
         </table>
+            </div>
         </c:forEach>
-</div>
 </body>
 </html>

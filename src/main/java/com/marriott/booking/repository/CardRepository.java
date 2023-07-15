@@ -17,4 +17,7 @@ public interface CardRepository extends JpaRepository<CreditCard, Long> {
 
     @Query("select c from CreditCard c where c.cardNumber = ?1")
     CreditCard findByCardNumber(String cardNumber) throws CardNotFoundException;
+
+    @Query("select c from CreditCard c where c.id = ?1")
+    CreditCard findByCardId(Long cardId) throws CardNotFoundException;
 }

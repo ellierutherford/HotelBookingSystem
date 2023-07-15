@@ -10,8 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -23,12 +26,13 @@ public class CardController {
     @Autowired
     CardRepository cardRepository;
 
-    @GetMapping("/cards")
-    public String addCardToBooking(@RequestParam Long userId, Model model) throws CardNotFoundException {
+    @PostMapping("/cards")
+    public String addCardToBooking(@RequestParam Long userId, Model model, Principal principal) throws CardNotFoundException {
+
         List<CreditCard> cards = cardRepository.findByUserId(userId);
         model.addAttribute("cards", cards);
         if(cards.size()==0){
-            return "cardform";
+            return "cardformbooking";
         }
         return "selectcard";
     }
@@ -40,6 +44,40 @@ public class CardController {
         List<CreditCard> userCards = cardRepository.findByUserId(u.getUser_id());
         model.addAttribute("cards", userCards);
         return "managecards";
+    }
+
+    @GetMapping("/newcard")
+    public String addCardForUser(){
+        return "cardformuser";
+    }
+
+    @GetMapping("/editcardform")
+    public String editCardForm(Model model, @RequestParam Long cardId) throws CardNotFoundException{
+        CreditCard card = cardRepository.findByCardId(cardId);
+        User user = userRepository.findByUsername(Utils.getLoggedOnUserName());
+        Long cardUId = card.getUserId();
+        Long userUId = user.getUser_id();
+        boolean areEqual = cardUId.equals(userUId);
+        if(!card.getUserId().equals(user.getUser_id())) {
+            return "redirect:/unauthorized";
+        }
+        model.addAttribute("card", card);
+        return "editcardform";
+    }
+
+    @PostMapping("/editcard")
+    public String saveCardEdits(@ModelAttribute("card") CreditCard card){
+        cardRepository.save(card);
+        return "redirect:/managecards";
+    }
+
+    @PostMapping("/savecard")
+    public String saveCardForUser(@ModelAttribute("card") CreditCard card){
+        String username = Utils.getLoggedOnUserName();
+        User user = userRepository.findByUsername(username);
+        card.setUserId(user.getUser_id());
+        cardRepository.save(card);
+        return "redirect:/managecards";
     }
 
 }
