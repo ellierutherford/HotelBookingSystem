@@ -46,8 +46,12 @@ public class BookingController {
         return "home";
     }
 
+    @GetMapping("/findbooking")
+    public String displayFindForm(){
+        return "find";
+    }
     @PostMapping("/find")
-    public String retrieveBooking(@ModelAttribute("booking") Booking b){
+    public String retrieveBooking(@ModelAttribute("reservation") Booking b){
         return "redirect:/bookings/" + b.getBookingRef();
     }
 
