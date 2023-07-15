@@ -34,8 +34,8 @@
             <tr>
                 <th>Expiry date: </th>
                 <td>
-                    <input type="date" name="expiry" size="45"
-                           value="<c:out value='${card.expiry}' />"
+                    <input type="text" name="expiry" placeholder="MM/YY"
+                           pattern="([0-9]{2}[/]?){2}" value="<c:out value='${card.expiry}' />"
                     />
                 </td>
             </tr>
