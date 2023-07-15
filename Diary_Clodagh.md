@@ -4,7 +4,7 @@ Finally working 13.07.23 after HUNDREDS (690 Pages of screenshots) of restarts a
 
 Learning - If you dont code day by day the learning curve is akin to learning a completely new language, e.g. operating in russian never having learned russian before and without haveing any direction on the grammer. 
 Security professionals know the general frameworks and analyse code for flaws, however rarely code full time as it is prohibitively expensive and not a great use of resources - possibly a conflict of interest (you cant be objective on code flaws you might have created) of resources
-Turns out there was a conflict with visual studio install I had added on matts recommendation as thats how he got everything working so easily, i just had tpp many othere Ellie helped me hugely with the sql startup code so team have been great
+Turns out there was a conflict with visual studio install I had added on matts recommendation as thats how he got everything working so easily, i just had too many other Ellie helped me hugely with the sql startup code so team have been great
 1507.have added some entries,
 theres a radio button to nowhere on newroomasset will see if I can fix and
 whitelabel error pops up on save will see if I can get a funkier and more informative error page
