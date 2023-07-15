@@ -74,7 +74,6 @@ public class User {
 
     public void setUser_id(Long user_id) { this.user_id = user_id;}
 
-    // password getter and setter?? is this right??
     public String getPassword(){
         return password;
     }

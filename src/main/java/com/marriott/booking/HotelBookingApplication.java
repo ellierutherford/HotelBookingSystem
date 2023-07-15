@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 
-// use our custom security config instead of default one
 @SpringBootApplication
 public class HotelBookingApplication {
 
