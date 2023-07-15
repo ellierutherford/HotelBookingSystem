@@ -10,6 +10,8 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    private Long user_id;
+
     @Column(nullable = false, unique = true, length = 45)
     private String username;
 
@@ -18,22 +20,17 @@ public class User {
 
     @Column(nullable = false, length = 120)
     private String roles;
-    /*@Column(name = "first_name", nullable = false, length = 20)
-    private String firstName;
-
-    @Column(name = "last_name", nullable = false, length = 20)
-    private String lastName;*/
-
 
     public User(){
 
     }
 
-    public User(String username, String password, String roles){
+    public User(Long userId, String username, String password, String roles){
+        this.user_id = userId;
         this.password = password;
         this.username = username;
         if(roles.isEmpty()){
-            roles = "user"; //hack hack, better to see can we do without
+            this.roles = "user";
         }
         else{
             this.roles = roles;
@@ -72,21 +69,10 @@ public class User {
                 ", roles='" + roles + '\'' +
                 '}';
     }
-    /*public String getFirstName() {
-        return firstName;
-    }
 
-    public void setFirstName(String firstName){
-        this.firstName = firstName;
-    }
+    public Long getUser_id() {return this.user_id; }
 
-    public String getLastName(){
-        return lastName;
-    }
-
-    public void setLastName(String lastName){
-        this.lastName = lastName;
-    }*/
+    public void setUser_id(Long user_id) { this.user_id = user_id;}
 
     // password getter and setter?? is this right??
     public String getPassword(){

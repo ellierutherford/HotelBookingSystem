@@ -10,10 +10,7 @@
 </head>
 <body>
 
-<h1>Successful login</h1>
+<h1>You have successfully deleted your registration!</h1>
 
-<div>
-    <p>Congrats, you've successfully logged in!</p>
-</div>
 </body>
 </html>

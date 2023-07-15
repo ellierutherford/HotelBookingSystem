@@ -3,8 +3,6 @@ package com.marriott.booking.controller;
 import com.marriott.booking.exception.*;
 import com.marriott.booking.model.*;
 import com.marriott.booking.repository.RoomAssetRepository;
-import com.marriott.booking.repository.ReservationRepository;
-import com.marriott.booking.repository.BookingRepository;
 import com.marriott.booking.repository.RoomTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -76,9 +73,6 @@ public class RoomAssetController {
         return viewRoomAssetHomePage(model);
     }
 
-
-
-
     @RequestMapping("/deleteroomasset/{id}")
     public String deleteRoomAsset(@PathVariable(value = "id") Long roomassetId, Model model) throws RoomAssetNotFoundException{
         try {RoomAsset roomasset = roomassetRepository.findById(roomassetId)
@@ -91,9 +85,6 @@ public class RoomAssetController {
         }
 
     }
-
-
-
 
     // Update a RoomAsset
     // Get RoomAsset By ID and open the editform

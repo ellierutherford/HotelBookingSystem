@@ -24,7 +24,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableMethodSecurity
 public class WebSecurityConfig {
 
-
     private final StarwoodUserDetailsSvc starwoodUserDetailsSvc;
 
     public WebSecurityConfig(StarwoodUserDetailsSvc userDetailsSvc){
@@ -43,6 +42,7 @@ public class WebSecurityConfig {
                 )
                 .userDetailsService(starwoodUserDetailsSvc)
                 .formLogin(withDefaults())
+                .logout((logout) -> logout.logoutSuccessUrl("/logoutsuccess"))
                 .build();
     }
 

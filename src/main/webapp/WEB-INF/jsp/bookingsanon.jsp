@@ -33,7 +33,7 @@
                 </td>
             </tr>
 
-            <!-- Add more fields for additional guest details if needed -->
+            <!-- Add more fields for additional customer details if needed -->
 
             <tr>
                 <th>Booking Start Date:</th>

@@ -13,7 +13,7 @@
 <h1>Register</h1>
 
 <div>
-    <form action="registration" method="post">
+    <form action="registerCredentials" method="post">
 
         <table >
             <caption>
@@ -22,6 +22,7 @@
             <tr>
                 <th>Username</th>
                 <td>
+                    <input type="hidden" name="userId" value="${userId}">
                     <input type="text" name="username" size="45"
                            value="<c:out value='${user.username}' />"
                     />
@@ -35,15 +36,6 @@
                     />
                 </td>
             </tr>
-            <tr>
-                <th>Roles </th>
-                <td>
-                    <input type="text" name="roles" size="45"
-                           value="<c:out value='${user.roles}' />"
-                    />
-                </td>
-            </tr>
-
             <tr>
                 <td colspan="2" >
                     <input type="submit" id="saveButton" value="Register" />

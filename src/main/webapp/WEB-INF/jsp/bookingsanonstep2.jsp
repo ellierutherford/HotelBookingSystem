@@ -19,7 +19,7 @@
         <input type="hidden" name="leadguest_first_name" value="${booking.leadguest_first_name}" />
         <input type="hidden" name="leadguest_last_name" value="${booking.leadguest_last_name}" />
 
-        <p>Hi ${guest.guest_first_name}, a Booking date of: ${booking.startDate} to ${booking.endDate}?</p>
+        <p>Hi ${customer.guest_first_name}, a Booking date of: ${booking.startDate} to ${booking.endDate}?</p>
 
 
         <!-------requirement:                                                           -------------->

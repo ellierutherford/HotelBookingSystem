@@ -10,40 +10,43 @@
 </head>
 <body>
 
-<h1>Login</h1>
+<h1>Your cards</h1>
 
 <div>
-
-    <form action="loginAction" method="post">
+        <c:forEach var="card" items="${cards}" varStatus="loop">
         <table >
             <caption>
                 <h2> Your Details </h2>
             </caption>
             <tr>
-                <th>User name:</th>
+                <th>Card Holder name:</th>
                 <td>
-                    <input type="text" name="username" size="45"
-                           value="<c:out value='${user.username}' />"
-                    />
+                    <c:out value='${card.cardHolderName}' />
                 </td>
             </tr>
 
             <tr>
-                <th>Password: </th>
+                <th>Card Number: </th>
                 <td>
-                    <input type="text" name="password" size="45"
-                           value="<c:out value='${password}' />"
-                    />
+                    <c:out value='${card.cardNumber}' />
                 </td>
             </tr>
 
             <tr>
-                <td colspan="2" >
-                    <input type="submit" id="saveButton" value="Save" />
+                <th>Cvv: </th>
+                <td>
+                    <c:out value='${card.cvv}' />
+                </td>
+            </tr>
+
+            <tr>
+                <th>Expiry date: </th>
+                <td>
+                    <c:out value='${card.expiry}' />
                 </td>
             </tr>
         </table>
-    </form>
+        </c:forEach>
 </div>
 </body>
 </html>

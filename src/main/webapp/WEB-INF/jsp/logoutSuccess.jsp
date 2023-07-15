@@ -10,10 +10,7 @@
 </head>
 <body>
 
-<h1>Unsuccessful login</h1>
+<h1>You have logged out!</h1>
 
-<div>
-    <p>You're not logged in...</p>
-</div>
 </body>
 </html>

@@ -11,8 +11,6 @@ import org.springframework.security.config.annotation.authentication.configurati
 @SpringBootApplication//(exclude = {SecurityAutoConfiguration.class})
 public class HotelBookingApplication {
 
-
-
     public static void main(String[] args) {
         SpringApplication.run(HotelBookingApplication.class, args);
     }

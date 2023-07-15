@@ -9,17 +9,14 @@
 <body>
 <%@ include file="header.jsp" %>
 
-<div>
+    <h2>Your bookings</h2>
+
+    <c:forEach var="booking" items="${bookings}" varStatus="loop">
+        <div>
         <table>
             <caption>
-                <h2>Booking Retrieved</h2>
+                <h3>Booking with reference ${booking.bookingRef}</h3>
             </caption>
-            <tr>
-                <th>Booking Ref: </th>
-                <td>
-                    <c:out value='${booking.bookingRef}' />
-                </td>
-            </tr>
             <tr>
                 <th>Booking Start Date: </th>
                 <td>
@@ -38,14 +35,19 @@
                     <c:out value='${booking.roomasset.roomasset_name}' />
                 </td>
             </tr>
-            <c:if test="${allowCancel}">
+            <tr>
+                <th>Booking status: </th>
+                <td>
+                    <c:out value='${booking.status}' />
+                </td>
+            </tr>
+            <c:if test="${booking.status eq 'ACTIVE'}">
                 <tr>
                     <td><a href="/cancel/${booking.id}">Cancel booking</a></td>
                 </tr>
             </c:if>
-
-
         </table>
-</div>
+        </div>
+    </c:forEach>
 </body>
 </html>

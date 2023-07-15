@@ -1,102 +1,83 @@
 package com.marriott.booking.model;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "creditCards")
+@Table(name = "credit_cards")
 public class CreditCard {
 
-    @Id
     @GeneratedValue
-    private Long id;
+    @Id
+    Long id;
 
     @NotBlank
-    private String creditCard_name;
+    private String cardHolderName;
 
     @NotBlank
-    private String bookingRef;
+    private Long userId;
 
-    @Column(name = "start_date")
-    private LocalDate startDate;
+    @NotBlank
+    @Column(nullable = false, unique = true, length = 16)
+    private String cardNumber;
 
-    @Column(name = "end_date")
-    private LocalDate endDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotBlank
+    private Date expiry;
 
-    @OneToMany(mappedBy = "creditCard")
-    private List<Reservation> reservations;
+    @NotBlank String cvv;
 
     @Enumerated(EnumType.STRING) // Using EnumType.STRING to store the status as a string in the database
-    private CreditCardStatus status; // New field for status
+    private CreditCardStatus status;
 
     public CreditCard() {
         super();
     }
 
-    public CreditCard(Long id, String creditCardName, String bookingRef, LocalDate startDate, LocalDate endDate, CreditCardStatus status) {
+    public CreditCard(Long id, Long userId, String cardHolderName, String cardNumber, Date expiry, String cvv, CreditCardStatus status) {
         this.id = id;
-        this.creditCard_name = creditCard_name;
-        this.bookingRef = bookingRef;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.userId = userId;
+        this.cardHolderName = cardHolderName;
+        this.cardNumber = cardNumber;
+        this.expiry = expiry;
+        this.cvv = cvv;
         this.status = status;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Long getId(){ return this.id; }
 
-    public void setCreditCard_name(String creditCard_name) {
-        this.creditCard_name = creditCard_name;
-    }
-
-    public void setbookingRef(String bookingRef) {
-        this.bookingRef = bookingRef;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
+    public void setId(Long id){ this.id = id; }
 
     public void setStatus(CreditCardStatus status) {
         this.status = status;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getCreditCard_name() {
-        return creditCard_name;
-    }
-
-    public String getbookingRef() {
-        return bookingRef;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
     }
 
     public CreditCardStatus getStatus() {
         return status;
     }
 
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
+    public String getCardHolderName(){ return this.cardHolderName; }
 
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
-    }
+    public void setCardHolderName(String cardHolderName) { this.cardHolderName = cardHolderName; }
+
+    public String getCvv() { return this.cvv; }
+
+    public void setCvv(String cvv) { this.cvv = cvv; }
+
+    public Date getExpiry() { return this.expiry; }
+
+    public void setExpiry(Date expiry) { this.expiry = expiry; }
+
+    public String getCardNumber() { return this.cardNumber; }
+
+    public void setCardNumber(String cardNumber) { this.cardNumber = cardNumber; }
+
+    public Long getUserId() { return this.userId; }
+
+    public void setUserId(Long userId) { this.userId = userId; }
 }

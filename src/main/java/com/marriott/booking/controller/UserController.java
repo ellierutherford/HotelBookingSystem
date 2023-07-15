@@ -1,73 +1,81 @@
 package com.marriott.booking.controller;
+import com.marriott.booking.Utils;
+import com.marriott.booking.exception.BookingNotFoundException;
+import com.marriott.booking.exception.CustomerNotFoundException;
+import com.marriott.booking.model.Booking;
+import com.marriott.booking.model.Customer;
 import com.marriott.booking.model.User;
+import com.marriott.booking.repository.BookingRepository;
+import com.marriott.booking.repository.CustomerRepository;
 import com.marriott.booking.repository.UserRepository;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @Controller
 public class UserController {
 
     @Autowired
-    private UserRepository userRepo;
+    private CustomerRepository customerRepository;
+    @Autowired
+    private UserRepository userRepository;
 
+    @Autowired
+    private BookingRepository bookingRepository;
 
 
     @GetMapping("/register")
-    public String registrationForm(Model model) {
-        model.addAttribute("user", new User());
-        return "registration_form";
+    public String register(){
+        return "registerDetails";
+    }
+    @PostMapping("/registerDetails")
+    public String registerDetails(@ModelAttribute Customer user, Model model) {
+        customerRepository.save(user);
+        model.addAttribute("userId", user.getId());
+        return "registerCredentials";
     }
 
-    @PostMapping("/registration")
-    public String register(Model model, @ModelAttribute User user) {
-        userRepo.save(user);
+    @PostMapping("/registerCredentials")
+    public String registerCreds(@ModelAttribute User user, @RequestParam Long userId) {
+        // by default, add everyone who registers through the GUI as a user
+        user.setRoles("user");
+        user.setUser_id(userId);
+        userRepository.save(user);
         return "registerSuccess";
     }
 
-    /*@GetMapping("/login")
-    public String login(){
-        return "login";
-    }*/
-
-    @PostMapping("/loginAction")
-    public String loginAction(HttpServletRequest request, @ModelAttribute User user) {
-        User u = userRepo.findByUsername(user.getUsername());
-        if(u.getPassword().equals(user.getPassword())){
-
-            return "loginSuccess";
-        }
-        else{
-            return "loginFailure";
-        }
+    @GetMapping("/logoutsuccess")
+    public String logout(){
+        return "logoutSuccess";
     }
 
-
-    @GetMapping("/test")
-    public String test(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getPrincipal().toString();
-        return "test";
+    @GetMapping("/myaccount")
+    public String viewLoggedOnUserAccount(Model model) throws CustomerNotFoundException {
+        User user = userRepository.findByUsername(Utils.getLoggedOnUserName());
+        Customer customer = customerRepository.findByCustomerId(user.getUser_id());
+        model.addAttribute("customer", customer);
+        return "customerdetails";
     }
 
-    @GetMapping("/listusers")
-    public String listUsers(Model model){
-        List<User> users = userRepo.findAll();
-        model.addAttribute("users", users);
-        return "listusers";
+    @GetMapping("mybookings")
+    public String viewReservations(Model model) throws BookingNotFoundException {
+        User user = userRepository.findByUsername(Utils.getLoggedOnUserName());
+        List<Booking> bookings = bookingRepository.findByUserId(user.getUser_id());
+        model.addAttribute("bookings", bookings);
+        return "userbookings";
+    }
+
+    @RequestMapping("/deleteRegistration")
+    public String deleteRegistration(HttpServletRequest request) throws ServletException {
+        User user = userRepository.findByUsername(Utils.getLoggedOnUserName());
+        userRepository.delete(user);
+        request.logout();
+        return "deletionSuccess";
     }
 }

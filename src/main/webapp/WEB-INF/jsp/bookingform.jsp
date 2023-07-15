@@ -27,14 +27,16 @@
             <th>Number of Guests: ${booking.numGuests}</th>
         </tr>
         <tr>
-            <th>Room ID: ${booking.roomasset.roomasset_name}</th>
+            <th>Room name: ${booking.roomasset.roomasset_name}</th>
+        </tr>
+        <tr>
+            <th>Booking ref: ${booking.bookingRef}</th>
         </tr>
     </table>
 </div>
 <div>
 
-
-    <form action="bookingsel" method="post">
+    <form action="bookingForm" method="post">
         <table >
             <caption>
                 <h2> Your Details </h2>
@@ -43,47 +45,42 @@
                 <th>First Name:</th>
                 <td>
                     <input type="text" name="guest_first_name" size="45"
-                           value="<c:out value='${guest.guest_first_name}' />"
+                           value="<c:out value='${customer.guest_first_name}' />"
                     />
                 </td>
             </tr>
-
             <tr>
                 <th>Last Name: </th>
                 <td>
                     <input type="text" name="guest_last_name" size="45"
-                           value="<c:out value='${guest.guest_last_name}' />"
+                           value="<c:out value='${customer.guest_last_name}' />"
                     />
                 </td>
             </tr>
-
             <tr>
                 <th>Phone: </th>
                 <td>
                     <input type="text" name="guest_phone_number" size="45"
-                           value="<c:out value='${guest.guest_phone_number}' />"
+                           value="<c:out value='${customer.guest_phone_number}' />"
                     />
                 </td>
             </tr>
-
             <tr>
                 <th>Address: </th>
                 <td>
                     <input type="text" name="guest_address" size="10"
-                           value="<c:out value='${guest.guest_address}' />"
+                           value="<c:out value='${customer.guest_address}' />"
                     />
                 </td>
             </tr>
-
             <tr>
                 <th>Guest email: </th>
                 <td>
                     <input type="text" name="guest_email" size="20"
-                           value="<c:out value='${guest.guest_email}' />"
+                           value="<c:out value='${customer.guest_email}' />"
                     />
                 </td>
             </tr>
-
             <tr>
                 <td colspan="2" >
                     <input type="submit" id="saveButton" value="Save" />
@@ -91,6 +88,8 @@
             </tr>
         </table>
     </form>
+
 </div>
+
 </body>
 </html>
