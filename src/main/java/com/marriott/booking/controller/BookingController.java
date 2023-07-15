@@ -138,16 +138,6 @@ public class BookingController {
         return "redirect:/cards?userId="+customer.getId();
     }
 
-    @GetMapping("/cards")
-    public String getCardsForUser(@RequestParam Long userId, Model model) throws CardNotFoundException {
-        List<CreditCard> cards = cardRepository.findByUserId(userId);
-        model.addAttribute("cards", cards);
-        if(cards.size()==0){
-            return "cardform";
-        }
-        return "selectcard";
-    }
-
     @PostMapping("/selectCard")
     public String selectCard(@RequestParam("selectedCardNumber") String selectedCardNumber, HttpSession session)
     throws CardNotFoundException{

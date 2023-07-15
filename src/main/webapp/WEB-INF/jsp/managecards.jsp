@@ -10,15 +10,10 @@
 </head>
 <body>
 
-<h1>Bookings Management</h1>
+<h1>Your cards</h1>
 
 <div>
-
-    <c:url var="actionUrl" value="/completeBooking">
-        <c:param name="bookingId" value="${booking.id}" />
-    </c:url>
-
-    <form action="${actionUrl}" method="post">
+        <c:forEach var="card" items="${cards}" varStatus="loop">
         <table >
             <caption>
                 <h2> Your Details </h2>
@@ -26,46 +21,32 @@
             <tr>
                 <th>Card Holder name:</th>
                 <td>
-                    <input type="text" name="cardHolderName" size="45"
-                           value="<c:out value='${card.cardHolderName}' />"
-                    />
+                    <c:out value='${card.cardHolderName}' />
                 </td>
             </tr>
 
             <tr>
                 <th>Card Number: </th>
                 <td>
-                    <input type="text" name="cardNumber" size="45"
-                           value="<c:out value='${card.cardNumber}' />"
-                    />
+                    <c:out value='${card.cardNumber}' />
                 </td>
             </tr>
 
             <tr>
                 <th>Cvv: </th>
                 <td>
-                    <input type="text" name="cvv" size="45"
-                           value="<c:out value='${card.cvv}' />"
-                    />
+                    <c:out value='${card.cvv}' />
                 </td>
             </tr>
 
             <tr>
                 <th>Expiry date: </th>
                 <td>
-                    <input type="date" name="expiry" size="45"
-                           value="<c:out value='${card.expiry}' />"
-                    />
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="2" >
-                    <input type="submit" id="saveButton" value="Save" />
+                    <c:out value='${card.expiry}' />
                 </td>
             </tr>
         </table>
-    </form>
+        </c:forEach>
 </div>
 </body>
 </html>

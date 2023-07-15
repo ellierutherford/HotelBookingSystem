@@ -1,8 +1,8 @@
 package com.marriott.booking.controller;
+import com.marriott.booking.Utils;
 import com.marriott.booking.exception.BookingNotFoundException;
 import com.marriott.booking.exception.CustomerNotFoundException;
 import com.marriott.booking.model.Booking;
-import com.marriott.booking.model.BookingStatus;
 import com.marriott.booking.model.Customer;
 import com.marriott.booking.model.User;
 import com.marriott.booking.repository.BookingRepository;
@@ -11,10 +11,6 @@ import com.marriott.booking.repository.UserRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,12 +29,7 @@ public class UserController {
     @Autowired
     private BookingRepository bookingRepository;
 
-    // helper method
-    private String getLoggedOnUser(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return userDetails.getUsername();
-    }
+
     @GetMapping("/register")
     public String register(){
         return "registerDetails";
@@ -66,7 +57,7 @@ public class UserController {
 
     @GetMapping("/myaccount")
     public String viewLoggedOnUserAccount(Model model) throws CustomerNotFoundException {
-        User user = userRepository.findByUsername(getLoggedOnUser());
+        User user = userRepository.findByUsername(Utils.getLoggedOnUserName());
         Customer customer = customerRepository.findByCustomerId(user.getUser_id());
         model.addAttribute("customer", customer);
         return "customerdetails";
@@ -74,7 +65,7 @@ public class UserController {
 
     @GetMapping("mybookings")
     public String viewReservations(Model model) throws BookingNotFoundException {
-        User user = userRepository.findByUsername(getLoggedOnUser());
+        User user = userRepository.findByUsername(Utils.getLoggedOnUserName());
         List<Booking> bookings = bookingRepository.findByUserId(user.getUser_id());
         model.addAttribute("bookings", bookings);
         return "userbookings";
@@ -82,7 +73,7 @@ public class UserController {
 
     @RequestMapping("/deleteRegistration")
     public String deleteRegistration(HttpServletRequest request) throws ServletException {
-        User user = userRepository.findByUsername(getLoggedOnUser());
+        User user = userRepository.findByUsername(Utils.getLoggedOnUserName());
         userRepository.delete(user);
         request.logout();
         return "deletionSuccess";
