@@ -54,10 +54,10 @@ Update 12/07 - split booking + registration flows into two steps, plus added cre
 
 Update 13/07 - allow logged in users to book rooms using previously created cards, fix cancel logic
 
-Update 15/07 - users can view past reservations + delete their registration. Fixed bug where a booking can be saved to DB before card is added.
+Update 15/07 - users can view past reservations + delete their registration. Fixed bug where a booking can be saved to DB before card is added. Users can view their credit card details
 
 NEXT - 
-Allow a user to add a credit card
+Allow a user to add a new credit card + modify an existing one
 
 
 Small improvements TODO:
@@ -67,6 +67,7 @@ Fix table UI when booking
 Fix the expiry date in credit card
 Add header to every page
 Lock down non assignment related endpoints to admin only
+Why does the home page "find reference" box auto populate?
 General tidy up
 
 
