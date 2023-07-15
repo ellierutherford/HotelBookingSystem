@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -40,6 +42,33 @@ public class CardController {
         List<CreditCard> userCards = cardRepository.findByUserId(u.getUser_id());
         model.addAttribute("cards", userCards);
         return "managecards";
+    }
+
+    @GetMapping("/newcard")
+    public String addCardForUser(){
+        return "cardformuser";
+    }
+
+    @GetMapping("/editcardform")
+    public String editCardForm(Model model, @RequestParam Long cardId) throws CardNotFoundException{
+        CreditCard card = cardRepository.findByCardId(cardId);
+        model.addAttribute("card", card);
+        return "editcardform";
+    }
+
+    @PostMapping("/editcard")
+    public String saveCardEdits(@ModelAttribute("card") CreditCard card){
+        cardRepository.save(card);
+        return "redirect:/managecards";
+    }
+
+    @PostMapping("/savecard")
+    public String saveCardForUser(@ModelAttribute("card") CreditCard card){
+        String username = Utils.getLoggedOnUserName();
+        User user = userRepository.findByUsername(username);
+        card.setUserId(user.getUser_id());
+        cardRepository.save(card);
+        return "redirect:/managecards";
     }
 
 }

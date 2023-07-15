@@ -157,7 +157,7 @@ public class BookingController {
         booking.setGuest_id(customer.getId());
         bookingRepository.save(booking);
         model.addAttribute("booking", booking);
-        return "cardform";
+        return "cardformbooking";
     }
 
     @PostMapping("/completeBooking")
