@@ -8,7 +8,7 @@ This felt like e.g. operating in russian never having learned russian before and
 
 Security professionals know the general frameworks and analyse code for flaws, however rarely code full time as it is not our core skill not a great use of resources (hats off to the devs its a fantastic skill of tracking multiple threads)  - possibly a conflict of interest for security people, devsecops its only beginning to start really now (you cant be objective on code flaws you might have created) of resources, having never really used github before that was a learning too as constantly wary of breaking what had been implemented already. I tried so much I was getting so litle sleep. 
 
-Turns out there was a conflict with visual studio install I had added on matts recommendation as thats how he got everything working so easily, i just had too many other Ellie helped me hugely with the sql startup code so team have been great
+Turns out one of the final issues (I had been uninstalling and reinstalling from scratch to insure no conflicts as couldnt resolve it in path / etc etc etc  - there was a conflict with visual studio install I had added on matts recommendation as thats how he got everything working so easily, i just had too many other Ellie helped me hugely with the sql startup code so team have been great
 1507.have added some entries,
 
 Theres a radio button to nowhere on newroomasset will see if I can fix and
