@@ -78,4 +78,9 @@ public class UserController {
         request.logout();
         return "deletionSuccess";
     }
+
+    @RequestMapping("/unauthorized")
+    public String notAuthorized(){
+        return "unauthorized";
+    }
 }

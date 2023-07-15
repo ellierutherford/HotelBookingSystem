@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -25,12 +26,13 @@ public class CardController {
     @Autowired
     CardRepository cardRepository;
 
-    @GetMapping("/cards")
-    public String addCardToBooking(@RequestParam Long userId, Model model) throws CardNotFoundException {
+    @PostMapping("/cards")
+    public String addCardToBooking(@RequestParam Long userId, Model model, Principal principal) throws CardNotFoundException {
+
         List<CreditCard> cards = cardRepository.findByUserId(userId);
         model.addAttribute("cards", cards);
         if(cards.size()==0){
-            return "cardform";
+            return "cardformbooking";
         }
         return "selectcard";
     }
@@ -52,6 +54,13 @@ public class CardController {
     @GetMapping("/editcardform")
     public String editCardForm(Model model, @RequestParam Long cardId) throws CardNotFoundException{
         CreditCard card = cardRepository.findByCardId(cardId);
+        User user = userRepository.findByUsername(Utils.getLoggedOnUserName());
+        Long cardUId = card.getUserId();
+        Long userUId = user.getUser_id();
+        boolean areEqual = cardUId.equals(userUId);
+        if(!card.getUserId().equals(user.getUser_id())) {
+            return "redirect:/unauthorized";
+        }
         model.addAttribute("card", card);
         return "editcardform";
     }
