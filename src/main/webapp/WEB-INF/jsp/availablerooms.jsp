@@ -20,9 +20,8 @@
             <th>Price per night</th>
         </tr>
         <c:forEach var="room" items="${availableRooms}" varStatus="loop">
-            <td>
-                <td><c:out value="${room.roomasset_name}" /></td>
-                <td><c:out value="${room.max_guests}" /></td>
+            <td><c:out value="${room.roomasset_name}" /></td>
+            <td><c:out value="${room.max_guests}" /></td>
             <td>
                 <c:choose>
                     <c:when test="${username eq 'anonymous'}">
@@ -33,7 +32,7 @@
                     </c:otherwise>
                 </c:choose>
             </td>
-                <td><a href="/book?startDate=${startDate}&endDate=${endDate}&numGuests=${numGuests}&roomId=${room.id}">Book this room</a></td>
+            <td><a href="/book?startDate=${startDate}&endDate=${endDate}&numGuests=${numGuests}&roomId=${room.id}">Book this room</a></td>
             </tr>
         </c:forEach>
     </table>
