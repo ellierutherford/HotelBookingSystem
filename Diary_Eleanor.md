@@ -41,8 +41,8 @@ So what have I covered from the assignment brief?
   - If an active reservation is selected, the user can cancel it: DONE
   - Note: all bookings are either active or cancelled, no functionality to make inactive?
 - Starwood members can delete their registration: DONE
-
-
+- Starwood members can save their credit card details and also modify their details: DONE
+  - After a user successfully logs in, Starwood members can save their credit card details (more than a credit card can be saved): DONE
 
 Update 09/07 - didn't get a chance to do any tidy up really, I just focussed on login functionality today. Was a bit of a slog, but finally have the login working. Next step for me - get logout working. 
 
@@ -54,15 +54,14 @@ Update 12/07 - split booking + registration flows into two steps, plus added cre
 
 Update 13/07 - allow logged in users to book rooms using previously created cards, fix cancel logic
 
-Update 15/07 - users can view past reservations + delete their registration. Fixed bug where a booking can be saved to DB before card is added. Users can view their credit card details
+Update 15/07 - users can view past reservations + delete their registration. Fixed bug where a booking can be saved to DB before card is added. Users can view and edit their credit card details, plus add new credit card.
+All functionality finished, plus secured some dangerous endpoints (modifying card details)
 
-NEXT - 
-Allow a user to add a new credit card + modify an existing one
-
+NEXT: Do all tidy up and work through small improvements.
 
 Small improvements TODO:
 Make sure you can't register if already logged in
-Make the input in password field in register form ****
+Make the input in password field in register form **** - DONE
 Fix table UI when booking
 Fix the expiry date in credit card
 Add header to every page
