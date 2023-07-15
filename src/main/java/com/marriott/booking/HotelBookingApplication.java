@@ -8,7 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 
 // use our custom security config instead of default one
-@SpringBootApplication//(exclude = {SecurityAutoConfiguration.class})
+@SpringBootApplication
 public class HotelBookingApplication {
 
     public static void main(String[] args) {

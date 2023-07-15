@@ -27,7 +27,7 @@ public class CardController {
     CardRepository cardRepository;
 
     @PostMapping("/cards")
-    public String addCardToBooking(@RequestParam Long userId, Model model, Principal principal) throws CardNotFoundException {
+    public String addCardToBooking(@RequestParam Long userId, Model model) throws CardNotFoundException {
 
         List<CreditCard> cards = cardRepository.findByUserId(userId);
         model.addAttribute("cards", cards);
@@ -55,9 +55,6 @@ public class CardController {
     public String editCardForm(Model model, @RequestParam Long cardId) throws CardNotFoundException{
         CreditCard card = cardRepository.findByCardId(cardId);
         User user = userRepository.findByUsername(Utils.getLoggedOnUserName());
-        Long cardUId = card.getUserId();
-        Long userUId = user.getUser_id();
-        boolean areEqual = cardUId.equals(userUId);
         if(!card.getUserId().equals(user.getUser_id())) {
             return "redirect:/unauthorized";
         }

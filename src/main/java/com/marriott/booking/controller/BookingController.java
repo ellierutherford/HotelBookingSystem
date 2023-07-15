@@ -1,5 +1,6 @@
 package com.marriott.booking.controller;
 
+import com.marriott.booking.Utils;
 import com.marriott.booking.exception.CardNotFoundException;
 import com.marriott.booking.exception.CustomerNotFoundException;
 import com.marriott.booking.exception.BookingNotFoundException;
@@ -87,8 +88,7 @@ public class BookingController {
             username = "anonymous";
         }
         else{
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            username = userDetails.getUsername();
+            username = Utils.getLoggedOnUserName();
         }
         model.addAttribute("username", username);
 
@@ -112,7 +112,7 @@ public class BookingController {
         booking.setEndDate(endDate);
         booking.setStartDate(startDate);
         booking.setNumGuests(numGuests);
-        roomAsset.ifPresent(room -> booking.setRoomAsset(room)); //throw instead?
+        roomAsset.ifPresent(room -> booking.setRoomAsset(room));
         String generatedBookingRef = UUID.randomUUID().toString().replaceAll("-", "");
         booking.setBookingRef(generatedBookingRef);
 
@@ -167,7 +167,7 @@ public class BookingController {
         b.setCard(card);
         // only set booking to active once a card is associated with it
         b.setStatus(BookingStatus.ACTIVE);
-        card.setUserId(b.getGuest_id()); //this is a bit gross
+        card.setUserId(b.getGuest_id());
         cardRepository.save(card);
         return "bookingSuccess";
     }
