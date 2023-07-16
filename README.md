@@ -3,7 +3,7 @@ Web app for UCD COMP47910
 
 ## Set up instructions
 1. First, please install IntelliJ + MySQL.
-1. Then, open a terminal/command line and run 'mysql -u <USERNAME> -p', and enter your SQL password when prompted.
+1. Then, open a terminal/command line and run 'mysql -u %USERNAME% -p', and enter your SQL password when prompted.
 1. Now, run the "setupDb.sql" file found in the root of this repo by running "source setupDb.sql" in the mysql prompt. (You will have to provide the full path to this sql file.) This file creates a new sql user, creates the database and grants the newly created user permissions on the database.
 1. Next, run the "populateDb.sql" file, also found in the root of this repo by running "source populateDb.sql". This set of commands 
 populates the database with some hotel rooms so you can start booking rooms!
