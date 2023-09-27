@@ -1,5 +1,7 @@
 package com.marriott.booking.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marriott.booking.model.CheckEvent;
 import com.marriott.booking.repository.CheckEventService;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -30,25 +32,44 @@ public class HelloController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         String username = "";
+        String activityType = ""; // Initialize activityType
+
         if (authentication instanceof AnonymousAuthenticationToken) {
             username = "anon " + message;
         } else {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             username = "Auth" + userDetails + message;
+
+            try {
+                // Parse the JSON message
+                ObjectMapper objectMapper = new ObjectMapper();
+                JsonNode jsonNode = objectMapper.readTree(message);
+
+                // Extract the ActivityType value
+                activityType = jsonNode.get("ActivityType").asText();
+
+                // Create and save a CheckEvent record
+                CheckEvent checkEvent = new CheckEvent();
+                checkEvent.setEventTime(LocalDateTime.now());
+                checkEvent.setTitle("YourTitle"); // Replace with the appropriate title
+                checkEvent.setClientSite("YourClientSite"); // Replace with the appropriate client site
+                checkEvent.setActivityDate(LocalDateTime.now()); // Replace with the appropriate activity date
+                checkEvent.setActivityType(activityType); // Set the extracted ActivityType
+                checkEvent.setLocation("YourLocation"); // Replace with the appropriate location
+
+                // Save the CheckEvent record
+                checkEventService.save(checkEvent); // Use save() method provided by JpaRepository
+            } catch (Exception e) {
+                // Handle JSON parsing errors here
+            }
         }
 
-        // Create and save a CheckEvent record
-        CheckEvent checkEvent = new CheckEvent();
-        checkEvent.setEventTime(LocalDateTime.now());
-        checkEvent.setTitle("YourTitle"); // Replace with the appropriate title
-        checkEvent.setClientSite("YourClientSite"); // Replace with the appropriate client site
-        checkEvent.setActivityDate(LocalDateTime.now()); // Replace with the appropriate activity date
-        checkEvent.setActivityType("YourActivityType"); // Replace with the appropriate activity type
-        checkEvent.setLocation("YourLocation"); // Replace with the appropriate location
-
-        // Save the CheckEvent record
-        checkEventService.save(checkEvent); // Use save() method provided by JpaRepository
+        // Print the ActivityType to the console
+        System.out.println("Received message: " + username);
+        System.out.println("ActivityType: " + activityType);
 
         return "Received message: " + username;
     }
+
+
 }
