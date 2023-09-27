@@ -30,7 +30,7 @@ public class HelloController {
         }
         else{
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            username = "Auth" + message;
+            username = "Auth" + userDetails + message;
         }
 
 
