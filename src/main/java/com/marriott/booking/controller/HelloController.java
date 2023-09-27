@@ -38,7 +38,7 @@ public class HelloController {
         String title = "";
 
         if (authentication instanceof AnonymousAuthenticationToken) {
-            username = "anon " + message;
+            username = "THis wasn't processed, was an error";
         } else {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             username = "Auth" + userDetails + message;
