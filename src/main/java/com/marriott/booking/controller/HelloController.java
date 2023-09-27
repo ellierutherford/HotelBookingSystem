@@ -34,6 +34,8 @@ public class HelloController {
         String username = "";
         String activityType = "";
         String clientSite = "";
+        String location = "";
+        String title = "";
 
         if (authentication instanceof AnonymousAuthenticationToken) {
             username = "anon " + message;
@@ -49,18 +51,16 @@ public class HelloController {
                 // Extract the ActivityType value
                 activityType = jsonNode.get("ActivityType").asText();
                 clientSite = jsonNode.get("ClientSite").asText();
-
-                // Create and save a CheckEvent record
+                location = jsonNode.get("Location").asText();
+                title = jsonNode.get("Title").asText();
                 CheckEvent checkEvent = new CheckEvent();
                 checkEvent.setEventTime(LocalDateTime.now());
-                checkEvent.setTitle("YourTitle"); // Replace with the appropriate title
-                checkEvent.setClientSite(clientSite); // Replace with the appropriate client site
-                checkEvent.setActivityDate(LocalDateTime.now()); // Replace with the appropriate activity date
-                checkEvent.setActivityType(activityType); // Set the extracted ActivityType
-                checkEvent.setLocation("YourLocation"); // Replace with the appropriate location
-
-                // Save the CheckEvent record
-                checkEventService.save(checkEvent); // Use save() method provided by JpaRepository
+                checkEvent.setTitle(title);
+                checkEvent.setClientSite(clientSite);
+                checkEvent.setActivityDate(LocalDateTime.now());
+                checkEvent.setActivityType(activityType);
+                checkEvent.setLocation(location);
+                checkEventService.save(checkEvent);
             } catch (Exception e) {
                 // Handle JSON parsing errors here
             }
