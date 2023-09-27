@@ -32,7 +32,8 @@ public class HelloController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         String username = "";
-        String activityType = ""; // Initialize activityType
+        String activityType = "";
+        String clientSite = "";
 
         if (authentication instanceof AnonymousAuthenticationToken) {
             username = "anon " + message;
@@ -47,12 +48,13 @@ public class HelloController {
 
                 // Extract the ActivityType value
                 activityType = jsonNode.get("ActivityType").asText();
+                clientSite = jsonNode.get("ClientSite").asText();
 
                 // Create and save a CheckEvent record
                 CheckEvent checkEvent = new CheckEvent();
                 checkEvent.setEventTime(LocalDateTime.now());
                 checkEvent.setTitle("YourTitle"); // Replace with the appropriate title
-                checkEvent.setClientSite("YourClientSite"); // Replace with the appropriate client site
+                checkEvent.setClientSite(clientSite); // Replace with the appropriate client site
                 checkEvent.setActivityDate(LocalDateTime.now()); // Replace with the appropriate activity date
                 checkEvent.setActivityType(activityType); // Set the extracted ActivityType
                 checkEvent.setLocation("YourLocation"); // Replace with the appropriate location
