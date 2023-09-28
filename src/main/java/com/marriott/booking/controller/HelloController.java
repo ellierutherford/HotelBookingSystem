@@ -75,15 +75,28 @@ public class HelloController {
 
                 String sharePointApiUrl = "https://laoisscaffolding.sharepoint.com/sites/TimeKeeping/_api/web/lists/GetByTitle('TimeTracker')/items";
 
-                // Create the JSON request body using the CheckEvent object
+
+
+
+
+                // Calculate the length of the request body
                 String requestBody = "{\"Title\":\"" + checkEvent.getTitle() + "\","
                         + "\"ActivityType\":\"" + checkEvent.getActivityType() + "\","
                         // ... (other fields)
                         + "\"ActivityDateTime\":\"" + checkEvent.getActivityDate() + "\"}";
 
+                byte[] requestBodyBytes = requestBody.getBytes(StandardCharsets.UTF_8);
+                long contentLength = requestBodyBytes.length;
+
+// Create the HttpHeaders object and set the necessary headers
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.APPLICATION_JSON);
-                headers.set("Authorization", "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyIsImtpZCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvbGFvaXNzY2FmZm9sZGluZy5zaGFyZXBvaW50LmNvbUAxM2RiOWVmZS1jMjIzLTQyZTctODRjMi1mZGE2MzE2N2FmOTgiLCJpc3MiOiIwMDAwMDAwMS0wMDAwLTAwMDAtYzAwMC0wMDAwMDAwMDAwMDBAMTNkYjllZmUtYzIyMy00MmU3LTg0YzItZmRhNjMxNjdhZjk4IiwiaWF0IjoxNjkzOTAwMjg5LCJuYmYiOjE2OTM5MDAyODksImV4cCI6MTY5Mzk4Njk4OSwiaWRlbnRpdHlwcm92aWRlciI6IjAwMDAwMDAxLTAwMDAtMDAwMC1jMDAwLTAwMDAwMDAwMDAwMEAxM2RiOWVmZS1jMjIzLTQyZTctODRjMi1mZGE2MzE2N2FmOTgiLCJuYW1laWQiOiJmYWZjOGFlMi1hMmU5LTRlYjMtYTZjYi1iM2NhOGZjYzA0OWNAMTNkYjllZmUtYzIyMy00MmU3LTg0YzItZmRhNjMxNjdhZjk4Iiwib2lkIjoiZGRkMjMyNWItMmM4Yy00YzdkLTg0NzctMzU2OTMwYzRjNWQ4Iiwic3ViIjoiZGRkMjMyNWItMmM4Yy00YzdkLTg0NzctMzU2OTMwYzRjNWQ4IiwidHJ1c3RlZGZvcmRlbGVnYXRpb24iOiJmYWxzZSJ9.UuIzCz8ZdylThE7qrPBI5V6JYjHjtHZaW8oCgDnYh8-KHWn3H6Gs0MKm6yza3f3U7APt5rHPgZibIDBmlhLErGZEUJxUj4-d1_EkYkhBQPjIjmL_y6T0lfyA5rpHZ0nZtqGYhsoitL9NuJ0NqhEydiUrbKnjbSzOOfV307RKo9BUYarjw-aHAP4bZghKuQ-DQfggDURfChBVqSBVks87v5YRwcf5ARosbJd1Nbc4qwXAERTMhFRc0FyzHIWo61lEI7-Li5XpqMBmPyZCHM635UTH0ug1AOYlJ2vZEjFHyv5ZnJoq52kH_q0l57i9qyCjTfSTkLbNqtX5T1lXAnpoFw");
+                headers.set("Authorization", "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyIsImtpZCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvbGFvaXNzY2FmZm9sZGluZy5zaGFyZXBvaW50LmNvbUAxM2RiOWVmZS1jMjIzLTQyZTctODRjMi1mZGE2MzE2N2FmOTgiLCJpc3MiOiIwMDAwMDAwMS0wMDAwLTAwMDAtYzAwMC0wMDAwMDAwMDAwMDBAMTNkYjllZmUtYzIyMy00MmU3LTg0YzItZmRhNjMxNjdhZjk4IiwiaWF0IjoxNjkzOTAwMjg5LCJuYmYiOjE2OTM5MDAyODksImV4cCI6MTY5Mzk4Njk4OSwiaWRlbnRpdHlwcm92aWRlciI6IjAwMDAwMDAxLTAwMDAtMDAwMC1jMDAwLTAwMDAwMDAwMDAwMEAxM2RiOWVmZS1jMjIzLTQyZTctODRjMi1mZGE2MzE2N2FmOTgiLCJuYW1laWQiOiJmYWZjOGFlMi1hMmU5LTRlYjMtYTZjYi1iM2NhOGZjYzA0OWNAMTNkYjllZmUtYzIyMy00MmU3LTg0YzItZmRhNjMxNjdhZjk4Iiwib2lkIjoiZGRkMjMyNWItMmM4Yy00YzdkLTg0NzctMzU2OTMwYzRjNWQ4Iiwic3ViIjoiZGRkMjMyNWItMmM4Yy00YzdkLTg0NzctMzU2OTMwYzRjNWQ4IiwidHJ1c3RlZGZvcmRlbGVnYXRpb24iOiJmYWxzZSJ9.UuIzCz8ZdylThE7qrPBI5V6JYjHjtHZaW8oCgDnYh8-KHWn3H6Gs0MKm6yza3f3U7APt5rHPgZibIDBmlhLErGZEUJxUj4-d1_EkYkhBQPjIjmL_y6T0lfyA5rpHZ0nZtqGYhsoitL9NuJ0NqhEydiUrbKnjbSzOOfV307RKo9BUYarjw-aHAP4bZghKuQ-DQfggDURfChBVqSBVks87v5YRwcf5ARosbJd1Nbc4qwXAERTMhFRc0FyzHIWo61lEI7-Li5XpqMBmPyZCHM635UTH0ug1AOYlJ2vZEjFHyv5ZnJoq52kH_q0l57i9qyCjTfSTkLbNqtX5T1lXAnpoFw"); // Add the authorization token
+                headers.set("Accept", "application/json"); // Add the "Accept" header
+                headers.setContentLength(contentLength); // Set the "Content-Length" header
+
+
+
                 HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
                 System.out.println("Make the HTTP POST request to SharePoint");
 
