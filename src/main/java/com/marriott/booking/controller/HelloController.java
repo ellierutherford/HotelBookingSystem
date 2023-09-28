@@ -1,20 +1,57 @@
 package com.marriott.booking.controller;
-
+import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marriott.booking.model.CheckEvent;
 import com.marriott.booking.repository.CheckEventService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+
 import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api")
 public class HelloController {
+
+    @PostMapping("/postToSharePoint")
+    public ResponseEntity<String> postToSharePoint(@RequestBody CheckEvent checkEvent) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // Create the JSON request body using the CheckEvent object
+        String requestBody = "{\"Title\":\"" + checkEvent.getTitle() + "\","
+                + "\"ActivityType\":\"" + checkEvent.getActivityType() + "\","
+                + "\"Task\":\"none\","
+                + "\"Location\":\"" + checkEvent.getLocation() + "\","
+                + "\"ClientSite\":\"" + checkEvent.getClientSite() + "\","
+                + "\"ActivityDate\":\"" + checkEvent.getActivityDate() + "\","
+                + "\"ActivityDateTime\":\"" + checkEvent.getActivityDate() + "\"}";
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        // Define the SharePoint API URL
+        String sharePointApiUrl = "https://laoisscaffolding.sharepoint.com/sites/TimeKeeping/_api/web/lists/GetByTitle('TimeTracker')/items";
+
+        // Make the HTTP POST request to SharePoint
+        ResponseEntity<String> response = restTemplate.postForEntity(sharePointApiUrl, requestEntity, String.class);
+
+        return response;
+    }
+
+
+
+    @Autowired
+    private RestTemplate restTemplate; // Autowire RestTemplate bean
 
     private final CheckEventService checkEventService;
 
@@ -61,6 +98,33 @@ public class HelloController {
                 checkEvent.setActivityType(activityType);
                 checkEvent.setLocation(location);
                 checkEventService.save(checkEvent);
+
+
+                // Define the SharePoint API URL
+                String sharePointApiUrl = "https://laoisscaffolding.sharepoint.com/sites/TimeKeeping/_api/web/lists/GetByTitle('TimeTracker')/items";
+
+                // Create the JSON request body using the CheckEvent object
+                String requestBody = "{\"Title\":\"" + checkEvent.getTitle() + "\","
+                        + "\"ActivityType\":\"" + checkEvent.getActivityType() + "\","
+                        + "\"Task\":\"none\","
+                        + "\"Location\":\"" + checkEvent.getLocation() + "\","
+                        + "\"ClientSite\":\"" + checkEvent.getClientSite() + "\","
+                        + "\"ActivityDate\":\"" + checkEvent.getActivityDate() + "\","
+                        + "\"ActivityDateTime\":\"" + checkEvent.getActivityDate() + "\"}";
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON);
+                HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+
+                // Make the HTTP POST request to SharePoint
+                ResponseEntity<String> response = restTemplate.postForEntity(sharePointApiUrl, requestEntity, String.class);
+
+                // Print the SharePoint response to the console
+                System.out.println("SharePoint Response: " + response.getBody());
+
+
+
+
             } catch (Exception e) {
                 // Handle JSON parsing errors here
             }
