@@ -23,33 +23,6 @@ import java.time.LocalDateTime;
 @RequestMapping("/api")
 public class HelloController {
 
-    @PostMapping("/postToSharePoint")
-    public ResponseEntity<String> postToSharePoint(@RequestBody CheckEvent checkEvent) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        // Create the JSON request body using the CheckEvent object
-        String requestBody = "{\"Title\":\"" + checkEvent.getTitle() + "\","
-                + "\"ActivityType\":\"" + checkEvent.getActivityType() + "\","
-                + "\"Task\":\"none\","
-                + "\"Location\":\"" + checkEvent.getLocation() + "\","
-                + "\"ClientSite\":\"" + checkEvent.getClientSite() + "\","
-                + "\"ActivityDate\":\"" + checkEvent.getActivityDate() + "\","
-                + "\"ActivityDateTime\":\"" + checkEvent.getActivityDate() + "\"}";
-
-        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
-
-        // Define the SharePoint API URL
-        String sharePointApiUrl = "https://laoisscaffolding.sharepoint.com/sites/TimeKeeping/_api/web/lists/GetByTitle('TimeTracker')/items";
-
-        // Make the HTTP POST request to SharePoint
-        ResponseEntity<String> response = restTemplate.postForEntity(sharePointApiUrl, requestEntity, String.class);
-
-        return response;
-    }
-
-
-
     @Autowired
     private RestTemplate restTemplate; // Autowire RestTemplate bean
 
@@ -100,33 +73,35 @@ public class HelloController {
                 checkEventService.save(checkEvent);
 
 
-                // Define the SharePoint API URL
                 String sharePointApiUrl = "https://laoisscaffolding.sharepoint.com/sites/TimeKeeping/_api/web/lists/GetByTitle('TimeTracker')/items";
 
                 // Create the JSON request body using the CheckEvent object
                 String requestBody = "{\"Title\":\"" + checkEvent.getTitle() + "\","
                         + "\"ActivityType\":\"" + checkEvent.getActivityType() + "\","
-                        + "\"Task\":\"none\","
-                        + "\"Location\":\"" + checkEvent.getLocation() + "\","
-                        + "\"ClientSite\":\"" + checkEvent.getClientSite() + "\","
-                        + "\"ActivityDate\":\"" + checkEvent.getActivityDate() + "\","
+                        // ... (other fields)
                         + "\"ActivityDateTime\":\"" + checkEvent.getActivityDate() + "\"}";
 
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.APPLICATION_JSON);
+                headers.set("Authorization", "Bearer " + "test");
                 HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+                System.out.println("Make the HTTP POST request to SharePoint");
 
                 // Make the HTTP POST request to SharePoint
                 ResponseEntity<String> response = restTemplate.postForEntity(sharePointApiUrl, requestEntity, String.class);
 
-                // Print the SharePoint response to the console
-                System.out.println("SharePoint Response: " + response.getBody());
-
-
-
-
+                if (response.getStatusCode().is2xxSuccessful()) {
+                    // The request was successful
+                    System.out.println("SharePoint Response: " + response.getBody());
+                } else {
+                    // Handle the error response (e.g., log it or throw an exception)
+                    System.err.println("Error during SharePoint request. Status code: " + response.getStatusCode());
+                    // You can log or throw an exception here to handle the error.
+                }
             } catch (Exception e) {
                 // Handle JSON parsing errors here
+                System.err.println("Error parsing JSON: " + e.getMessage());
+                // You can log or throw an exception here to handle the error.
             }
         }
 
@@ -136,6 +111,7 @@ public class HelloController {
 
         return "Received message: " + username;
     }
-
-
 }
+
+
+
